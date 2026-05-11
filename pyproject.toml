@@ -1,0 +1,19 @@
+[project]
+name = "ai-sports-coach"
+version = "0.1.0"
+description = "Assistant d'entraînement IA conversationnel"
+requires-python = ">=3.11"
+dependencies = [
+    "aiogram>=3.4",
+    "openai",          # OpenRouter compatible OpenAI SDK
+    "google-generativeai",
+    "supabase",
+    "python-dotenv",
+    "pydantic",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-asyncio",
+]
