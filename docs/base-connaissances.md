@@ -135,7 +135,22 @@ Recherches à effectuer par sport :
 - FFA (Fédération Française d'Athlétisme)
 - FFTri (Fédération Française de Triathlon)
 
-## Implémentation technique
+## Modèle d'embedding choisi : Gemini Embedding 2
+
+Après analyse comparative (recommandations Perplexity 05/2026) :
+
+| Modèle | Avantages | Inconvénients | Verdict |
+|--------|-----------|---------------|---------|
+| **Gemini Embedding 2** ✅ | 10× moins cher qu'OpenAI, excellent sur longs docs (32K tokens), très bon français, multimodal | Nécessite clé API Google | **Choisi** |
+| Qwen3-Embedding-8B | Meilleur score français (69.8), auto-hébergé | Nécessite GPU ou 2.5 Go RAM, non multimodal | Trop lourd pour VPS |
+| BGE-M3 | Hybride dense+sparse, bon français, <2 Go | Inférieur à Gemini sur longs docs | Bon fallback local |
+| text-embedding-3-small (OpenAI) | Simple, bien intégré | Cher (10× Gemini), 1536 dims | Rejeté |
+
+**Pourquoi Gemini :**
+- Documents longs (articles PubMed, chapitres) → Gemini est le seul qui tient la perf jusqu'à 32K tokens
+- Budget → quasi gratuit à nos volumes
+- Techniquement → 768 dimensions (vs 1536 pour OpenAI), stockage vectoriel divisé par 2
+- Français → très bon, suffisant pour notre base FR
 
 ### Structure de la table `knowledge_base`
 
@@ -153,7 +168,7 @@ CREATE TABLE knowledge_base (
     quality_score INT DEFAULT 5,   -- 1-10, évalué par un pro si possible
     language TEXT DEFAULT 'fr',    -- fr, en
     tags JSONB,                    -- ["ftp", "seuil", "progression"]
-    embedding VECTOR(1536),        -- Embedding OpenAI (text-embedding-3-small)
+    embedding VECTOR(768),        -- Embedding Gemini (text-embedding-004, 768 dims)
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 ```
@@ -162,8 +177,10 @@ CREATE TABLE knowledge_base (
 
 ```python
 # scripts/generate_embeddings.py
-from openai import OpenAI
+import google.generativeai as genai
 from supabase import create_client
+
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # 1. Lire tous les documents sans embedding
 docs = supabase.table("knowledge_base") \
@@ -171,22 +188,20 @@ docs = supabase.table("knowledge_base") \
     .is_("embedding", "null") \
     .execute()
 
-# 2. Générer les embeddings (batch de 100)
-for i in range(0, len(docs), 100):
-    batch = docs[i:i+100]
-    contents = [d["content"][:8000] for d in batch]  # embed max 8192 tokens
-    
-    response = openai.embeddings.create(
-        model="text-embedding-3-small",
-        input=contents
+# 2. Générer les embeddings (batch traité séquentiellement, API Gemini)
+for doc in docs:
+    content = doc["content"][:8000]  # Pas de limite stricte, Gemini tient 32K
+    result = genai.embed_content(
+        model="models/text-embedding-004",
+        content=content,
+        task_type="RETRIEVAL_DOCUMENT"
     )
     
-    # 3. Mettre à jour
-    for doc, emb in zip(batch, response.data):
-        supabase.table("knowledge_base") \
-            .update({"embedding": emb.embedding}) \
-            .eq("id", doc["id"]) \
-            .execute()
+    # 3. Mettre à jour (768 dimensions)
+    supabase.table("knowledge_base") \
+        .update({"embedding": result["embedding"]}) \
+        .eq("id", doc["id"]) \
+        .execute()
 ```
 
 ### Recherche sémantique
@@ -210,7 +225,7 @@ async def search_knowledge(query: str, sport: str, limit: int = 5):
 ```sql
 -- Fonction RPC Supabase
 CREATE OR REPLACE FUNCTION match_knowledge(
-    query_embedding VECTOR(1536),
+    query_embedding VECTOR(768),
     sport_filter TEXT DEFAULT NULL,
     match_count INT DEFAULT 5
 )
