@@ -12,6 +12,7 @@ Haut de gamme (100-300€/mois)
 ├── Notre cible (15-20€/mois)
 │   │  ★ AI Sports Coach (chat IA conversationnel)
 │   │
+│   ├── Campus Coach (15-19€/mois) ← NOUVEAU
 │   ├── Runna (15,99€/mois)
 │   ├── JOIN (14,99€/mois)
 │   ├── Freeletics (9,99-16,99€/mois)
@@ -92,6 +93,28 @@ Bas de gamme (gratuit-5€/mois)
 
 **Notre avantage** : TrainingPeaks sans coach humain c'est une coquille vide pour un amateur. Nous on remplace le coach humain.
 
+## Concurrent direct n°5 : Campus Coach 🆕 (découvert 12/05/2026)
+
+| Aspect | Détail |
+|--------|--------|
+| **Prix** | 15€/mois (web), 19€/mois (app), 119€/an, Campus Pro 499€/an |
+| **Sports** | Running, trail uniquement |
+| **Chat IA** | ❌ Pas de chat LLM — IA algorithmique pour adapter les plans |
+| **Utilisateurs** | +300K (France/Europe francophone) |
+| **Points forts** | Tracker GPS intégré gratuit (sans montre), export Garmin/Strava 1-clic, analyse charge d'entraînement (claim -73% blessures), masterclass intégrées, onboarding soigné, communauté active |
+| **Points faibles** | Running/trail uniquement (pas vélo, triathlon, fitness), pas de dialogue conversationnel, transition payante mal vécue (fin du gratuit en janv. 2026), IA non-générative (plans adaptatifs mais pas de conseil contextuel), bootstrappé (pas de levées visibles → croissance organique lente) |
+| **Technique** | Plans personnalisés par analyse profil + adaptation algorithmique. Pas de LLM, pas de RAG, pas de dialogue. Tracker GPS natif. Intégrations API Garmin/Strava. App iOS + Android. |
+| **Marketing** | Croissance organique via App Store/Google Play, influenceurs running/YouTube (affiliés), SEO dominant sur « coach running » |
+| **Société** | Derrière Sport Strategies (probable), pas de levées de fonds publiques, équipe discrète (pas de CEO public) |
+
+**Notre avantage** : Campus Coach est le concurrent le plus proche de nous sur le prix et le marché français, MAIS :
+- ❌ Zéro chat — leur « IA » adapte des plans, elle ne te répond pas si tu lui dis « j'ai mal au genou » ou « j'ai pas dormi »
+- ❌ Monosport — un triathlète doit utiliser 3 apps différentes (Campus pour courir + une app vélo + une app natation)
+- ❌ Transition payante mal gérée → utilisateurs frustrés, opportunité de les capter
+- ✅ Leur tracker gratuit est leur killer feature d'acquisition — on doit intégrer Strava/Garmin au plus vite pour ne pas être en retard là-dessus
+
+**Ce qu'on doit piquer** : Leur onboarding (questionnaire intelligent, objectifs visuels), leur export 1-clic montres, leur analyse de charge d'entraînement. Et leur prix annuel agressif (119€/an = 9,92€/mois) : on doit prévoir une offre annuelle équivalente.
+
 ## Menaces émergentes
 
 - **Strava** : a les données de tout le monde. S'ils sortent un coach IA, c'est un risque majeur.
@@ -101,16 +124,19 @@ Bas de gamme (gratuit-5€/mois)
 
 ## Positionnement différenciant
 
-| Fonctionnalité | Freeletics | Runna | JOIN | FizzUp | **Nous** |
-|---------------|------------|-------|------|--------|----------|
-| Chat IA conversationnel | ❌ | ❌ | ❌ | ❌ | **✅** |
-| Multi-sport endurance | ❌ | ❌ | ✅ | ❌ | **✅** |
-| Plans personnalisés | ✅ | ✅ | ✅ | ✅ | **✅** |
-| Explication scientifique | ❌ | ✅ | ❌ | ❌ | **✅** |
-| Intégration calendrier | ❌ | ❌ | ❌ | ❌ | **✅** |
-| Adaptation en cours de plan | ✅ | ❌ | ✅ | ❌ | **✅** |
-| Français | ❌ | ❌ | ❌ | ✅ | **✅** |
-| Prix | 17€ | 16€ | 15€ | 10€ | 15-20€ |
+| Fonctionnalité | Freeletics | Runna | JOIN | Campus Coach | FizzUp | **Nous** |
+|---------------|------------|-------|------|-------------|--------|----------|
+| Chat IA conversationnel | ❌ | ❌ | ❌ | ❌ | ❌ | **✅** |
+| Multi-sport endurance | ❌ | ❌ | ✅ | ❌ | ❌ | **✅** |
+| Plans personnalisés | ✅ | ✅ | ✅ | ✅ | ✅ | **✅** |
+| Explication scientifique | ❌ | ✅ | ❌ | ✅ | ❌ | **✅** |
+| Intégration calendrier | ❌ | ❌ | ❌ | ❌ | ❌ | **✅** |
+| Adaptation en cours de plan | ✅ | ❌ | ✅ | ✅ | ❌ | **✅** |
+| Tracker GPS intégré | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ |
+| Coach humain (option) | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ |
+| Français | ❌ | ❌ | ❌ | ✅ | ✅ | **✅** |
+| Prix | 17€ | 16€ | 15€ | 15-19€ | 10€ | 15-20€ |
+| Utilisateurs | 50M+ | 1M+ | 500K+ | 300K+ | 5M+ | 0 |
 
 ## Stratégie d'attaque
 
@@ -138,15 +164,17 @@ Bas de gamme (gratuit-5€/mois)
 
 | Forces | Faiblesses |
 |--------|------------|
-| Chat IA conversationnel unique | Bootstrappé solo |
-| Multi-sport | Pas de contenu vidéo |
-| Qualité scientifique | Marque inconnue |
-| Français | Pas de data d'utilisateurs |
-| Intégrations (calendrier) | Budget marketing limité |
+| Chat IA conversationnel unique (personne ne le fait) | Bootstrappé solo |
+| Multi-sport (course, vélo, triathlon, fitness) | Pas de tracker GPS natif |
+| Qualité scientifique + pédagogie | Pas de contenu vidéo |
+| Français natif + marché FR moins concurrentiel | Marque inconnue (0 utilisateur) |
+| Intégrations (calendrier, Strava à venir) | Pas de data d'utilisateurs |
 
 | Opportunités | Menaces |
 |-------------|---------|
-| Aucun concurrent sur le chat | Strava Coach IA |
-| Marché coaching en croissance | Garmin Coach IA amélioré |
-| IA de plus en plus accessible | Régulation EU AI Act |
-| Français = marché moins concurrentiel | Copies rapides si succès |
+| Aucun concurrent n'a de chat IA conversationnel | Strava Coach IA (massif si lancé) |
+| Marché coaching en croissance (1Md€+) | Campus Coach : 300K utilisateurs, prix similaire, marché FR |
+| IA de plus en plus accessible et pas chère | Garmin Coach IA amélioré |
+| Mécontents Campus Coach (fin gratuit janv. 2026) | Régulation EU AI Act |
+| Triathlètes mal servis (3 apps différentes) | Copies rapides si succès |
+| Prix annuel agressif possible (120€/an) | Apple Fitness+, Google Fit IA |
