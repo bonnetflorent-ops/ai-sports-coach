@@ -10,6 +10,7 @@ dependencies = [
     "supabase",
     "python-dotenv",
     "pydantic",
+    "pyyaml",
 ]
 
 [project.optional-dependencies]
