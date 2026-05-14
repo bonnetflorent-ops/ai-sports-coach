@@ -17,7 +17,7 @@ import logging
 from aiogram import Router, types
 from aiogram.fsm.context import FSMContext
 
-from src.engine.llm import get_client, chat as llm_chat
+from src.engine.llm import get_client, chat as llm_chat, chat_with_metrics as llm_chat_metrics
 from src.engine.selector import select_concepts
 from src.engine.prompt_builder import build_system_prompt
 from src.bot.handlers.start import Onboarding
@@ -214,7 +214,8 @@ RÈGLES POUR CE MESSAGE :
             {"role": "user", "content": f"[{profile.get('name', prenom)}] {message.text}"},
         ]
 
-        response = await llm_chat(messages)
+        result = await llm_chat_metrics(messages)
+        response = result["content"]
 
         # --- Étape 6: Sauvegarder les messages ---
         if session:
@@ -225,8 +226,8 @@ RÈGLES POUR CE MESSAGE :
                     session_id=session["id"],
                     role="user",
                     content=message.text,
-                    tokens_in=0,  # On pourrait estimer plus tard
-                    tokens_out=0,
+                    tokens_in=result["tokens_in"],
+                    tokens_out=result["tokens_out"],
                     cost_eur=0.0,
                     concepts_used=selection.get("concepts"),
                     level_used=selection.get("level"),
@@ -237,8 +238,8 @@ RÈGLES POUR CE MESSAGE :
                     session_id=session["id"],
                     role="assistant",
                     content=response,
-                    tokens_in=0,
-                    tokens_out=0,
+                    tokens_in=result["tokens_in"],
+                    tokens_out=result["tokens_out"],
                     cost_eur=0.0,
                     concepts_used=selection.get("concepts"),
                     level_used=selection.get("level"),
