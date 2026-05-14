@@ -1,12 +1,18 @@
-# Séances types par filière énergétique – Synthèse scientifique pour la programmation de terrain
+# Séances types par filière énergétique
 
-## 1. Bibliothèque de Protocoles (Modèle à 3 Couches)
+## 1. Concepts Fondamentaux (Modèle à 3 Couches)
 
 ### 1.1 Endurance fondamentale (base aérobie, Zone 2)
 
 #### Couche 1 – Débutant
 
-L’intention est de développer une « caisse » aérobie solide avec une perception d’effort facile, respiration nasale possible, conversation aisée, sans fatigue résiduelle le lendemain.[^1][^2] La durée typique pour un athlète déjà actif se situe entre 40 et 120 minutes en continu, 2 à 5 fois par semaine selon le volume hebdomadaire global.[^1][^3] L’intensité reste clairement sous le premier seuil ventilatoire (SV1), ce qui correspond pour la plupart des sujets à un RPE de 2 à 3 sur 10 et environ 60–75% de la fréquence cardiaque maximale (FCmax), tout en acceptant une variabilité interindividuelle importante.[^1][^4]
+L'intention est de développer une « caisse » aérobie solide avec une perception d'effort facile, respiration nasale possible, conversation aisée, sans fatigue résiduelle le lendemain.[^1][^2] La durée typique pour un athlète déjà actif se situe entre 40 et 120 minutes en continu, 2 à 5 fois par semaine selon le volume hebdomadaire global.[^1][^3] L'intensité reste clairement sous le premier seuil ventilatoire (SV1), ce qui correspond pour la plupart des sujets à un RPE de 2 à 3 sur 10 et environ 60–75% de la fréquence cardiaque maximale (FCmax), tout en acceptant une variabilité interindividuelle importante.[^1][^4]
+
+**Le test de la conversation :** Le moyen le plus simple de vérifier que tu es bien en endurance fondamentale : tu dois pouvoir parler en phrases complètes sans chercher ton souffle. Si tu peux chanter, tu es peut-être un peu trop tranquille (mais ce n'est pas grave). Si tu ne peux sortir que 3-4 mots avant de reprendre ta respiration, tu es au-dessus de la zone 2 — ralentis. Ce test, tout simple, est plus fiable que n'importe quel cardiofréquencemètre pour un débutant.
+
+**Combien de temps en Zone 2 ?** L'idéal est d'accumuler au moins 150 à 200 minutes par semaine en endurance fondamentale (réparties sur 3-5 sorties). Une sortie unique de 60-90 minutes est un bon point de départ. Pour les sports d'endurance (vélo, course à pied), c'est la fondation sur laquelle tout le reste se construit : plus ta « caisse » est grande, plus tu pourras encaisser les séances intenses sans te brûler. Les athlètes d'élite passent 75-80% de leur temps d'entraînement dans cette zone — ce n'est pas du « temps perdu », c'est le socle de la pyramide.[^6][^7]
+
+**L'erreur numéro 1 : aller trop vite.** La plupart des débutants (et beaucoup d'amateurs confirmés) font leurs sorties d'endurance fondamentale à une intensité « moyenne » — ni facile, ni dure. Cette zone grise est le piège : elle fatigue sans apporter les bénéfices de la zone 2 (développement mitochondrial, capillarisation, oxydation des graisses) et sans provoquer les adaptations des séances intenses. Résultat : tu es fatigué(e) pour tes séances de qualité et tu stagnes. La discipline de rester en zone 2 quand on se sent frais est l'une des compétences les plus importantes à développer. [^6][^8]
 
 #### Couche 2 – Intermédiaire
 

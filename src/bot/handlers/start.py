@@ -31,5 +31,9 @@ async def cmd_start(message: types.Message, state: FSMContext):
         f"5️⃣ Combien de créneaux par semaine as-tu ? Quels jours ?\n"
         f"6️⃣ As-tu des blessures ou contraintes que je dois connaître ?\n\n"
         f"*Numérote tes réponses, je m'occupe du reste.*"
+        f"\n\n"
+        f"🔒 *Confidentialité* : Tes données d'entraînement restent privées. "
+        f"Pas de revente, pas de partage. Conformément au RGPD, tu peux demander "
+        f"l'accès ou la suppression de tes données à tout moment (/rgpd)."
     )
     await state.set_state(Onboarding.waiting)

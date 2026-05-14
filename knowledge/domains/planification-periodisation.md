@@ -1,6 +1,6 @@
-# Planification et périodisation de l’entraînement en endurance moderne
+# Planification & périodisation
 
-## 1. Concepts fondamentaux (modèle à 3 couches)
+## 1. Concepts Fondamentaux (Modèle à 3 Couches)
 
 ### 1.1 Modèles de périodisation
 
@@ -10,11 +10,27 @@ La périodisation signifie simplement que l’on ne s’entraîne pas de la mêm
 L’idée centrale est qu’un corps qui reçoit toujours exactement le même stimulus finit par stagner, alors que des phases de charge progressive suivies de phases plus légères permettent de continuer à progresser tout en limitant le risque de blessure ou de fatigue chronique. [^3]
 Concrètement, cela se traduit par une saison divisée en grandes périodes : préparation générale, préparation spécifique, période de compétition, puis période de transition plus légère. [^2]
 
+**Métaphore simple :** Imagine que tu construis une maison. Tu ne poses pas les fenêtres avant d'avoir coulé les fondations, et tu ne peins pas les murs avant qu'ils ne soient secs. L'entraînement fonctionne de la même façon : chaque phase prépare la suivante. La période de préparation générale, c'est les fondations (endurance, force de base) ; la période spécifique, c'est les murs et la toiture (travail au seuil, allure course) ; l'affûtage, c'est la peinture et la déco finale. Si tu essaies de tout faire en même temps, la maison s'écroule.
+
+**Exemple concret hebdomadaire :** Dans une phase de préparation générale, une semaine type pourrait être : lundi repos, mardi 1h d'endurance fondamentale + 20 min de renforcement musculaire, mercredi 45 min de vélo facile, jeudi 1h en endurance avec 3 × 8 min à allure seuil (RPE 6/10), vendredi repos, samedi sortie longue de 1h30 à 2h en endurance facile (RPE 3-4/10), dimanche 30 min de récupération active ou repos. L'important est que les séances difficiles soient peu nombreuses (1-2/semaine) et bien entourées de séances faciles.
+
+**Erreur classique du débutant :** Vouloir s'entraîner « à fond » toute l'année, sans période de repos ni de transition. C'est comme rouler en voiture avec le pied au plancher en permanence : le moteur finit par casser. Beaucoup de coureurs amateurs enchaînent les compétitions sans jamais recharger les batteries, ce qui mène à la stagnation, puis à la blessure ou au dégoût. [^3]
+
 #### Couche 2 (intermédiaire)
 
 Dans le modèle traditionnel (dit linéaire, issu notamment des travaux de Matveyev), on commence par un volume élevé à intensité faible à modérée, puis on réduit progressivement le volume en augmentant l’intensité à l’approche des compétitions. [^2][^4]
 Les blocs de travail se succèdent de façon relativement ordonnée : par exemple 4 à 8 semaines centrées sur l’endurance de base, puis 4 à 6 semaines plus orientées seuil/VO2max, puis une phase de compétition où l’on entretient les qualités et une phase de transition plus facile. [^1][^3]
 Des modèles alternatifs (inversé, par blocs, ondulatoire) changent surtout la manière de répartir volume et intensité dans le temps, mais conservent le principe de blocs ciblés (par exemple bloc force, puis bloc puissance, puis bloc spécifique). [^5][^6][^3]
+
+**Comparaison rapide des modèles :**
+
+- **Linéaire (Matveyev)** : Volume élevé → baisse du volume + hausse de l'intensité. Idéal pour un objectif unique dans la saison (un marathon, un triathlon). Simple à planifier mais peu flexible si le calendrier est chargé.
+- **Par blocs (Issurin)** : Blocs de 2-4 semaines hyper-spécialisés (ex. bloc VO2max, bloc seuil, bloc spécifique). Très efficace pour les athlètes confirmés qui ont déjà une bonne base aérobie. Permet de concentrer la charge sur une qualité sans perdre les autres (effets résiduels).
+- **Ondulatoire / non-linéaire** : Variation fréquente (hebdomadaire) du volume et de l'intensité. Très flexible, s'adapte bien aux contraintes des amateurs (travail, famille) et aux longues saisons.
+
+**Quand utiliser quel modèle ?** Si tu prépares un seul gros objectif dans l'année, le modèle linéaire est suffisant et facile à suivre. Si tu enchaînes les compétitions ou si tu as déjà 2-3 ans de pratique structurée, le modèle par blocs ou ondulatoire devient plus intéressant pour continuer à progresser sans te brûler. Pour les amateurs avec un emploi du temps chargé, le modèle ondulatoire est souvent le plus réaliste car il permet de « pousser » les semaines où tu as du temps et de lever le pied quand la vie prend le dessus.
+
+**Exemple pratique (blocs) :** Un cycliste préparant une cyclosportive en juin pourrait organiser : janvier-février = bloc endurance + force (4 semaines charge / 1 semaine allégée), mars = bloc seuil/Sweet Spot (3 semaines charge / 1 allégée), avril = bloc VO2max + PMA (3 semaines / 1 allégée), mai = bloc spécifique + affûtage progressif, juin = pic de forme pour la course.
 
 #### Couche 3 (expert)
 
@@ -30,7 +46,11 @@ Les modèles modernes combinent souvent plusieurs logiques : distribution polari
 
 La charge d’entraînement correspond à « combien » et « à quelle intensité » on s’entraîne, sur une séance mais aussi sur la semaine et le mois. [^10]
 Si cette charge augmente trop vite, le risque de fatigue excessive et de blessure augmente ; si elle est trop faible ou trop irrégulière, la progression est limitée. [^11][^12]
-L’objectif pratique est donc de faire évoluer la charge progressivement, avec des semaines plus chargées et des semaines plus légères pour laisser au corps le temps de s’adapter. [^3]
+L'objectif pratique est donc de faire évoluer la charge progressivement, avec des semaines plus chargées et des semaines plus légères pour laisser au corps le temps de s'adapter. [^3]
+
+**Trop de charge = blessure :** Le corps fonctionne comme un compte en banque. Chaque séance d'entraînement est un retrait (tu « dépenses » de l'énergie, tu crées de la fatigue et des micro-dommages musculaires). Le sommeil, la nutrition et les jours de repos sont des dépôts (tu « recharges » le compte). Si tu retires plus que tu ne déposes, le compte passe dans le rouge : fatigue chronique, baisse de motivation, douleurs persistantes, puis blessure. La règle d'or est de garder le solde positif : pour chaque semaine de charge, assure-toi d'avoir assez de « dépôts » (sommeil ≥7h, alimentation suffisante, au moins 1-2 jours de repos ou très légers par semaine). [^11][^12]
+
+**Signes d'alerte à surveiller :** Fatigue matinale qui ne passe pas après l'échauffement, baisse de motivation pour des séances que tu aimais, irritabilité, sommeil agité, douleurs qui persistent plus de 48h, fréquence cardiaque au repos plus élevée que d'habitude (+5-10 bpm). Si tu coches 2-3 de ces signes pendant plusieurs jours, c'est le moment de lever le pied : 2-3 jours allégés ou un repos complet peuvent éviter des semaines de galère. [^11]
 
 #### Couche 2 (intermédiaire)
 

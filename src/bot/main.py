@@ -8,7 +8,7 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 
 from src.utils.config import settings
-from src.bot.handlers import start, chat
+from src.bot.handlers import start, chat, feedback
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -24,6 +24,7 @@ async def main():
     # Handlers — l'ordre compte : /start en premier, puis fallback chat
     dp.include_router(start.router)
     dp.include_router(chat.router)
+    dp.include_router(feedback.router)
 
     logger.info("Bot démarré, polling...")
     await dp.start_polling(bot)

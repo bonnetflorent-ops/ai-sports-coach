@@ -1,4 +1,4 @@
-# Récupération et Adaptation Physiologique pour Athlètes de Haut Niveau
+# Récupération & adaptation
 
 ## 1. Concepts Fondamentaux (Modèle à 3 Couches)
 
@@ -24,19 +24,13 @@ La littérature récente souligne que de nombreux processus de maintenance (prot
 ### 1.2 Nutrition de récupération
 
 #### Couche 1 (Débutant)
-Après l’entraînement, la « batterie énergie » (glycogène) est entamée et des micro‑dommages musculaires apparaissent, que l’alimentation aide à réparer.[^10][^11] Consommer des glucides (pour recharger le réservoir) et des protéines (pour reconstruire les briques musculaires) dans les heures qui suivent l’effort permet au corps de préparer la prochaine séance dans de meilleures conditions.[^10][^11]
-
-L’idée n’est pas de « manger plus » en permanence, mais de « manger mieux » autour de l’entraînement : boire, apporter des glucides de qualité et une source de protéines complètes aide la batterie à se recharger plus vite et plus complètement.[^10] Un athlète qui saute systématiquement ces apports post‑effort laisse sa batterie sous‑chargée, ce qui, répété sur plusieurs jours, augmente la fatigue, le risque de blessure et les signes de surmenage.[^10][^12]
+> **Voir le domaine [Nutrition sportive](#) pour le détail complet.** En résumé : après l'effort, consomme des glucides (pour recharger le glycogène) et des protéines (pour réparer les muscles) dans les 2 heures qui suivent. Exemple simple : un repas riz + poulet, ou un smoothie banane-lait-yaourt. L'essentiel est la régularité sur la journée — le mythe de la « fenêtre de 30 minutes » est exagéré : ce qui compte, c'est le total journalier et la qualité des apports, pas la minute près.[^10]
 
 #### Couche 2 (Intermédiaire)
-Les recommandations contemporaines suggèrent, pour les sports d’endurance ou les sports à forte composante glycogénique, un apport de glucides sur la journée de l’ordre de 5–8 g/kg/j en phase de charge modérée, et jusqu’à 8–12 g/kg/j en préparation de compétitions ou de blocs intensifs.[^10] En récupération immédiate, lorsque l’objectif est une resynthèse rapide du glycogène (<4 h avant la prochaine sollicitation), des apports d’environ 1,0–1,2 g de glucides/kg/h, éventuellement répartis en prises fractionnées, sont recommandés, avec un index glycémique élevé pour maximiser la vitesse de resynthèse.[^10][^11]
-
-L’apport protéique quotidien optimal pour les athlètes se situe généralement entre 1,2 et 2,0 g/kg/j, avec une distribution homogène (20–40 g de protéines riches en acides aminés essentiels toutes les ~3 heures) pour soutenir la synthèse protéique musculaire.[^10] En post‑effort, l’association de 0,2–0,4 g de protéines/kg à 0,8–1,0 g de glucides/kg peut améliorer la resynthèse du glycogène lorsque l’apport glucidique isolé est sous‑optimal, tout en stimulant la réparation musculaire.[^10][^11]
+> Pour les recommandations chiffrées (g/kg/j, distribution des prises, timing pré/per/post effort), consulte les concepts **nutrition/glucides-timing** et **nutrition/proteines-besoins** dans le domaine Nutrition sportive. En bref : apport glucidique post-effort de 1,0–1,2 g/kg si la séance suivante est dans <4h, protéines ~0,2–0,4 g/kg en post-effort, distribution de 20–40 g de protéines de qualité toutes les ~3h sur la journée pour maximiser la synthèse protéique musculaire.[^10][^11]
 
 #### Couche 3 (Expert)
-Le concept de « fenêtre anabolique de 30 minutes » est largement nuancé par les données récentes : la synthèse protéique musculaire reste augmentée plusieurs heures après l’exercice (au moins 24–48 h selon le type de séance), et l’effet de timing précis est secondaire tant que l’apport total journalier et la distribution sont adéquats.[^10][^13] Toutefois, lorsque les intervalles entre séances sont très courts (<8 h), un apport précoce de glucides (1,0–1,2 g/kg/h) et de protéines permet d’optimiser la cinétique de resynthèse du glycogène et la disponibilité d’acides aminés, ce qui est pertinent pour les athlètes multi‑sessions/jour.[^10][^11]
-
-Les méta‑analyses sur la co‑ingestion glucides‑protéines montrent que l’ajout de protéines à une dose glucidique modérée peut accélérer la resynthèse du glycogène et réduire les marqueurs de dommages musculaires (CK), mais que lorsque l’apport glucidique est déjà élevé (>1,2 g/kg/h), l’effet additif des protéines sur la vitesse de resynthèse du glycogène devient marginal et relève davantage de l’optimisation de la réparation tissulaire.[^11][^13] La période post‑effort est également propice à l’ingestion de micronutriments et d’antioxydants via des aliments complets, mais une supplémentation antioxydante agressive (doses élevées de vitamines C/E) peut théoriquement atténuer certains signaux d’adaptation, ce qui justifie une prudence chez les athlètes visant des adaptations maximales.[^10]
+> Pour les mécanismes détaillés — co-ingestion glucides-protéines et cinétique de resynthèse du glycogène, fenêtre métabolique et synthèse protéique musculaire (MPS), supplémentation antioxydante et interférence avec les adaptations, stratégies « train low » et périodisation nutritionnelle — le domaine **Nutrition sportive** est la référence. Consulte en particulier **nutrition/glucides-timing**, **nutrition/proteines-besoins**, et **nutrition/periodisation-nutritionnelle**. La récupération nutritionnelle ne peut pas être pensée isolément : elle s'intègre dans une stratégie nutritionnelle périodisée globale.[^10][^11][^13]
 
 ***
 

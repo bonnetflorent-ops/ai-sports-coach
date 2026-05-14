@@ -1,4 +1,6 @@
-## 1. Concepts fondamentaux (modèle à 3 couches)
+# Blessures & prévention
+
+## 1. Concepts Fondamentaux (Modèle à 3 Couches)
 
 ### 1.1 Cyclisme
 
