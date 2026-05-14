@@ -1,34 +1,44 @@
-# AI Sports Coach 🏃‍♂️🚴‍♀️
+# AI Sports Coach 🏃‍♂️
 
-> Assistant d'entraînement IA conversationnel — le premier coach dans ta poche qui te parle vraiment.
-
-## Vision
-
-Remplacer les coachs sportifs humains (100€+/mois) par une IA de qualité professionnelle à 15-20€/mois. Pas juste un générateur de plans — un assistant qui dialogue, comprend ton contexte, adapte en temps réel.
-
-## Pourquoi ça va marcher
-
-**Aucun concurrent n'a de vrai chat IA.** Freeletics, Runna, JOIN, FizzUp génèrent des programmes. Aucun ne te dit "J'ai vu que t'as mal dormi, on adapte ta séance du jour".
+Assistant d'entraînement IA conversationnel sur Telegram.
 
 ## Stack
+- **Bot** : aiogram 3 (Telegram)
+- **LLM** : DeepSeek V4 via OpenRouter (pipeline 2 étages)
+- **Base** : Supabase (PostgreSQL + pgvector)
+- **Déploiement** : Docker
 
-| Composant | Technologie |
-|-----------|-------------|
-| Distribution | Telegram (bot unique multi-tenant) |
-| LLM | DeepSeek V4 (via OpenRouter) |
-| Framework bot | aiogram 3.x |
-| API/Backend | FastAPI |
-| Base de données | Supabase (PostgreSQL + pgvector) |
-| Déploiement | Docker sur VPS Hostinger |
+## Démarrage rapide
 
-## Documentation
+```bash
+# 1. Cloner
+git clone <repo-url>
+cd ai-sports-coach
 
-- [📋 Plan projet](plan.md) — Vision, fonctionnalités, roadmap
-- [🏗️ Architecture technique](docs/architecture.md) — Stack, multi-tenant, schéma DB, flux
-- [🧠 Coaching](docs/coaching.md) — Prompt système, safety, qualité, onboarding
-- [📚 Base de connaissances](docs/base-connaissances.md) — RAG, sources scientifiques, structure
-- [🔍 Analyse concurrentielle](docs/concurrents.md) — Marché, concurrents, SWOT
+# 2. Configurer
+cp .env.example .env
+# Éditer .env avec les vraies clés
 
-## Statut
+# 3. Lancer
+pip install .
+python -m src.bot.main
 
-🚧 **Phase : Documentation & prototypage** — MVP en développement.
+# Ou via Docker
+docker compose up -d --build
+```
+
+## Architecture
+
+Voir `docs/architecture.md` pour l'architecture cible.
+Voir `knowledge/index.yaml` pour l'index de la base de connaissances.
+
+## Tests
+
+```bash
+pip install ".[dev]"
+pytest tests/ -v
+```
+
+## Licence
+
+Propriétaire — Tous droits réservés.
