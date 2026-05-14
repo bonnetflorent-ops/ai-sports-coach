@@ -242,6 +242,45 @@ Dérive cardiovasculaire (cardiovascular drift) :
 
 ***
 
+### 1.5 Système cardiovasculaire : cœur, débit, retour veineux
+
+#### Couche 1 (Débutant)
+Le cœur est la pompe qui envoie le sang chargé d'oxygène vers les muscles. Plus tu t'entraînes, plus cette pompe devient efficace : elle éjecte plus de sang à chaque battement, ce qui permet au cœur de battre plus lentement au repos. Imagine une pompe qui, avec l'entraînement, augmente le volume d'eau qu'elle déplace à chaque coup de piston — elle travaille moins vite mais plus puissamment. Une fréquence cardiaque de repos basse (50-60 battements par minute) est un signe classique de bonne adaptation chez le sportif d'endurance.
+
+#### Couche 2 (Intermédiaire)
+Le débit cardiaque (Qc) est le produit de la fréquence cardiaque (FC) par le volume d'éjection systolique (VES) : Qc = FC × VES. Les adaptations cardiovasculaires à l'entraînement d'endurance incluent : hypertrophie ventriculaire gauche de type excentrique (augmentation de la cavité, pas de l'épaisseur de la paroi), augmentation du volume plasmatique de 10 à 15%, et capillarisation musculaire accrue (densité capillaire multipliée par 1,5 à 2). La bradycardie du sportif (FC repos entre 35 et 50 bpm) est une adaptation normale et non pathologique. Le retour veineux est amélioré par deux pompes naturelles : la pompe musculaire (contractions des muscles qui compriment les veines) et la pompe respiratoire (variations de pression thoracique lors de l'inspiration).
+
+#### Couche 3 (Expert)
+L'équation de Fick régit le transport d'oxygène : VO₂ = Qc × différence artério-veineuse en O₂ (a-v̄O₂). Chez le sédentaire, le Qc max atteint environ 20 L/min, contre 35 à 40 L/min chez l'athlète d'élite. Le volume d'éjection systolique peut doubler (de 70 mL à 140 mL) grâce au mécanisme de Frank-Starling (augmentation du retour veineux → étirement des cardiomyocytes → contraction plus puissante) et à l'amélioration de la compliance ventriculaire. La précharge (déterminée par le retour veineux et la volémie) et la postcharge (résistances périphériques) sont toutes deux modulées par l'entraînement. Il est important de distinguer l'hypertrophie excentrique, caractéristique de l'endurance (augmentation du diamètre cavitaire), de l'hypertrophie concentrique, typique de la force (épaississement pariétal).
+
+***
+
+### 1.6 Fatigue : centrale vs périphérique
+
+#### Couche 1 (Débutant)
+La fatigue a deux origines distinctes. La fatigue périphérique vient directement des muscles : accumulation de déchets métaboliques, manque de carburant disponible. La fatigue centrale, elle, vient du cerveau qui agit comme un « gouverneur » : il réduit volontairement l'intensité de la commande nerveuse pour protéger l'organisme d'un effort excessif. Un sommeil de qualité répare les deux types de fatigue. Quand tu te sens vidé mentalement mais que tes jambes répondent encore, c'est plutôt de la fatigue centrale. Quand tes jambes brûlent mais que tu as envie de continuer, c'est plutôt périphérique.
+
+#### Couche 2 (Intermédiaire)
+La fatigue périphérique implique plusieurs mécanismes : accumulation d'ions H⁺ et de phosphates inorganiques (Pi) qui inhibent le couplage actine-myosine, déplétion du glycogène musculaire, micro-déchirures des sarcomères (dommages structuraux), et stress oxydatif. La fatigue centrale se caractérise par une baisse de la commande motrice volontaire, une modification du ratio sérotonine/dopamine (augmentation de la 5-HT, diminution de la DA), et correspond à la théorie du « gouverneur central » de Noakes : le cerveau anticipe et limite l'effort avant qu'un dommage irréversible ne survienne. La récupération suit des cinétiques différentes : la fatigue périphérique se résorbe en 24 à 72 heures, tandis que la fatigue centrale (24-48h) peut s'accumuler si les périodes de repos sont insuffisantes.
+
+#### Couche 3 (Expert)
+Le modèle psychobiologique de Marcora postule que la perception de l'effort (RPE) est le déterminant ultime de l'arrêt, cette perception étant modulée par des facteurs psychologiques comme la motivation et la monotonie de la tâche. Le test de Twitch Interpolation (combinaison de stimulation magnétique transcrânienne et de stimulation du nerf moteur périphérique) permet de quantifier objectivement la part d'activation volontaire (centrale) versus la part périphérique dans la production de force. Les cytokines pro-inflammatoires (IL-6, TNF-α) libérées par le muscle en contraction prolongée agissent sur le système nerveux central via le nerf vague, constituant une voie neuro-immune de signalisation de la fatigue. Le sommeil lent profond (stade N3) est crucial pour la restauration centrale, notamment via la clairance de l'adénosine et la restauration de la sensibilité dopaminergique.
+
+***
+
+### 1.7 Hormones et entraînement
+
+#### Couche 1 (Débutant)
+L'entraînement est un stress positif qui déclenche la libération de plusieurs hormones. Le cortisol est l'hormone du stress : utile à dose modérée, mais en excès il provoque fatigue chronique et baisse des défenses immunitaires. La testostérone favorise la construction et la réparation musculaire. L'hormone de croissance (GH) est libérée principalement pendant le sommeil profond et participe à la réparation des tissus. L'équilibre entre ces différentes hormones détermine si tu progresses ou si tu t'épuises. Un sommeil suffisant et une alimentation adéquate sont les deux piliers qui maintiennent cet équilibre hormonal.
+
+#### Couche 2 (Intermédiaire)
+La réponse hormonale aiguë à l'exercice : le cortisol augmente proportionnellement à la durée et à l'intensité (pic 30 à 60 min après un exercice intense), la GH augmente (le pic nocturne est amplifié par l'exercice intense réalisé en journée), et les catécholamines (adrénaline, noradrénaline) augmentent pour mobiliser le glycogène et les lipides. La réponse chronique est évaluée par le ratio Testostérone/Cortisol (T/C), utilisé comme marqueur de l'équilibre anabolisme/catabolisme. Une baisse de plus de 30% du T/C par rapport à la valeur basale indique un état de non-récupération. Un cortisol chroniquement élevé entraîne immunosuppression, perte de masse musculaire et résistance à l'insuline. Pour les athlètes à haut volume d'entraînement, un bilan sanguin à jeun le matin, 1 fois tous les 3 à 6 mois, permet un suivi utile.
+
+#### Couche 3 (Expert)
+L'axe hypothalamo-hypophyso-surrénalien (HHS) est activé par l'exercice : l'IL-6 libérée par le muscle stimule la CRH hypothalamique, qui déclenche la sécrétion d'ACTH hypophysaire, aboutissant à la libération de cortisol par les glandes surrénales. Le rétrocontrôle négatif normal (cortisol élevé → inhibition de CRH/ACTH) peut être altéré en situation de surentraînement. L'axe gonadotrope est également impacté : la testostérone libre (non liée à la SHBG) est la forme biologiquement active ; la SHBG peut augmenter sous l'effet du cortisol, réduisant la fraction de testostérone biodisponible. La GH atteint son pic principal pendant le sommeil lent profond (stade N3) et stimule la lipolyse ainsi que la synthèse protéique via l'IGF-1 hépatique. Le syndrome de surentraînement (OTS) présente un tableau hormonal caractéristique : cortisol élevé ou paradoxalement bas (épuisement surrénalien), testostérone basse, ratio T/C effondré, GH normale ou basse.
+
+***
+
 ## 2. Méthodologies & Chercheurs de Référence
 
 ### 2.1 Modèles et cadres conceptuels majeurs

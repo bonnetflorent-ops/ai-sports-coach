@@ -25,16 +25,70 @@
 #   psychologie → Psychologie & mental
 # =============================================================================
 
-version: "1.0"
-generated: "2026-05-12"
-total_concepts: 30
-total_domains: 7
+version: "2.0"
+generated: "2026-05-14"
+total_concepts: 53
+total_domains: 12
 
 # =============================================================================
 # MAPPING DES INTENTIONS UTILISATEUR → CONCEPTS
 # Utilisé en fallback si le LLM classifieur échoue
 # =============================================================================
 intent_rules:
+  echauffement_question:
+    description: "L'utilisateur pose une question sur l'échauffement"
+    concepts:
+      - echauffement/principes-generaux
+      - echauffement/routines-par-sport
+    priority: medium
+
+  chaleur_canicule:
+    description: "L'utilisateur s'interroge sur l'entraînement par temps chaud"
+    concepts:
+      - environnement/chaleur
+      - nutrition/hydratation-electrolytes
+    priority: high
+
+  altitude_stage:
+    description: "Questions sur l'entraînement en altitude"
+    concepts:
+      - environnement/altitude
+      - physiologie/vo2max-seuils
+    priority: medium
+
+  materiel_question:
+    description: "Questions sur le matériel d'entraînement"
+    concepts:
+      - materiel/capteurs-de-puissance
+      - materiel/cardio-gps-montres
+    priority: low
+
+  femme_athlete:
+    description: "Questions spécifiques aux femmes athlètes"
+    concepts:
+      - populations/femmes-athletes
+    priority: high
+
+  senior_50_plus:
+    description: "Questions d'un sportif de plus de 50 ans"
+    concepts:
+      - populations/seniors-50-plus
+      - physiologie/adaptations-entrainement
+    priority: high
+
+  reprise_sport:
+    description: "L'utilisateur reprend le sport après une longue pause"
+    concepts:
+      - populations/reprise-apres-pause
+      - seances/endurance-fondamentale
+    priority: high
+
+  renforcement_musculation:
+    description: "Questions sur le renforcement musculaire pour l'endurance"
+    concepts:
+      - entrainement-croise/renforcement-endurance
+      - seances/travail-neuromusculaire
+    priority: medium
   fatigue_surentrainement:
     description: "L'utilisateur se sent fatigué, épuisé, pas en forme"
     concepts:
@@ -1071,6 +1125,426 @@ domains:
           - "physiologie/adaptations-entrainement"
         applies_when: "plateau | injury-recovery | motivation"
 
+  # ---------------------------------------------------------------------------
+  # DOMAINE 8: ÉCHAUFFEMENT & RETOUR AU CALME
+  # Fichier: echauffement-retour-au-calme.md (77 lignes)
+  # ---------------------------------------------------------------------------
+  echauffement:
+    name: "Échauffement & Retour au calme"
+    file: "echauffement-retour-au-calme.md"
+    total_lines: 77
+    description: "Pourquoi et comment s'échauffer, routines par sport, étirements et retour au calme"
+    concepts:
+
+      - id: "echauffement/principes-generaux"
+        name: "Pourquoi s'échauffer : principes physiologiques"
+        lines: {layer1: "7-10", layer2: "11-14", layer3: "15-18"}
+        keywords:
+          - échauffement
+          - warm-up
+          - préparation
+          - température musculaire
+          - PAP
+          - progressif
+          - avant séance
+          - routine
+          - activation
+        triggers:
+          - "Comment bien s'échauffer ?"
+          - "Pourquoi s'échauffer ?"
+          - "Combien de temps d'échauffement ?"
+          - "Est-ce que l'échauffement est vraiment utile ?"
+        connects_to:
+          - "echauffement/routines-par-sport"
+          - "seances/endurance-fondamentale"
+        applies_when: "pre-workout | general | beginner"
+
+      - id: "echauffement/routines-par-sport"
+        name: "Routines d'échauffement par sport"
+        lines: {layer1: "23-26", layer2: "27-30", layer3: "31-34"}
+        keywords:
+          - routine échauffement
+          - vélo
+          - course
+          - natation
+          - gammes
+          - accélérations
+          - footing
+          - spécifique sport
+        triggers:
+          - "Quel échauffement pour le vélo ?"
+          - "Comment m'échauffer avant de courir ?"
+          - "Routine échauffement natation"
+        connects_to:
+          - "echauffement/principes-generaux"
+        applies_when: "pre-workout"
+
+      - id: "echauffement/etirements-et-mobilite"
+        name: "Étirements et mobilité : quand, comment, pourquoi"
+        lines: {layer1: "39-42", layer2: "43-46", layer3: "47-50"}
+        keywords:
+          - étirements
+          - stretching
+          - mobilité
+          - dynamique
+          - statique
+          - foam roller
+          - PNF
+          - amplitude
+        triggers:
+          - "Faut-il s'étirer avant ou après le sport ?"
+          - "Étirements dynamiques ou statiques ?"
+          - "Le foam roller c'est utile ?"
+          - "Comment gagner en souplesse ?"
+        connects_to:
+          - "echauffement/principes-generaux"
+        applies_when: "pre-workout | post-workout | recovery"
+
+      - id: "echauffement/retour-au-calme"
+        name: "Retour au calme : pourquoi et comment"
+        lines: {layer1: "55-58", layer2: "59-62", layer3: "63-66"}
+        keywords:
+          - retour au calme
+          - cool down
+          - récupération active
+          - fin de séance
+          - étirements post
+          - drainage
+        triggers:
+          - "Faut-il faire un retour au calme ?"
+          - "Comment bien terminer une séance ?"
+          - "Pourquoi ne pas s'arrêter brutalement ?"
+        connects_to:
+          - "recuperation/surcompensation-surentrainement"
+          - "echauffement/etirements-et-mobilite"
+        applies_when: "post-workout | daily"
+
+  # ---------------------------------------------------------------------------
+  # DOMAINE 9: ENVIRONNEMENT & CONDITIONS
+  # Fichier: environnement-et-conditions.md (77 lignes)
+  # ---------------------------------------------------------------------------
+  environnement:
+    name: "Environnement & Conditions"
+    file: "environnement-et-conditions.md"
+    total_lines: 77
+    description: "Chaleur, froid, altitude, pluie et vent — adapter l'entraînement"
+    concepts:
+
+      - id: "environnement/chaleur"
+        name: "Entraînement par forte chaleur"
+        lines: {layer1: "7-10", layer2: "11-14", layer3: "15-18"}
+        keywords:
+          - chaleur
+          - canicule
+          - été
+          - acclimatation
+          - déshydratation
+          - coup de chaleur
+          - transpiration
+        triggers:
+          - "Comment s'entraîner quand il fait chaud ?"
+          - "Acclimatation à la chaleur"
+          - "Hydratation canicule"
+        connects_to:
+          - "nutrition/hydratation-electrolytes"
+        applies_when: "hot-weather | summer"
+
+      - id: "environnement/froid"
+        name: "Entraînement par grand froid"
+        lines: {layer1: "23-26", layer2: "27-30", layer3: "31-34"}
+        keywords:
+          - froid
+          - hiver
+          - hypothermie
+          - windchill
+          - équipement hiver
+        triggers:
+          - "Courir par -10°C ?"
+          - "S'entraîner en hiver"
+          - "Équipement vélo hiver"
+        connects_to:
+          - "materiel/choisir-son-equipement"
+        applies_when: "cold-weather | winter"
+
+      - id: "environnement/altitude"
+        name: "Altitude et hypoxie"
+        lines: {layer1: "39-42", layer2: "43-46", layer3: "47-50"}
+        keywords:
+          - altitude
+          - hypoxie
+          - stage
+          - EPO
+          - LHTL
+          - live high train low
+        triggers:
+          - "Stage en altitude"
+          - "S'entraîner en montagne"
+          - "Combien de temps en altitude ?"
+        connects_to:
+          - "physiologie/vo2max-seuils"
+        applies_when: "altitude | pre-competition"
+
+      - id: "environnement/pluie-vent-securite"
+        name: "Pluie, vent et sécurité météo"
+        lines: {layer1: "55-58", layer2: "59-62", layer3: "63-66"}
+        keywords:
+          - pluie
+          - vent
+          - sécurité
+          - visibilité
+          - aérodynamisme
+          - météo
+        triggers:
+          - "Sortir sous la pluie ?"
+          - "Vent fort vélo"
+          - "Sécurité météo vélo"
+        connects_to:
+          - "environnement/froid"
+        applies_when: "bad-weather"
+
+  # ---------------------------------------------------------------------------
+  # DOMAINE 10: MATÉRIEL & ÉQUIPEMENT
+  # Fichier: materiel-et-equipement.md (95 lignes)
+  # ---------------------------------------------------------------------------
+  materiel:
+    name: "Matériel & Équipement"
+    file: "materiel-et-equipement.md"
+    total_lines: 95
+    description: "Capteurs, montres, home-trainers et analyse de données"
+    concepts:
+
+      - id: "materiel/capteurs-de-puissance"
+        name: "Capteurs de puissance : comprendre et utiliser"
+        lines: {layer1: "7-10", layer2: "11-14", layer3: "15-18"}
+        keywords:
+          - capteur puissance
+          - wattmètre
+          - FTP
+          - watts
+          - Normalized Power
+          - SRM
+          - pédalier
+        triggers:
+          - "Quel capteur de puissance choisir ?"
+          - "Comment utiliser un wattmètre ?"
+          - "FTP comment le mesurer ?"
+        applies_when: "equipment | cycling"
+
+      - id: "materiel/cardio-gps-montres"
+        name: "Cardio, GPS et montres connectées"
+        lines: {layer1: "23-26", layer2: "27-30", layer3: "31-34"}
+        keywords:
+          - montre GPS
+          - cardiofréquencemètre
+          - Garmin
+          - ceinture cardio
+          - capteur optique
+        triggers:
+          - "Quelle montre GPS pour le sport ?"
+          - "Cardio poignet ou ceinture ?"
+        applies_when: "equipment"
+
+      - id: "materiel/home-trainers"
+        name: "Home-trainers et rouleaux"
+        lines: {layer1: "39-42", layer2: "43-46", layer3: "47-50"}
+        keywords:
+          - home-trainer
+          - rouleaux
+          - Zwift
+          - Wahoo
+          - Tacx
+          - intérieur
+        triggers:
+          - "Quel home-trainer acheter ?"
+          - "Rouleaux ou home-trainer ?"
+        applies_when: "equipment | indoor"
+
+      - id: "materiel/analyse-donnees-training"
+        name: "Analyser ses données d'entraînement"
+        lines: {layer1: "55-58", layer2: "59-62", layer3: "63-66"}
+        keywords:
+          - analyse données
+          - TrainingPeaks
+          - intervals.icu
+          - Strava
+          - PMC
+          - CTL
+          - découplage
+        triggers:
+          - "Comment analyser mes données ?"
+          - "PMC chart"
+          - "CTL ATL TSB"
+        applies_when: "analysis"
+
+      - id: "materiel/choisir-son-equipement"
+        name: "Choisir son équipement selon son budget"
+        lines: {layer1: "71-74", layer2: "75-78", layer3: "79-82"}
+        keywords:
+          - budget
+          - équipement
+          - acheter
+          - investissement
+        triggers:
+          - "Quel équipement pour débuter ?"
+          - "Priorités achat équipement sportif"
+        applies_when: "equipment"
+
+  # ---------------------------------------------------------------------------
+  # DOMAINE 11: POPULATIONS SPÉCIFIQUES
+  # Fichier: populations-specifiques.md (125 lignes)
+  # ---------------------------------------------------------------------------
+  populations:
+    name: "Populations spécifiques"
+    file: "populations-specifiques.md"
+    total_lines: 125
+    description: "Femmes, seniors, jeunes, reprise après pause, sport et surpoids"
+    concepts:
+
+      - id: "populations/femmes-athletes"
+        name: "Femmes athlètes : cycle menstruel, grossesse, ménopause"
+        lines: {layer1: "7-10", layer2: "11-16", layer3: "17-22"}
+        keywords:
+          - femme
+          - cycle menstruel
+          - règles
+          - grossesse
+          - post-partum
+          - ménopause
+          - RED-S
+        triggers:
+          - "Entraînement et règles"
+          - "Cycle menstruel performance"
+          - "Reprendre le sport après grossesse"
+        priority: critical
+        applies_when: "female-athlete | health"
+
+      - id: "populations/seniors-50-plus"
+        name: "Sportifs de 50 ans et plus"
+        lines: {layer1: "27-30", layer2: "31-36", layer3: "37-42"}
+        keywords:
+          - senior
+          - 50 ans
+          - sarcopénie
+          - âge
+          - vétéran
+          - récupération âge
+        triggers:
+          - "S'entraîner après 50 ans"
+          - "Sport et vieillissement"
+        priority: high
+        applies_when: "masters | senior"
+
+      - id: "populations/jeunes-athletes"
+        name: "Jeunes sportifs en croissance"
+        lines: {layer1: "47-50", layer2: "51-56", layer3: "57-62"}
+        keywords:
+          - jeune
+          - adolescent
+          - croissance
+          - enfant
+          - Osgood-Schlatter
+        triggers:
+          - "Mon enfant veut faire du sport"
+          - "Entraînement adolescent"
+        applies_when: "youth | junior"
+
+      - id: "populations/reprise-apres-pause"
+        name: "Reprise après une longue pause"
+        lines: {layer1: "67-72", layer2: "73-78", layer3: "79-84"}
+        keywords:
+          - reprise
+          - pause
+          - arrêt
+          - retour
+          - désentraînement
+          - mémoire musculaire
+        triggers:
+          - "Reprendre le sport après des années"
+          - "Je n'ai pas fait de sport depuis longtemps"
+        priority: high
+        applies_when: "comeback | detraining"
+
+      - id: "populations/surpoids-obesite"
+        name: "Sport et surpoids : approche bienveillante"
+        lines: {layer1: "89-94", layer2: "95-100", layer3: "101-106"}
+        keywords:
+          - surpoids
+          - obésité
+          - poids
+          - articulations
+          - bienveillance
+        triggers:
+          - "Quel sport quand on est en surpoids ?"
+          - "Perdre du poids par le sport"
+        applies_when: "weight-management | beginner"
+
+  # ---------------------------------------------------------------------------
+  # DOMAINE 12: ENTRAÎNEMENT CROISÉ & COMPLÉMENTAIRE
+  # Fichier: entrainement-croise.md (79 lignes)
+  # ---------------------------------------------------------------------------
+  entrainement-croise:
+    name: "Entraînement croisé & Complémentaire"
+    file: "entrainement-croise.md"
+    total_lines: 79
+    description: "Renforcement, natation, yoga/Pilates et combinaison de sports"
+    concepts:
+
+      - id: "entrainement-croise/renforcement-endurance"
+        name: "Renforcement musculaire pour l'endurance"
+        lines: {layer1: "7-10", layer2: "11-14", layer3: "15-18"}
+        keywords:
+          - renforcement
+          - musculation
+          - force
+          - gainage
+          - squat
+          - économie de course
+        triggers:
+          - "Faut-il faire de la musculation pour le vélo ?"
+          - "Renforcement pour coureurs"
+        applies_when: "strength | cross-training"
+
+      - id: "entrainement-croise/natation-cyclistes-coureurs"
+        name: "Natation pour cyclistes et coureurs"
+        lines: {layer1: "23-26", layer2: "27-30", layer3: "31-34"}
+        keywords:
+          - natation
+          - piscine
+          - pull-buoy
+          - récupération active
+        triggers:
+          - "La natation c'est bien pour les cyclistes ?"
+          - "Nager en complément de la course"
+        applies_when: "cross-training | recovery"
+
+      - id: "entrainement-croise/yoga-pilates"
+        name: "Yoga, Pilates et mobilité pour le sportif"
+        lines: {layer1: "39-42", layer2: "43-46", layer3: "47-50"}
+        keywords:
+          - yoga
+          - pilates
+          - mobilité
+          - souplesse
+          - gainage profond
+        triggers:
+          - "Le yoga c'est utile pour le sport ?"
+          - "Pilates pour coureurs"
+        applies_when: "mobility | recovery"
+
+      - id: "entrainement-croise/brick-triathlon"
+        name: "Combiner plusieurs sports : le brick workout"
+        lines: {layer1: "55-58", layer2: "59-62", layer3: "63-66"}
+        keywords:
+          - brick
+          - triathlon
+          - enchaînement
+          - vélo-course
+          - transition
+        triggers:
+          - "Comment enchaîner vélo et course ?"
+          - "Brick workout triathlon"
+        applies_when: "triathlon | multi-sport"
+
 # =============================================================================
 # MÉTADONNÉES POUR LE SÉLECTEUR LLM
 # =============================================================================
@@ -1107,3 +1581,4 @@ selector_config:
         - "planification/structure-temporelle"
         - "planification/gestion-charge"
       description: "Quand l'utilisateur veut organiser son entraînement"
+

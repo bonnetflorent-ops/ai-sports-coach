@@ -34,9 +34,15 @@ Des modèles alternatifs (inversé, par blocs, ondulatoire) changent surtout la 
 
 #### Couche 3 (expert)
 
-Au niveau expert, la périodisation devient non linéaire : les charges hebdomadaires de volume et d’intensité fluctuent de manière planifiée plutôt que de suivre une simple ligne droite de « volume élevé → intensité élevée ». [^3][^7]
-La périodisation par blocs (Issurin) repose sur la concentration de la charge sur un nombre limité de qualités dans chaque mésocycle (bloc de développement, bloc de compétition, bloc de restauration) et sur l’exploitation d’effets résiduels d’entraînement (par exemple, les gains d’endurance de base perdurent plusieurs semaines pendant qu’on focalise ensuite sur la puissance). [^5][^6]
-Les modèles modernes combinent souvent plusieurs logiques : distribution polarisée de l’intensité (≈80% facile / 20% dur), structures en blocs pour les qualités clés, et micro-périodisation ondulatoire d’une semaine à l’autre, afin d’optimiser le ratio adaptation/fatigue tout en répondant aux contraintes de calendrier. [^8][^3][^9]
+Au niveau expert, la périodisation devient non linéaire : les charges hebdomadaires de volume et d'intensité fluctuent de manière planifiée plutôt que de suivre une simple ligne droite de « volume élevé → intensité élevée ». [^3][^7]
+La périodisation par blocs (Issurin) repose sur la concentration de la charge sur un nombre limité de qualités dans chaque mésocycle (bloc de développement, bloc de compétition, bloc de restauration) et sur l'exploitation d'effets résiduels d'entraînement (par exemple, les gains d'endurance de base perdurent plusieurs semaines pendant qu'on focalise ensuite sur la puissance). [^5][^6]
+Les modèles modernes combinent souvent plusieurs logiques : distribution polarisée de l'intensité (≈80% facile / 20% dur), structures en blocs pour les qualités clés, et micro-périodisation ondulatoire d'une semaine à l'autre, afin d'optimiser le ratio adaptation/fatigue tout en répondant aux contraintes de calendrier. [^8][^3][^9]
+
+**Rémanence des qualités et séquencement des blocs :** Les qualités ont des durées de vie différentes une fois développées. L'endurance aérobie de base persiste 30 ± 5 jours, la force maximale 30 ± 5 jours, la capacité anaérobie 15-25 jours, et la vitesse/puissance de pointe seulement 5-8 jours. Cette hiérarchie de rémanence dicte l'ordre des blocs : on place les qualités à courte rémanence (vitesse, puissance anaérobie) en fin de préparation, juste avant la compétition, tandis que les qualités durables (aérobie, force) sont construites plus tôt. [^5]
+
+**Application par sport :** En cyclisme, la périodisation par blocs peut suivre le schéma : accumulation (4 semaines endurance + force) → transmutation (3 semaines seuil/VO2max) → réalisation (2 semaines spécifique allure course + affûtage). En course à pied marathon, le macrocycle de 16-20 semaines typique : 4 semaines base (endurance fondamentale + renforcement) → 8 semaines build (introduction seuil puis VO2max) → 2 semaines pic (allure spécifique marathon) → 2 semaines taper. En triathlon, la périodisation doit gérer trois disciplines simultanément, souvent en priorisant la discipline la plus faible pendant les blocs de développement. [^3]
+
+**Erreur experte :** Vouloir tout développer simultanément. Un athlète peut progresser sur 2-3 qualités en même temps, pas 6. La périodisation par blocs résout ce problème en concentrant la charge, mais elle exige une excellente connaissance de ses propres temps de récupération et de rémanence — sous-estimer le temps nécessaire à la récupération entre blocs est l'erreur la plus fréquente chez les coachs qui débutent avec ce modèle. [^5][^6]
 
 ***
 
@@ -55,14 +61,23 @@ L'objectif pratique est donc de faire évoluer la charge progressivement, avec d
 #### Couche 2 (intermédiaire)
 
 Les modèles de charge utilisent souvent un score chiffré par séance, basé par exemple sur la durée et la fréquence cardiaque (TRIMP de Banister) ou sur la puissance normalisée et la relation à la FTP en cyclisme (TSS de Coggan). [^10][^13][^14]
-La charge hebdomadaire devient alors la somme de ces scores (par exemple total TSS de la semaine), ce qui permet de comparer les semaines entre elles et de suivre l’évolution de la charge au fil des mois. [^13]
-On distingue la charge aiguë (dernière semaine) de la charge chronique (4 à 6 dernières semaines), ce qui permet d’évaluer si l’on pousse momentanément plus fort que son niveau habituel ou non. [^13]
+La charge hebdomadaire devient alors la somme de ces scores (par exemple total TSS de la semaine), ce qui permet de comparer les semaines entre elles et de suivre l'évolution de la charge au fil des mois. [^13]
+On distingue la charge aiguë (dernière semaine) de la charge chronique (4 à 6 dernières semaines), ce qui permet d'évaluer si l'on pousse momentanément plus fort que son niveau habituel ou non. [^13]
+
+**Repères TSS par type de sortie (cyclisme) :** Une sortie très facile (récupération active, Z1) donne typiquement <100 TSS, une sortie d'endurance fondamentale (Z2, 1h30-2h) donne 100-150 TSS, une sortie modérée avec du tempo donne 150-200 TSS, une séance avec intervalles donne 200-250 TSS, et une sortie longue ou très intense dépasse souvent 250 TSS. Ces repères varient selon le niveau (FTP), mais ils aident à calibrer la charge hebdomadaire : un amateur sérieux peut viser 400-600 TSS/semaine, un élite 700-1000+ TSS/semaine. [^13][^17]
+
+**ACWR et zones de sécurité :** Le ratio charge aiguë/chronique (ACWR) compare la charge de la dernière semaine (aiguë) à la moyenne des 3-4 semaines précédentes (chronique). La zone de sécurité se situe entre 0,8 et 1,3 : en dessous de 0,8, la charge est probablement insuffisante pour progresser ; entre 0,8 et 1,3, c'est le « sweet spot » où le risque de blessure est minimal et la progression optimale ; entre 1,3 et 1,5, le risque de blessure augmente modérément ; au-dessus de 1,5, le risque de blessure est significativement accru. [^11][^12]
+Attention : ces seuils sont des repères statistiques, pas des lois absolues. Un athlète qui revient de maladie aura un ACWR artificiellement élevé même avec une charge modérée, car sa charge chronique a chuté. L'ACWR doit toujours être interprété dans le contexte. [^11][^18]
 
 #### Couche 3 (expert)
 
 Dans le modèle impulsion-réponse de Banister et dans ses dérivés utilisés en cyclisme, on modélise la performance comme la différence entre un effet positif à long terme (fitness) et un effet négatif à court terme (fatigue), tous deux issus de la même séquence de charges (TRIMP ou TSS). [^15][^16][^14]
-Les métriques CTL (Chronic Training Load, typiquement moyenne exponentielle sur 42 jours) et ATL (Acute Training Load, moyenne sur 7 jours) quantifient respectivement la « forme physique » et la « fatigue récente », et leur différence (TSB = CTL − ATL) sert d’indicateur de forme potentielle : un TSB très négatif reflète une forte fatigue, un TSB légèrement positif une bonne fraîcheur avec encore un socle de fitness. [^13][^17]
-Ces modèles permettent d’identifier des zones de risque ; ainsi, des travaux sur le ratio charge aiguë/charge chronique (ACWR) montrent qu’un ratio très élevé par rapport à la plage modérée augmente le risque de blessure, même si la qualité méthodologique de ces études reste hétérogène et les seuils exacts débattus. [^11][^12][^18]
+Les métriques CTL (Chronic Training Load, typiquement moyenne exponentielle sur 42 jours) et ATL (Acute Training Load, moyenne sur 7 jours) quantifient respectivement la « forme physique » et la « fatigue récente », et leur différence (TSB = CTL − ATL) sert d'indicateur de forme potentielle : un TSB très négatif reflète une forte fatigue, un TSB légèrement positif une bonne fraîcheur avec encore un socle de fitness. [^13][^17]
+Ces modèles permettent d'identifier des zones de risque ; ainsi, des travaux sur le ratio charge aiguë/charge chronique (ACWR) montrent qu'un ratio très élevé par rapport à la plage modérée augmente le risque de blessure, même si la qualité méthodologique de ces études reste hétérogène et les seuils exacts débattus. [^11][^12][^18]
+
+**Plages TSB typiques :** En phase de build (construction), on vise un TSB entre -10 et -30 : l'athlète accumule de la fatigue mais la CTL grimpe, ce qui est le signal recherché. En phase de maintien, TSB entre -5 et -15. À l'approche d'une compétition, on laisse le TSB remonter vers 0 puis positif (+5 à +15), signe que la fatigue se dissipe alors que la fitness reste élevée. Un TSB qui descend sous -30 de façon prolongée (>2 semaines) signale un risque de surmenage fonctionnel. Un TSB qui dépasse +25 indique probablement une perte de fitness (CTL en chute). [^13]
+
+**Limites du modèle ACWR :** Les critiques méthodologiques récentes soulignent plusieurs problèmes : 1) le choix de la période de charge chronique (3 semaines vs 4 semaines vs moyenne exponentielle) change les résultats ; 2) le ratio couple mathématiquement charge aiguë et chronique, ce qui crée des corrélations artificielles ; 3) le modèle ne capture pas la variabilité interindividuelle de tolérance à la charge. La tendance actuelle est d'utiliser l'ACWR comme un indicateur parmi d'autres (RPE, sommeil, humeur, HRV) dans un tableau de bord de suivi, jamais comme unique outil de décision. [^11][^18]
 
 ***
 
@@ -70,20 +85,37 @@ Ces modèles permettent d’identifier des zones de risque ; ainsi, des travaux 
 
 #### Couche 1 (débutant)
 
-On peut voir la saison comme une poupée russe : la séance est l’unité de base, la semaine (microcycle) regroupe plusieurs séances complémentaires, le mois ou bloc de quelques semaines (mésocycle) regroupe des semaines avec un objectif commun, et l’année (macrocycle) regroupe plusieurs blocs en vue d’une ou plusieurs compétitions importantes. [^2][^1]
-Cette structure aide simplement à répondre à la question : « que fais‑je cette semaine, dans ce mois, pour être prêt à telle date ? » plutôt que de s’entraîner au hasard. [^2]
+On peut voir la saison comme une poupée russe : la séance est l'unité de base, la semaine (microcycle) regroupe plusieurs séances complémentaires, le mois ou bloc de quelques semaines (mésocycle) regroupe des semaines avec un objectif commun, et l'année (macrocycle) regroupe plusieurs blocs en vue d'une ou plusieurs compétitions importantes. [^2][^1]
+Cette structure aide simplement à répondre à la question : « que fais‑je cette semaine, dans ce mois, pour être prêt à telle date ? » plutôt que de s'entraîner au hasard. [^2]
+
+**Exemple concret de microcycle débutant (course à pied) :** Une semaine type pour quelqu'un qui court 3 fois par semaine et prépare un 10 km : lundi repos, mardi 30-40 min endurance fondamentale (conversation possible), mercredi repos ou marche, jeudi 30 min endurance + 4 × 30 sec accélérations, vendredi repos, samedi 45-60 min sortie longue facile, dimanche repos. La règle simple : jamais deux séances difficiles consécutives, toujours 48h entre deux efforts intenses. [^3]
+
+**Piège classique :** Faire du « chrono » à chaque sortie. Beaucoup de débutants transforment chaque footing en contre-la-montre, ce qui empêche toute progression car le corps est constamment en mode survie plutôt qu'en mode adaptation. Mémorise cette règle : sur 3 séances par semaine, au moins 2 doivent être « faciles » (tu peux parler sans problème) et une seule vraiment stimulante. [^1]
 
 #### Couche 2 (intermédiaire)
 
-Le microcycle le plus courant chez l’amateur et le semi‑pro est hebdomadaire, car il s’aligne sur les contraintes travail/famille ; il comporte typiquement 1 à 3 séances clés (intensité, sorties longues, force) entourées de séances plus faciles ou de repos. [^3]
+Le microcycle le plus courant chez l'amateur et le semi‑pro est hebdomadaire, car il s'aligne sur les contraintes travail/famille ; il comporte typiquement 1 à 3 séances clés (intensité, sorties longues, force) entourées de séances plus faciles ou de repos. [^3]
 Un mésocycle dure généralement 3 à 6 semaines et suit souvent un schéma de charge progressive sur 2‑3 semaines puis une semaine allégée (par exemple 3:1 ou 2:1) pour favoriser la surcompensation et limiter la fatigue accumulée. [^1][^2]
 Le macrocycle, enfin, couvre une saison ou une année et articule plusieurs mésocycles : période de préparation générale, période spécifique, bloc de compétitions avec éventuellement plusieurs pics de forme, puis période de transition. [^2]
 
+**Schémas de charge/allègement selon le niveau :**
+- Débutant : 2:1 (2 semaines de progression + 1 semaine allégée à -20/30% du volume). Le corps ne tolère pas encore de longues périodes de charge.
+- Intermédiaire : 3:1 (3 semaines montée + 1 semaine allégée à -30/40%). C'est le ratio le plus classique et le plus polyvalent.
+- Avancé / élite : 4:1 voire 5:1 pour les athlètes très résilients, avec une semaine de décharge à -40/50%. [^1]
+
+**Types de microcycles selon l'objectif :** Microcycle de charge (volume/intensité en hausse, TSB négatif qui s'accentue), microcycle de maintien (charge stable, TSB qui se stabilise), microcycle d'allègement (volume réduit de 30-50%, intensité maintenue, TSB qui remonte), microcycle de pré-compétition (volume très réduit, intensité spécifique, séances courtes mais qualitatives), microcycle de récupération/transition (volume minimal, activité croisée, pas d'intensité). [^3]
+
+**Exemple concret d'un mésocycle 3:1 pour cyclisme :** Semaine 1 = 400 TSS (charge modérée), Semaine 2 = 480 TSS (+20%), Semaine 3 = 560 TSS (+17%), Semaine 4 (allégée) = 280 TSS (-50%). Ce schéma permet une progression nette de la CTL sur 3 semaines (environ +5-8 points) puis une consolidation sans perte de fitness pendant la semaine allégée. [^13]
+
 #### Couche 3 (expert)
 
-Au niveau expert, la durée des blocs et le placement des microcycles sont adaptés aux caractéristiques de la discipline (sports monodoses vs pluri‑compétitifs), du calendrier (championnats, tours, objectifs A/B/C) et du profil de l’athlète (temps de récupération, susceptibilité à la fatigue). [^5][^6]
-La notion d’effets résiduels est centrale : certaines qualités (force maximale, endurance de base) ont une rémanence de plusieurs semaines, alors que d’autres (vitesse, puissance anaérobie) s’estompent plus rapidement, ce qui impose une séquence rationnelle des blocs pour « empiler » les adaptations au bon moment. [^5][^6]
-La micro‑périodisation à l’intérieur des semaines utilise souvent des alternances fortes/faibles (jours d’intensité / jours faciles), des schémas ondulatoires, et une intégration fine des contraintes non sportives (déplacements, horaires, jet lag) afin de maximiser la qualité des séances clés. [^3][^7]
+Au niveau expert, la durée des blocs et le placement des microcycles sont adaptés aux caractéristiques de la discipline (sports monodoses vs pluri‑compétitifs), du calendrier (championnats, tours, objectifs A/B/C) et du profil de l'athlète (temps de récupération, susceptibilité à la fatigue). [^5][^6]
+La notion d'effets résiduels est centrale : certaines qualités (force maximale, endurance de base) ont une rémanence de plusieurs semaines, alors que d'autres (vitesse, puissance anaérobie) s'estompent plus rapidement, ce qui impose une séquence rationnelle des blocs pour « empiler » les adaptations au bon moment. [^5][^6]
+La micro‑périodisation à l'intérieur des semaines utilise souvent des alternances fortes/faibles (jours d'intensité / jours faciles), des schémas ondulatoires, et une intégration fine des contraintes non sportives (déplacements, horaires, jet lag) afin de maximiser la qualité des séances clés. [^3][^7]
+
+**Programmation des intensités dans le microcycle :** Les séances à forte charge neuromusculaire (sprints, force maximale, pliométrie) sont placées en début de microcycle, quand le système nerveux est frais (typiquement mardi si lundi = repos). Les séances de VO2max suivent (mercredi/jeudi), elles sont moins dépendantes de la fraîcheur neuromusculaire. Les séances de seuil peuvent être faites avec une fatigue modérée. La sortie longue est placée le week-end, souvent samedi ou dimanche, quand le volume horaire est disponible. Entre chaque séance intense, minimum 48h de repos ou d'endurance très facile. [^3]
+
+**Modèle des « jours clés » :** Dans une semaine de 5-6 séances, on identifie 2-3 séances « clés » (celles qui produisent le stimulus d'adaptation principal) et le reste sont des séances « de soutien » (endurance facile qui augmente le volume sans surcharge). Si une contrainte externe force à supprimer une séance, on supprime une séance de soutien, jamais une séance clé. Exemple : si mardi = VO2max (clé), jeudi = seuil (clé), dimanche = sortie longue (clé), alors les séances de mercredi, vendredi et samedi sont du soutien sacrifiable. [^3][^7]
 
 ***
 
@@ -91,20 +123,45 @@ La micro‑périodisation à l’intérieur des semaines utilise souvent des alt
 
 #### Couche 1 (débutant)
 
-Le tapering ou affûtage est la période de réduction de l’entraînement avant une course importante, pour arriver reposé(e) mais sans perdre la forme acquise. [^19][^20]
-Cela consiste à diminuer le volume des séances sur une à trois semaines tout en gardant un peu d’intensité, de manière à sentir les jambes fraîches le jour J sans être « rouillé ». [^19]
+Le tapering ou affûtage est la période de réduction de l'entraînement avant une course importante, pour arriver reposé(e) mais sans perdre la forme acquise. [^19][^20]
+Cela consiste à diminuer le volume des séances sur une à trois semaines tout en gardant un peu d'intensité, de manière à sentir les jambes fraîches le jour J sans être « rouillé ». [^19]
+
+**Métaphore :** Si tu prépares un gâteau, l'affûtage c'est le temps de repos au frigo avant de servir. Tu ne continues pas à mélanger jusqu'à la dernière seconde, sinon la texture est ratée. Tu arrêtes de « travailler » la pâte, tu la laisses prendre, et tu obtiens un résultat parfait. En entraînement, c'est pareil : les dernières semaines, tu réduis le travail pour laisser le corps « prendre » et exprimer tout le travail fait avant.
+
+**Durée d'affûtage selon l'épreuve :**
+- Épreuve courte (<1h, ex: 10 km, CLM court) : 7-10 jours de taper. Le volume baisse de 40-50%, l'intensité est maintenue avec des rappels courts et vifs.
+- Épreuve moyenne (1-3h, ex: semi-marathon, cyclosportive) : 10-14 jours. Volume -40 à -60%, maintien de quelques blocs à allure course.
+- Épreuve longue (>3h, ex: marathon, triathlon LD, granfondo) : 14-21 jours. Volume -50 à -70%, la dernière semaine très allégée. [^19][^22]
+
+**Erreur classique du débutant :** Courir/rouler plus fort la dernière semaine « pour se rassurer » ou au contraire tout arrêter « pour être frais ». Les deux sont des pièges : trop en faire empêche de récupérer, ne rien faire fait perdre les sensations. Le bon compromis : volume divisé par deux, mais garder 1-2 courtes accélérations à allure course pour entretenir les repères neuromusculaires. [^19]
 
 #### Couche 2 (intermédiaire)
 
-Les revues de Mujika et Padilla montrent qu’un taper efficace se caractérise par une réduction progressive et non linéaire du volume total d’entraînement, de l’ordre de 40 à 60% sur ≈2 semaines pour beaucoup de sports d’endurance, tout en maintenant l’intensité et en réduisant peu la fréquence des séances (≤20%). [^19][^21][^20]
-Une méta‑analyse plus récente sur les athlètes d’endurance suggère qu’une durée de 8 à 14 jours avec une réduction de volume d’environ 41 à 60% est particulièrement efficace pour améliorer la performance de 1 à 3%, essentiellement via une réduction de la fatigue et une restauration neuromusculaire plutôt qu’une amélioration supplémentaire de la VO2max. [^22]
-Pour les marathons et épreuves longues, des données observationnelles sur de grands échantillons d’amateurs montrent que des tapers de 2 à 3 semaines bien structurés s’accompagnent typiquement de gains de temps de l’ordre de 2 à 3% par rapport à des tapers minimalistes ou désorganisés. [^22]
+Les revues de Mujika et Padilla montrent qu'un taper efficace se caractérise par une réduction progressive et non linéaire du volume total d'entraînement, de l'ordre de 40 à 60% sur ≈2 semaines pour beaucoup de sports d'endurance, tout en maintenant l'intensité et en réduisant peu la fréquence des séances (≤20%). [^19][^21][^20]
+Une méta‑analyse plus récente sur les athlètes d'endurance suggère qu'une durée de 8 à 14 jours avec une réduction de volume d'environ 41 à 60% est particulièrement efficace pour améliorer la performance de 1 à 3%, essentiellement via une réduction de la fatigue et une restauration neuromusculaire plutôt qu'une amélioration supplémentaire de la VO2max. [^22]
+Pour les marathons et épreuves longues, des données observationnelles sur de grands échantillons d'amateurs montrent que des tapers de 2 à 3 semaines bien structurés s'accompagnent typiquement de gains de temps de l'ordre de 2 à 3% par rapport à des tapers minimalistes ou désorganisés. [^22]
+
+**Les trois leviers du taper :**
+1. **Volume :** réduction de 40-60% pour les épreuves de 1-3h, jusqu'à 60-70% pour les épreuves >3h. La réduction doit être progressive (pas de chute brutale).
+2. **Intensité :** À MAINTENIR, voire légèrement augmenter la densité. Si tu supprimes l'intensité, le corps perd ses repères et tes sensations de course se dégradent. Garde 1-2 blocs courts à allure course par semaine.
+3. **Fréquence :** Réduire peu (<20%), voire maintenir. Continuer à s'entraîner souvent mais moins longtemps maintient la « mémoire » neuromusculaire et le rythme de vie de l'athlète.
+
+**Les 3 types de taper (forme de décroissance) :**
+- **Linéaire :** Volume réduit d'un pourcentage constant chaque jour/semaine. Simple mais moins optimal que l'exponentiel.
+- **Exponentiel progressif (recommandé) :** Forte réduction en début de taper, puis décroissance plus lente. Permet une élimination rapide de la fatigue tout en préservant les adaptations.
+- **Par palier (step taper) :** Réduction brutale du volume dès le début, maintenue constante. Utilisé pour les épreuves très courtes où la fraîcheur prime. [^19][^20]
+
+**Exemple concret de taper 14 jours pour marathon :** J-14 à J-10 : volume à 70% de la normale, garder 2 séances avec allure marathon (ex: 2 × 5 km à allure course). J-9 à J-5 : volume à 50%, 1 séance allure course (3 km). J-4 à J-1 : volume à 30%, séances très courtes (30-40 min) avec quelques rappels d'allure (5 × 200m à allure 10 km). La veille : 15-20 min de footing très léger + 3-4 accélérations progressives. [^19][^22]
 
 #### Couche 3 (expert)
 
-Au niveau expert, l’affûtage est modélisé comme un ajustement fin de la charge : diminution marquée du volume (60–90% pour certains sports) avec maintien, voire légère augmentation, de la densité d’intensité, de façon à conserver les adaptations périphériques et centrales tout en éliminant la fatigue résiduelle. [^19][^21]
-Les paramètres clés sont : durée (souvent 7–21 jours selon la discipline), forme de la décroissance (exponentielle progressive > décroissance linéaire ou step taper), amplitude de la réduction de volume (≈40–60% le plus souvent) et maintien des intensités proches de la compétition (séances spécifiques, rappels neuromusculaires). [^19][^20]
-Les travaux de Mujika, les méta‑analyses récentes et les observations de terrain convergent sur le fait que la plupart des athlètes sous‑taproient (trop peu de réduction de volume) ou modifient trop la structure des intensités, conduisant à un maintien d’une fatigue latente qui empêche d’exprimer le pic de forme attendu. [^22][^23]
+Au niveau expert, l'affûtage est modélisé comme un ajustement fin de la charge : diminution marquée du volume (60-90% pour certains sports) avec maintien, voire légère augmentation, de la densité d'intensité, de façon à conserver les adaptations périphériques et centrales tout en éliminant la fatigue résiduelle. [^19][^21]
+Les paramètres clés sont : durée (souvent 7-21 jours selon la discipline), forme de la décroissance (exponentielle progressive > décroissance linéaire ou step taper), amplitude de la réduction de volume (≈40-60% le plus souvent) et maintien des intensités proches de la compétition (séances spécifiques, rappels neuromusculaires). [^19][^20]
+Les travaux de Mujika, les méta‑analyses récentes et les observations de terrain convergent sur le fait que la plupart des athlètes sous‑taproient (trop peu de réduction de volume) ou modifient trop la structure des intensités, conduisant à un maintien d'une fatigue latente qui empêche d'exprimer le pic de forme attendu. [^22][^23]
+
+**Mécanismes physiologiques du taper :** La réduction du volume permet : 1) une resynthèse du glycogène musculaire (retour aux niveaux pré-entraînement, voire supercompensation) ; 2) une restauration du système neuromusculaire (augmentation de la force et de la puissance mesurées) ; 3) une normalisation des marqueurs de dommages musculaires (CK) et de l'inflammation ; 4) une augmentation du volume plasmatique et de la masse d'hémoglobine (amélioration du transport d'O2) ; 5) une restauration du profil hormonal (baisse du cortisol, remontée testostérone/cortisol). Ces adaptations expliquent le gain de performance de 1-3% sans amélioration de la VO2max. [^19][^22]
+
+**Individualisation experte du taper :** L'athlète à dominante « diesel » (excellent récupérateur, profil endurant) bénéficie d'un taper plus court (7-10j). L'athlète à dominante « explosive » (sensible à la fatigue neuromusculaire) nécessite un taper plus long (14-21j). Les athlètes masters (>40 ans) ont des temps de récupération allongés : ajouter 3-5 jours au taper standard. Le volume de charge pré-taper influence aussi : plus le bloc de charge précédent était intense, plus le taper doit être long. [^19][^23]
 
 ***
 
@@ -112,19 +169,35 @@ Les travaux de Mujika, les méta‑analyses récentes et les observations de ter
 
 #### Couche 1 (débutant)
 
-Un amateur avec travail, famille et autres contraintes ne peut pas s’entraîner comme un professionnel ; il doit adapter le volume total et la fréquence des séances à son emploi du temps et à sa capacité de récupération. [^3]
-L’essentiel est de garder une certaine régularité (quelques séances par semaine) et une progression douce de la charge plutôt que de faire de gros blocs irréguliers qui génèrent beaucoup de fatigue d’un coup. [^10][^24]
+Un amateur avec travail, famille et autres contraintes ne peut pas s'entraîner comme un professionnel ; il doit adapter le volume total et la fréquence des séances à son emploi du temps et à sa capacité de récupération. [^3]
+L'essentiel est de garder une certaine régularité (quelques séances par semaine) et une progression douce de la charge plutôt que de faire de gros blocs irréguliers qui génèrent beaucoup de fatigue d'un coup. [^10][^24]
+
+**La dose minimale efficace :** Tu n'as pas besoin de 15h/semaine pour progresser. La recherche montre qu'avec 3 séances par semaine on peut maintenir et même améliorer sa condition physique. Exemple de programme minimaliste : 3 × 45 min par semaine en endurance fondamentale (Z2, conversation possible) + 1 séance HIIT courte (20-30 min) ajoutée 1 semaine sur 2. Ce volume « minimum » (environ 3h/semaine) maintient les adaptations aérobies et la santé cardiovasculaire. En dessous de 2h/semaine, on entre en mode « maintien » (on ne perd pas mais on ne progresse plus vraiment).
+
+**La règle du 80/20 simplifiée pour amateur pressé :** Si tu as 3 créneaux par semaine : 2 séances « faciles » (endurance fondamentale, tu peux parler) + 1 séance « dure » (fractionné, côtes, ou sortie longue avec portions rapides). Si tu as 4 créneaux : 3 faciles + 1 dure. Jamais 2 séances dures en 3 jours. Cette règle simple te protège du surmenage tout en garantissant un stimulus suffisant pour progresser. [^8][^9]
+
+**Piège :** Vouloir compenser une semaine sans entraînement en « doublant » la semaine suivante. C'est le meilleur moyen de se blesser. Si tu as raté une semaine, reprends simplement le programme où tu en étais, sans chercher à rattraper. Le corps ne fonctionne pas comme un compte épargne : les heures perdues ne se rattrapent pas, elles se digèrent. [^11]
 
 #### Couche 2 (intermédiaire)
 
 Les modèles de périodisation du haut niveau doivent être simplifiés et « compressés » pour les amateurs : bloc de 3–4 semaines au lieu de 6–8, nombre de séances clés limité (par exemple 2 séances de qualité + 1 sortie longue hebdomadaire), accent sur les séances à fort rapport stimulus/temps (interval training structuré, travail de force ciblé). [^3]
-La prise en compte des contraintes de stress professionnel, de sommeil et de charge mentale est essentielle : des outils simples (questionnaires RPE, score de fatigue, suivi du sommeil) permettent d’ajuster à la baisse certaines semaines plutôt que de forcer le plan à tout prix. [^12][^11]
+La prise en compte des contraintes de stress professionnel, de sommeil et de charge mentale est essentielle : des outils simples (questionnaires RPE, score de fatigue, suivi du sommeil) permettent d'ajuster à la baisse certaines semaines plutôt que de forcer le plan à tout prix. [^12][^11]
+
+**Le protocole du « cycliste pressé » (time-crunched cyclist) :** Pour un cycliste qui n'a que 5-6h/semaine, la structure optimale est : 2 séances de haute intensité (HIIT) en semaine (ex: mardi = 3 × 8 min sweet spot, jeudi = 5 × 3 min VO2max) + 1 sortie longue le week-end (2h30-3h en endurance Z2). Ce format maximise le rapport stimulus/temps : en 5-6h, on couvre tous les piliers (endurance via la sortie longue, seuil et VO2max via les séances HIIT). Les jours sans vélo : idéalement 1-2 séances de renforcement de 20-30 min (gainage, squats, fentes). [^3]
+
+**Gestion du stress et périodisation « liquide » :** Pour l'amateur, la plus grande variable n'est pas la charge d'entraînement mais le stress de la vie. Une semaine de boulot intense + mauvais sommeil = capacité de récupération amputée de 30-50%. La solution : une périodisation « liquide » où le plan n'est pas gravé dans le marbre. Chaque dimanche, on évalue la semaine écoulée (fatigue, sommeil, stress) et on ajuste la semaine à venir : si le réservoir est bas, on remplace une séance intense par de l'endurance facile ou du repos. Cette flexibilité est plus importante que la rigidité du plan. [^11][^12]
+
+**Ratio idéal pour amateur :** 2 à 3 séances de qualité par semaine maximum, le reste en endurance fondamentale. Avec 4-6h/semaine : 2h d'intensité réparties sur 2 séances + 3-4h d'endurance facile sur 2-3 sorties. Au-delà de 3 séances d'intensité par semaine, le risque de surentraînement augmente fortement chez l'amateur dont la récupération est déjà sollicitée par le reste de la vie. [^8]
 
 #### Couche 3 (expert)
 
-Pour un amateur ambitieux ou un semi‑pro, la clé est l’individualisation : la charge maximale tolérable (TRIMP/jour, TSS/semaine, CTL cible) est fortement influencée par les contraintes non sportives, et les modèles issus du haut niveau (volumes très élevés, double séances quotidiennes) ne peuvent pas être transposés directement. [^10][^24]
-L’usage de métriques comme CTL/ATL/TSB et ACWR doit être contextualisé : les valeurs « cibles » décrites en littérature ou popularisées par certains logiciels sont des repères, mais l’athlète doit identifier ses propres seuils de tolérance (par exemple, au‑delà d’une certaine CTL ou d’un certain ratio ATL/CTL, le sommeil se dégrade, la motivation baisse, les douleurs augmentent). [^13][^11]
+Pour un amateur ambitieux ou un semi‑pro, la clé est l'individualisation : la charge maximale tolérable (TRIMP/jour, TSS/semaine, CTL cible) est fortement influencée par les contraintes non sportives, et les modèles issus du haut niveau (volumes très élevés, double séances quotidiennes) ne peuvent pas être transposés directement. [^10][^24]
+L'usage de métriques comme CTL/ATL/TSB et ACWR doit être contextualisé : les valeurs « cibles » décrites en littérature ou popularisées par certains logiciels sont des repères, mais l'athlète doit identifier ses propres seuils de tolérance (par exemple, au‑delà d'une certaine CTL ou d'un certain ratio ATL/CTL, le sommeil se dégrade, la motivation baisse, les douleurs augmentent). [^13][^11]
 La périodisation non linéaire est particulièrement adaptée aux amateurs, car elle permet de redistribuer les charges autour des contraintes professionnelles (ex. gros week‑end, semaine légère de déplacement) tout en respectant les principes de progression globale, de variation et de récupération. [^3][^7]
+
+**Seuils individuels de tolérance à la charge :** Chaque athlète amateur doit cartographier ses propres limites. Un bon exercice : pendant 3-4 mois, noter chaque semaine le TSS total, la CTL, et 3 indicateurs subjectifs (qualité de sommeil /10, niveau d'énergie matinal /10, motivation à s'entraîner /10). On identifie ensuite le seuil au-delà duquel au moins 2 de ces 3 indicateurs se dégradent durablement (>1 semaine). Ce seuil devient la « CTL max tolérable » personnelle : on planifie pour rester 80-90% du temps sous ce seuil, avec des incursions ponctuelles au-dessus uniquement pendant les blocs de charge courts (2-3 semaines max). [^13][^11]
+
+**Modèle de la « charge allostatique » :** Le concept clé pour l'amateur est que la charge d'entraînement s'additionne à toutes les autres charges de la vie (travail, famille, transport, stress émotionnel). La capacité totale d'adaptation est limitée. Si la vie « prend » 80% de cette capacité, il ne reste que 20% pour l'entraînement. Forcer l'entraînement au-delà de cette capacité restante, c'est garantir le surmenage. Les athlètes amateurs qui performent le mieux ne sont pas ceux qui s'entraînent le plus, mais ceux qui gèrent le mieux l'équation : entraînement + vie = capacité d'adaptation. [^10][^12]
 
 ***
 
