@@ -19,3 +19,8 @@ dev = [
     "pytest",
     "pytest-asyncio",
 ]
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: tests d'intégration (accès DB, LLM réel)",
+]

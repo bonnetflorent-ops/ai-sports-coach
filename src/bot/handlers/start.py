@@ -10,8 +10,9 @@ router = Router(name="onboarding")
 
 
 class Onboarding(StatesGroup):
-    waiting = State()    # Attend les 5 réponses (sport, niveau, objectif, créneaux, blessures)
+    waiting = State()    # Attend les 6 réponses (prénom, sport, niveau, objectif, créneaux, blessures)
     details = State()    # Attend les infos optionnelles (poids, taille, âge, sexe, email)
+    parq = State()       # Attend les réponses au questionnaire PAR-Q (7 questions santé)
 
 
 @router.message(Command("start"))
@@ -22,6 +23,9 @@ async def cmd_start(message: types.Message, state: FSMContext):
         f"Salut {prenom} ! 👋\n\n"
         f"Je suis ton assistant d'entraînement IA. "
         f"Je crée des plans, j'analyse tes séances, et surtout — je dialogue avec toi.\n\n"
+        f"⚠️ *Important* : Je suis une IA, je ne remplace pas un médecin "
+        f"ni un professionnel de santé. En cas de douleur, consulte un médecin. "
+        f"Tu interagis avec une intelligence artificielle, pas un humain.\n\n"
         f"Pour commencer, j'ai besoin d'en savoir un peu plus sur toi. "
         f"Réponds à ces 6 questions en une fois :\n\n"
         f"1️⃣ Quel est ton prénom ?\n"

@@ -91,14 +91,42 @@ async def handle_message(message: types.Message, state: FSMContext):
             await message.answer("Souci technique. Réessaie /start.")
         return
 
-    # Phase 2: infos optionnelles → message de bienvenue
+    # Phase 2: infos optionnelles → questionnaire PAR-Q
     if current_state == Onboarding.details.state:
-        await state.clear()
         try:
             # Parser les détails
             details = _parse_details(message.text)
             if details:
                 await asyncio.to_thread(update_user_profile, user_id, details)
+
+            # Passer au questionnaire PAR-Q
+            await message.answer(
+                "👍 Noté ! Dernière étape avant de commencer : un petit questionnaire "
+                "de santé obligatoire (PAR-Q).\n\n"
+                "Réponds simplement par les *numéros* des questions où tu réponds OUI. "
+                "Exemple : « 1, 4 » ou « non » si tout va bien.\n\n"
+                "1️⃣ Un médecin t'a-t-il déjà dit que tu avais un problème cardiaque "
+                "et que tu ne devais faire que l'activité physique prescrite ?\n"
+                "2️⃣ Ressens-tu une douleur à la poitrine quand tu fais de l'activité physique ?\n"
+                "3️⃣ As-tu eu des douleurs à la poitrine sans activité physique au cours du dernier mois ?\n"
+                "4️⃣ As-tu des problèmes osseux ou articulaires qui pourraient être aggravés par l'activité physique ?\n"
+                "5️⃣ Perds-tu l'équilibre ou as-tu déjà perdu connaissance ?\n"
+                "6️⃣ Prends-tu des médicaments pour la tension artérielle ou un problème cardiaque ?\n"
+                "7️⃣ Y a-t-il une autre raison pour laquelle tu ne devrais pas faire d'activité physique ?"
+            )
+            await state.set_state(Onboarding.parq)
+        except Exception as e:
+            logger.error("onboarding_phase2_error", error=str(e), exc_info=True)
+            await state.clear()
+            await message.answer("Souci technique. Réessaie /start.")
+        return
+
+    # Phase 3: PAR-Q → message de bienvenue
+    if current_state == Onboarding.parq.state:
+        await state.clear()
+        try:
+            # Parser les réponses PAR-Q
+            parq_oui = _parse_parq(message.text)
 
             # Charger le profil complet
             profile = await asyncio.to_thread(get_user_profile, user_id)
@@ -106,6 +134,16 @@ async def handle_message(message: types.Message, state: FSMContext):
 
             # Envoyer "..." puis générer le message d'accueil proactif
             ack = await message.answer("...")
+
+            # Si PAR-Q a des OUI → avertissement
+            parq_warning = ""
+            if parq_oui:
+                parq_warning = (
+                    "\n⚠️ ATTENTION : L'athlète a répondu OUI aux questions PAR-Q suivantes : "
+                    + ", ".join(str(q) for q in parq_oui)
+                    + ". Ajoute un avertissement bienveillant dans ton message "
+                    "(« consulte ton médecin avant d'augmenter ton activité ») mais ne sois pas alarmiste."
+                )
 
             detail_str = ""
             if profile.get("weight_kg"):
@@ -127,6 +165,7 @@ PROFIL DE L'ATHLÈTE :
 - Objectif : {profile.get('goal', 'être en forme')}
 - Blessure/contrainte : {profile.get('blessures', 'aucune')}
 {detail_str}
+{parq_warning}
 RÈGLES POUR CE MESSAGE :
 1. Commence par un mot d'accueil chaleureux
 2. Montre que tu as bien compris son profil et son objectif
@@ -135,7 +174,8 @@ RÈGLES POUR CE MESSAGE :
 5. Propose UNE action concrète pour cette semaine
 6. Termine par UNE question ouverte sur son planning/routine
 7. Reste concis (8-12 lignes max), français courant, émojis avec parcimonie
-8. IMPORTANT : ne termine PAS par "n'hésite pas à..." — sois proactif."""
+8. IMPORTANT : ne termine PAS par "n'hésite pas à..." — sois proactif.
+9. Termine par une petite ligne de disclaimer : « ⚠️ Je suis une IA, pas un médecin. En cas de doute ou de douleur, consulte un professionnel de santé. »"""
 
             client = get_client()
             welcome_response = await llm_chat([
@@ -144,10 +184,10 @@ RÈGLES POUR CE MESSAGE :
             ])
 
             await ack.edit_text(welcome_response)
-            logger.info("onboarding_complete", user_id=user_id)
+            logger.info("onboarding_complete", user_id=user_id, parq_oui=parq_oui or [])
 
         except Exception as e:
-            logger.error("onboarding_phase2_error", error=str(e), exc_info=True)
+            logger.error("onboarding_phase3_error", error=str(e), exc_info=True)
             await message.answer(
                 "J'ai bien tout noté ! Tu peux commencer à me parler — "
                 "entraînement, nutrition, récupération, vas-y."
@@ -345,17 +385,17 @@ def _parse_onboarding(text: str, prenom: str) -> dict:
         profile["level"] = 3
         profile["experience"] = "expert"
 
-    # Objectif — chercher la ligne contenant "3" ou "objectif"
+    # Objectif — chercher la ligne contenant "4" ou "objectif"
     for line in text.split("\n"):
         line_lower = line.lower().strip()
-        if "3" in line_lower[:3] or "objectif" in line_lower:
+        if re.match(r"4[.)\-\s]", line_lower) or "objectif" in line_lower:
             profile["goal"] = line_lower
             break
 
-    # Blessures — chercher "5" ou "blessure"
+    # Blessures — chercher "6" ou "blessure"
     for line in text.split("\n"):
         line_lower = line.lower().strip()
-        if "5" in line_lower[:3] or "blessure" in line_lower or "contrainte" in line_lower:
+        if re.match(r"6[.)\-\s]", line_lower) or "blessure" in line_lower or "contrainte" in line_lower:
             if any(w in line_lower for w in ["non", "aucun", "pas de", "ras", "rien"]):
                 profile["blessures"] = "Aucune"
             else:
@@ -431,3 +471,27 @@ def _parse_details(text: str) -> dict:
         details["email"] = email
 
     return details
+
+
+def _parse_parq(text: str) -> list[int]:
+    """Parse les réponses au questionnaire PAR-Q.
+
+    Retourne la liste des numéros de questions où l'utilisateur a répondu OUI.
+    Liste vide = tout va bien.
+    """
+    import re
+
+    text_lower = text.lower().strip()
+
+    # Si l'utilisateur dit "non", "rien", "ras", "aucun" → tout va bien
+    if text_lower in ("non", "non.", "rien", "ras", "aucun", "non merci", "0"):
+        return []
+
+    # Extraire tous les chiffres de 1 à 7
+    oui = []
+    for num in re.findall(r"[1-7]", text_lower):
+        n = int(num)
+        if n not in oui:
+            oui.append(n)
+
+    return sorted(oui)
