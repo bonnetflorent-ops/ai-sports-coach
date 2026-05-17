@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""
-Sélecteur de concepts — choisit les 2-4 concepts les plus pertinents
+"""Sélecteur de concepts — choisit les 2-4 concepts les plus pertinents
 pour répondre à une question utilisateur.
 
-Deux stratégies :
-1. LLM SELECTOR (primaire) — appel à un petit LLM pas cher
-2. KEYWORD FALLBACK (secours) — règles d'intention basées sur index.yaml
+Trois stratégies (par ordre de priorité) :
+1. DÉTECTION CRITIQUE — douleur/blessure → injection immédiate
+2. KEYWORD FALLBACK — mots-clés (gratuit, couvre ~80% des cas)
+3. LLM SELECTOR — appel à deepseek-chat (uniquement si score fallback < 2)
 """
 
 import json
@@ -87,14 +87,26 @@ async def select_concepts(
             "reasoning": "Détection critique (douleur/blessure) — fallback immédiat",
         }
 
-    # 2. Essayer le sélecteur LLM
+    # 2. Essayer le fallback mot-clé d'abord (gratuit, couvre ~80% des cas)
+    fallback_result = _keyword_fallback(user_message, user_profile)
+    fallback_score = fallback_result.pop("_score", 0)
+
+    if fallback_score >= 2:
+        logger.info(
+            f"Fallback mot-clé (score={fallback_score}) → {fallback_result['concepts']}"
+        )
+        return fallback_result
+
+    # 3. Score faible → essayer le sélecteur LLM
     try:
         result = await _llm_select(client, user_message, user_profile, recent_context)
         logger.info(f"Sélecteur LLM → {result}")
         return result
     except Exception as e:
-        logger.warning(f"Sélecteur LLM échoué ({e}), fallback mot-clé")
-        return _keyword_fallback(user_message, user_profile)
+        logger.warning(
+            f"Sélecteur LLM échoué ({e}), fallback mot-clé (score={fallback_score})"
+        )
+        return fallback_result
 
 
 async def _llm_select(
@@ -284,6 +296,7 @@ def _keyword_fallback(user_message: str, user_profile: dict) -> dict:
                 "concepts": rule["concepts"][:4],
                 "level": user_profile.get("level", 1),
                 "reasoning": f"Fallback: règle '{best_match}' (score={best_score})",
+                "_score": best_score,
             }
 
     # Fallback ultime : concepts les plus généraux
@@ -294,11 +307,12 @@ def _keyword_fallback(user_message: str, user_profile: dict) -> dict:
         ],
         "level": user_profile.get("level", 1),
         "reasoning": "Fallback ultime (aucune règle trouvée)",
+        "_score": 0,
     }
 
 
 def _format_concepts_for_prompt(concepts: list[dict]) -> str:
-    """Formate la liste des concepts pour le prompt du sélecteur."""
+    """Formate la liste des concepts pour le prompt du sélecteur (sans mots-clés)."""
     lines = []
     current_domain = None
 
@@ -307,9 +321,7 @@ def _format_concepts_for_prompt(concepts: list[dict]) -> str:
         if domain != current_domain:
             current_domain = domain
             lines.append(f"\n## {domain.upper()}")
-        keywords = ", ".join(str(kw) for kw in c.get("keywords", [])[:8])
+        # Format compact : id : nom (pas de mots-clés → économise ~40% de tokens)
         lines.append(f"  - {c['id']} : {c['name']}")
-        if keywords:
-            lines.append(f"    Mots-clés: {keywords}")
 
     return "\n".join(lines)

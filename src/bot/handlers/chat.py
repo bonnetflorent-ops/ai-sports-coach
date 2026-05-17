@@ -12,7 +12,7 @@ Flux complet :
 """
 
 import asyncio
-import logging
+import structlog
 
 from aiogram import Router, types
 from aiogram.fsm.context import FSMContext
@@ -20,7 +20,9 @@ from aiogram.fsm.context import FSMContext
 from src.engine.llm import get_client, chat as llm_chat, chat_with_metrics as llm_chat_metrics
 from src.engine.selector import select_concepts
 from src.engine.prompt_builder import build_system_prompt
+from src.engine.cost_tracker import track_cost, get_user_cost
 from src.bot.handlers.start import Onboarding
+from src.utils.config import settings
 
 from src.db.users import (
     get_or_create_user,
@@ -34,7 +36,7 @@ from src.db.sessions import (
 )
 
 router = Router(name="chat")
-logger = logging.getLogger(__name__)
+logger = structlog.get_logger(__name__)
 
 
 # Fallback profile quand Supabase est down (le bot reste utilisable)
@@ -84,7 +86,7 @@ async def handle_message(message: types.Message, state: FSMContext):
             )
             await state.set_state(Onboarding.details)
         except Exception as e:
-            logger.error(f"Erreur onboarding phase 1: {e}", exc_info=True)
+            logger.error("onboarding_phase1_error", error=str(e), exc_info=True)
             await state.clear()
             await message.answer("Souci technique. Réessaie /start.")
         return
@@ -142,14 +144,24 @@ RÈGLES POUR CE MESSAGE :
             ])
 
             await ack.edit_text(welcome_response)
-            logger.info(f"Onboarding terminé pour user={user_id}")
+            logger.info("onboarding_complete", user_id=user_id)
 
         except Exception as e:
-            logger.error(f"Erreur onboarding phase 2: {e}", exc_info=True)
+            logger.error("onboarding_phase2_error", error=str(e), exc_info=True)
             await message.answer(
                 "J'ai bien tout noté ! Tu peux commencer à me parler — "
                 "entraînement, nutrition, récupération, vas-y."
             )
+        return
+
+    # --- Étape 0.5: Vérifier le quota quotidien ---
+    DAILY_COST_LIMIT = 0.05  # 5 centimes par jour max (~17 messages)
+    costs = get_user_cost(user_id)
+    if costs["daily_cost_eur"] > DAILY_COST_LIMIT and current_state is None:
+        await message.answer(
+            "Tu as atteint ta limite de coaching pour aujourd'hui 🔄 "
+            "Reviens demain pour continuer !"
+        )
         return
 
     # --- Étape 1: Charger l'utilisateur et la session ---
@@ -172,7 +184,7 @@ RÈGLES POUR CE MESSAGE :
             get_or_create_active_session, user_id
         )
     except Exception as e:
-        logger.warning(f"Supabase indisponible, mode dégradé: {e}")
+        logger.warning("supabase_degraded", error=str(e))
 
     # --- Étape 2: Accusé de réception immédiat ---
     ack_msg = await message.answer("...")
@@ -198,8 +210,11 @@ RÈGLES POUR CE MESSAGE :
             recent_context=recent_context,
         )
         logger.info(
-            f"[user={user_id}] Sélection: {selection['concepts']} "
-            f"(niveau {selection['level']}, raison: {selection['reasoning']})"
+            "concept_selection",
+            user_id=user_id,
+            concepts=selection["concepts"],
+            level=selection["level"],
+            reasoning=selection["reasoning"],
         )
 
         # --- Étape 4: Construire le prompt système ---
@@ -217,6 +232,22 @@ RÈGLES POUR CE MESSAGE :
         result = await llm_chat_metrics(messages)
         response = result["content"]
 
+        # Track cost
+        call_cost = track_cost(
+            telegram_id=user_id,
+            model=result.get("model", settings.llm_model),
+            tokens_in=result["tokens_in"],
+            tokens_out=result["tokens_out"],
+        )
+        logger.info(
+            "llm_call",
+            user_id=user_id,
+            tokens_in=result["tokens_in"],
+            tokens_out=result["tokens_out"],
+            cost_eur=round(call_cost, 6),
+            concepts=selection["concepts"],
+        )
+
         # --- Étape 6: Sauvegarder les messages ---
         if session:
             try:
@@ -228,7 +259,7 @@ RÈGLES POUR CE MESSAGE :
                     content=message.text,
                     tokens_in=result["tokens_in"],
                     tokens_out=result["tokens_out"],
-                    cost_eur=0.0,
+                    cost_eur=round(call_cost, 6),
                     concepts_used=selection.get("concepts"),
                     level_used=selection.get("level"),
                 )
@@ -240,18 +271,18 @@ RÈGLES POUR CE MESSAGE :
                     content=response,
                     tokens_in=result["tokens_in"],
                     tokens_out=result["tokens_out"],
-                    cost_eur=0.0,
+                    cost_eur=round(call_cost, 6),
                     concepts_used=selection.get("concepts"),
                     level_used=selection.get("level"),
                 )
             except Exception as e:
-                logger.warning(f"Sauvegarde message échouée: {e}")
+                logger.warning("save_message_failed", error=str(e))
 
         # Remplacer le "..." par la vraie réponse
         await ack_msg.edit_text(response)
 
     except Exception as e:
-        logger.error(f"[user={user_id}] Erreur: {e}", exc_info=True)
+        logger.error("chat_error", user_id=user_id, error=str(e), exc_info=True)
         await ack_msg.edit_text(
             "Désolé, je rencontre un problème technique. "
             "Réessaie dans un instant. Si ça persiste, contacte le support."

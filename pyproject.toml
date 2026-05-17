@@ -11,6 +11,7 @@ dependencies = [
     "python-dotenv",
     "pydantic",
     "pyyaml",
+    "structlog",
 ]
 
 [project.optional-dependencies]

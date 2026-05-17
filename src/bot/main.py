@@ -2,16 +2,18 @@
 """AI Sports Coach — Bot Telegram principal."""
 
 import asyncio
-import logging
 
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 
 from src.utils.config import settings
+from src.utils.logging_setup import setup_logging
 from src.bot.handlers import start, chat, feedback
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+import structlog
+
+setup_logging()
+logger = structlog.get_logger(__name__)
 
 
 async def main():
@@ -26,7 +28,7 @@ async def main():
     dp.include_router(chat.router)
     dp.include_router(feedback.router)
 
-    logger.info("Bot démarré, polling...")
+    logger.info("bot_started", mode="polling")
     await dp.start_polling(bot)
 
 
