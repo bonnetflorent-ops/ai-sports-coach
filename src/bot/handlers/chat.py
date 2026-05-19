@@ -38,6 +38,57 @@ from src.db.sessions import (
 router = Router(name="chat")
 logger = structlog.get_logger(__name__)
 
+# Telegram message limit (4096 chars, with safety margin)
+TELEGRAM_MAX_CHARS = 4000
+
+
+def _split_long_message(text: str, max_chars: int = TELEGRAM_MAX_CHARS) -> list[str]:
+    """Split a long message into Telegram-safe chunks.
+
+    Splits at paragraph boundaries (double newline) first,
+    then at sentence boundaries (. ! ?) if a paragraph is still too long,
+    and finally hard-splits if all else fails.
+    """
+    if len(text) <= max_chars:
+        return [text]
+
+    chunks = []
+    paragraphs = text.split("\n\n")
+
+    for para in paragraphs:
+        if len(para) <= max_chars:
+            if para.strip():
+                chunks.append(para.strip())
+        else:
+            # Try splitting at sentence boundaries
+            import re
+            sentences = re.split(r"(?<=[.!?])\s+", para)
+            current = ""
+            for sentence in sentences:
+                if len(current) + len(sentence) + 1 <= max_chars:
+                    current = f"{current} {sentence}".strip() if current else sentence
+                else:
+                    if current:
+                        chunks.append(current)
+                    # If a single sentence is still too long, hard-split
+                    if len(sentence) > max_chars:
+                        for i in range(0, len(sentence), max_chars):
+                            chunks.append(sentence[i:i + max_chars])
+                    else:
+                        current = sentence
+            if current:
+                chunks.append(current)
+
+    # Merge small tail chunks with previous ones if possible
+    merged = []
+    for chunk in chunks:
+        if merged and len(merged[-1]) + len(chunk) + 2 <= max_chars:
+            merged[-1] = f"{merged[-1]}\n\n{chunk}"
+        else:
+            merged.append(chunk)
+
+    return merged
+
 
 # Fallback profile quand Supabase est down (le bot reste utilisable)
 FALLBACK_PROFILE = {
@@ -181,9 +232,12 @@ RÈGLES POUR CE MESSAGE :
             welcome_response = await llm_chat([
                 {"role": "system", "content": welcome_prompt},
                 {"role": "user", "content": "Génère le message de bienvenue pour cet athlète."},
-            ])
+            ], max_tokens=1200)
 
-            await ack.edit_text(welcome_response)
+            chunks = _split_long_message(welcome_response)
+            await ack.edit_text(chunks[0])
+            for chunk in chunks[1:]:
+                await message.answer(chunk)
             logger.info("onboarding_complete", user_id=user_id, parq_oui=parq_oui or [])
 
         except Exception as e:
@@ -269,7 +323,7 @@ RÈGLES POUR CE MESSAGE :
             {"role": "user", "content": f"[{profile.get('name', prenom)}] {message.text}"},
         ]
 
-        result = await llm_chat_metrics(messages)
+        result = await llm_chat_metrics(messages, max_tokens=1200)
         response = result["content"]
 
         # Track cost
@@ -318,15 +372,22 @@ RÈGLES POUR CE MESSAGE :
             except Exception as e:
                 logger.warning("save_message_failed", error=str(e))
 
-        # Remplacer le "..." par la vraie réponse
-        await ack_msg.edit_text(response)
+        # Remplacer le "..." par la vraie réponse (split si > 4000 chars)
+        chunks = _split_long_message(response)
+        await ack_msg.edit_text(chunks[0])
+        for chunk in chunks[1:]:
+            await message.answer(chunk)
 
     except Exception as e:
         logger.error("chat_error", user_id=user_id, error=str(e), exc_info=True)
-        await ack_msg.edit_text(
+        error_text = (
             "Désolé, je rencontre un problème technique. "
             "Réessaie dans un instant. Si ça persiste, contacte le support."
         )
+        try:
+            await ack_msg.edit_text(error_text)
+        except Exception:
+            await message.answer(error_text)
 
 
 def _parse_onboarding(text: str, prenom: str) -> dict:
