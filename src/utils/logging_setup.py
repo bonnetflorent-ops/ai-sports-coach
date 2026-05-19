@@ -5,6 +5,7 @@ import logging
 
 def setup_logging():
     """Configure structlog avec sortie console colorée (JSON en prod)."""
+    logging.basicConfig(level=logging.INFO, format="%(message)s")
     structlog.configure(
         processors=[
             structlog.stdlib.filter_by_level,
