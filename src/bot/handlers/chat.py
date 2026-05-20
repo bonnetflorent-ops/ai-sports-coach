@@ -232,7 +232,7 @@ RÈGLES POUR CE MESSAGE :
             welcome_response = await llm_chat([
                 {"role": "system", "content": welcome_prompt},
                 {"role": "user", "content": "Génère le message de bienvenue pour cet athlète."},
-            ], max_tokens=1200)
+            ], max_tokens=2000)
 
             chunks = _split_long_message(welcome_response)
             await ack.edit_text(chunks[0])
@@ -249,7 +249,7 @@ RÈGLES POUR CE MESSAGE :
         return
 
     # --- Étape 0.5: Vérifier le quota quotidien ---
-    DAILY_COST_LIMIT = 0.05  # 5 centimes par jour max (~17 messages)
+    DAILY_COST_LIMIT = 0.08  # 8 centimes par jour max (~15 messages avec max_tokens=2000)
     costs = get_user_cost(user_id)
     if costs["daily_cost_eur"] > DAILY_COST_LIMIT and current_state is None:
         await message.answer(
@@ -323,7 +323,7 @@ RÈGLES POUR CE MESSAGE :
             {"role": "user", "content": f"[{profile.get('name', prenom)}] {message.text}"},
         ]
 
-        result = await llm_chat_metrics(messages, max_tokens=1200)
+        result = await llm_chat_metrics(messages, max_tokens=2000)
         response = result["content"]
 
         # Track cost

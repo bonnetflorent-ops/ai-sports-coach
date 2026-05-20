@@ -114,11 +114,20 @@ async def chat_with_metrics(
             )
             _failure_count = 0
             usage = response.usage
+            finish_reason = response.choices[0].finish_reason
+            if finish_reason == "length":
+                logger.warning(
+                    "llm_truncated",
+                    tokens_out=usage.completion_tokens if usage else 0,
+                    tokens_in=usage.prompt_tokens if usage else 0,
+                    finish_reason=finish_reason,
+                )
             return {
                 "content": response.choices[0].message.content,
                 "tokens_in": usage.prompt_tokens if usage else 0,
                 "tokens_out": usage.completion_tokens if usage else 0,
                 "model": response.model,
+                "finish_reason": finish_reason,
             }
 
         except RateLimitError as e:
