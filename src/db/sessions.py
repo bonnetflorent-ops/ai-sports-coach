@@ -149,6 +149,30 @@ def get_or_create_active_session(telegram_id: int) -> dict:
     return create_session(telegram_id)
 
 
+def get_session_messages(session_id: str, limit: int = 10) -> list[dict]:
+    """
+    Returns the last N messages of a session, WITH FULL CONTENT (no truncation).
+    Ordered chronologically (oldest first).
+    Each dict: {role, content, created_at}
+
+    Unlike get_recent_context(), this returns complete messages
+    for injection into the coach prompt.
+    """
+    admin = get_supabase_admin()
+
+    result = (
+        admin.table("chat_messages")
+        .select("role, content, created_at")
+        .eq("session_id", session_id)
+        .order("created_at", desc=True)
+        .limit(limit)
+        .execute()
+    )
+
+    # Reverse to chronological order
+    return list(reversed(result.data))
+
+
 def end_session(session_id: str):
     """Marque une session comme terminée."""
     admin = get_supabase_admin()
