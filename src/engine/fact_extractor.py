@@ -142,15 +142,15 @@ def extract_facts_from_messages(messages: list[dict]) -> list[dict]:
             })
         
         logger.info(
-            "facts_extracted",
-            input_messages=len(messages),
-            extracted_count=len(valid_facts),
+            "facts_extracted: input_messages=%s extracted_count=%s",
+            len(messages),
+            len(valid_facts),
         )
         return valid_facts
     
     except json.JSONDecodeError as e:
-        logger.warning("fact_extraction_json_error", error=str(e), raw=raw[:200])
+        logger.warning("fact_extraction_json_error: error=%s raw=%s", str(e), raw[:200])
         return []
     except Exception as e:
-        logger.error("fact_extraction_failed", error=str(e))
+        logger.error("fact_extraction_failed: error=%s", str(e))
         return []
