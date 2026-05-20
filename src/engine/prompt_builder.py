@@ -59,7 +59,7 @@ def build_system_prompt(
     context_block = ""
     if coaching_context:
         context_block = f"""
-HISTORIQUE DE COACHING :
+CONTEXTE DE COACHING :
 {coaching_context}
 """
 
