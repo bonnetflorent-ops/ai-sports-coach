@@ -11,8 +11,8 @@ def test_get_session_messages_returns_full_content():
     mock_admin = MagicMock()
     mock_admin.table().select().eq().order().limit().execute.return_value = MagicMock(
         data=[
-            {"role": "user", "content": "Long message " * 50, "created_at": "2026-01-01T00:00:00Z"},
             {"role": "assistant", "content": "Another long message " * 50, "created_at": "2026-01-01T00:01:00Z"},
+            {"role": "user", "content": "Long message " * 50, "created_at": "2026-01-01T00:00:00Z"},
         ]
     )
 
