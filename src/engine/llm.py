@@ -117,10 +117,10 @@ async def chat_with_metrics(
             finish_reason = response.choices[0].finish_reason
             if finish_reason == "length":
                 logger.warning(
-                    "llm_truncated",
-                    tokens_out=usage.completion_tokens if usage else 0,
-                    tokens_in=usage.prompt_tokens if usage else 0,
-                    finish_reason=finish_reason,
+                    "llm_truncated: tokens_out=%s tokens_in=%s finish_reason=%s",
+                    usage.completion_tokens if usage else 0,
+                    usage.prompt_tokens if usage else 0,
+                    finish_reason,
                 )
             return {
                 "content": response.choices[0].message.content,
