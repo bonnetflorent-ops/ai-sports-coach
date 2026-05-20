@@ -36,6 +36,7 @@ from src.db.sessions import (
     get_recent_summaries,
     _get_active_session_id,
     summarize_session,
+    get_session_messages,
 )
 
 router = Router(name="chat")
@@ -353,9 +354,46 @@ RÈGLES POUR CE MESSAGE :
             reasoning=selection["reasoning"],
         )
 
-        # Build coaching context from session summaries
+        # Build coaching context from session messages + summaries + facts
         coaching_context_parts = []
 
+        # 1. Current session messages (hot memory — A2)
+        if session:
+            try:
+                session_msgs = await asyncio.to_thread(
+                    get_session_messages, session["id"], limit=10
+                )
+                if session_msgs:
+                    lines = ["CONVERSATION EN COURS :"]
+                    for m in session_msgs:
+                        role_label = "athlète" if m["role"] == "user" else "coach"
+                        lines.append(f"[{role_label}] {m['content']}")
+                    coaching_context_parts.append("\n".join(lines))
+            except Exception:
+                pass
+
+        # 2. Relevant persistent facts (warm memory — C6)
+        try:
+            from src.engine.embeddings import embed_text
+            from src.db.facts import get_relevant_facts
+
+            msg_embedding = await asyncio.to_thread(embed_text, message.text)
+            if not all(v == 0.0 for v in msg_embedding):
+                db_user_id = str(profile.get("id", ""))
+                if db_user_id:
+                    facts = await asyncio.to_thread(
+                        get_relevant_facts, db_user_id, msg_embedding, 5
+                    )
+                    if facts:
+                        fact_lines = ["FAITS CONNUS SUR L'ATHLÈTE :"]
+                        for f in facts:
+                            cat = f.get("category", "autre")
+                            fact_lines.append(f"- {f['fact']}   [{cat}]")
+                        coaching_context_parts.append("\n".join(fact_lines))
+        except Exception:
+            pass
+
+        # 3. Previous session summaries (warm memory — B4)
         if previous_summaries:
             summary_lines = ["SESSIONS PRÉCÉDENTES :"]
             for s in previous_summaries:
@@ -426,6 +464,66 @@ RÈGLES POUR CE MESSAGE :
                 )
             except Exception as e:
                 logger.warning("save_message_failed", error=str(e))
+
+        # --- Background fact extraction (C5) ---
+        # Trigger every 5 messages in the session
+        if session:
+            msg_count = session.get("message_count", 0) + 1
+            if msg_count % 5 == 0:
+                async def _extract_and_store():
+                    try:
+                        from src.engine.fact_extractor import extract_facts_from_messages
+                        from src.engine.embeddings import embed_text
+                        from src.db.facts import add_fact, deduplicate_facts, bump_importance
+
+                        recent_msgs = await asyncio.to_thread(
+                            get_session_messages, session["id"], limit=20
+                        )
+                        if not recent_msgs:
+                            return
+
+                        facts = await asyncio.to_thread(
+                            extract_facts_from_messages, recent_msgs
+                        )
+                        if not facts:
+                            return
+
+                        db_user_id = str(profile.get("id", ""))
+                        if not db_user_id:
+                            return
+
+                        for fact_data in facts:
+                            try:
+                                embedding = await asyncio.to_thread(
+                                    embed_text, fact_data["fact"]
+                                )
+                                if all(v == 0.0 for v in embedding):
+                                    continue
+
+                                is_dup, existing = await asyncio.to_thread(
+                                    deduplicate_facts, db_user_id, fact_data["fact"]
+                                )
+
+                                if is_dup and existing:
+                                    await asyncio.to_thread(
+                                        bump_importance, existing["id"]
+                                    )
+                                else:
+                                    await asyncio.to_thread(
+                                        add_fact,
+                                        db_user_id,
+                                        fact_data["fact"],
+                                        fact_data["category"],
+                                        fact_data["importance"],
+                                        session["id"],
+                                        embedding,
+                                    )
+                            except Exception:
+                                pass
+                    except Exception:
+                        pass
+
+                asyncio.create_task(_extract_and_store())
 
         # Remplacer le "..." par la vraie réponse (split si > 4000 chars)
         chunks = _split_long_message(response)
