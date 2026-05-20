@@ -173,6 +173,136 @@ def get_session_messages(session_id: str, limit: int = 10) -> list[dict]:
     return list(reversed(result.data))
 
 
+def summarize_session(session_id: str) -> str:
+    """
+    Generate a 300-500 char session summary using deepseek-chat.
+    Saves summary to chat_sessions.session_summary column.
+    Returns the summary string.
+    """
+    import json
+    from openai import OpenAI
+    from src.utils.config import settings
+
+    admin = get_supabase_admin()
+
+    # Get session messages (last 30, for summarization we want more context)
+    messages = get_session_messages(session_id, limit=30)
+    if not messages:
+        return ""
+
+    # Build conversation text
+    conversation = "\n".join(
+        [f"[{m['role']}] {m['content'][:300]}" for m in messages[-20:]]
+    )
+
+    # Summarize with deepseek-chat
+    try:
+        client = OpenAI(
+            api_key=settings.openrouter_api_key,
+            base_url=settings.openrouter_base_url,
+            timeout=30.0,
+        )
+        response = client.chat.completions.create(
+            model="deepseek/deepseek-chat",
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "Tu es un assistant qui résume des sessions de coaching sportif. "
+                        "Résume en 3-5 phrases en français (300-500 caractères max) : "
+                        "ce dont l'athlète a parlé, les décisions prises, les faits mentionnés, "
+                        "les suivis à faire. Sois concis et factuel. Format : texte simple, pas de markdown."
+                    ),
+                },
+                {
+                    "role": "user",
+                    "content": f"Résume cette session de coaching :\n\n{conversation}",
+                },
+            ],
+            max_tokens=200,
+            temperature=0.3,
+        )
+
+        summary = response.choices[0].message.content.strip()[:600]
+
+        # Save to DB
+        admin.table("chat_sessions").update(
+            {"session_summary": summary}
+        ).eq("id", session_id).execute()
+
+        logger.info(f"Session summarized: {session_id[:8]}... ({len(summary)} chars)")
+        return summary
+
+    except Exception as e:
+        logger.warning(f"Session summarization failed for {session_id[:8]}...: {e}")
+        return ""
+
+
+def get_recent_summaries(telegram_id: int, limit: int = 3) -> list[dict]:
+    """
+    Returns summaries of the last N completed sessions (excluding current).
+    Each dict: {started_at, session_summary}
+    """
+    admin = get_supabase_admin()
+
+    # Find user_id
+    user_result = (
+        admin.table("users")
+        .select("id")
+        .eq("telegram_id", telegram_id)
+        .execute()
+    )
+    if not user_result.data:
+        return []
+
+    user_id = user_result.data[0]["id"]
+
+    result = (
+        admin.table("chat_sessions")
+        .select("started_at, session_summary")
+        .eq("user_id", user_id)
+        .not_.is_("session_summary", "null")
+        .order("started_at", desc=True)
+        .limit(limit)
+        .execute()
+    )
+
+    return result.data
+
+
+def _get_active_session_id(telegram_id: int) -> dict | None:
+    """
+    Returns the ID of the current active session (if any, even if expired).
+    Used to detect session expiry for auto-summarization.
+    """
+    admin = get_supabase_admin()
+
+    user_result = (
+        admin.table("users")
+        .select("id")
+        .eq("telegram_id", telegram_id)
+        .execute()
+    )
+    if not user_result.data:
+        return None
+
+    user_id = user_result.data[0]["id"]
+
+    result = (
+        admin.table("chat_sessions")
+        .select("id, message_count, session_summary")
+        .eq("user_id", user_id)
+        .is_("ended_at", "null")
+        .order("started_at", desc=True)
+        .limit(1)
+        .execute()
+    )
+
+    if result.data:
+        return result.data[0]
+    return None
+
+
 def end_session(session_id: str):
     """Marque une session comme terminée."""
     admin = get_supabase_admin()

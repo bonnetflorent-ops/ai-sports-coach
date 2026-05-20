@@ -153,6 +153,7 @@ def get_user_profile(telegram_id: int) -> dict:
     level_map = {1: "Débutant", 2: "Intermédiaire", 3: "Expert"}
 
     return {
+        "id": user.get("id"),
         "name": user.get("first_name", ""),
         "sport": user.get("sport", "non spécifié"),
         "level": user.get("level", 1),

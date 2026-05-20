@@ -33,6 +33,9 @@ from src.db.sessions import (
     get_or_create_active_session,
     get_recent_context,
     save_message,
+    get_recent_summaries,
+    _get_active_session_id,
+    summarize_session,
 )
 
 router = Router(name="chat")
@@ -40,6 +43,14 @@ logger = structlog.get_logger(__name__)
 
 # Telegram message limit (4096 chars, with safety margin)
 TELEGRAM_MAX_CHARS = 4000
+
+
+async def _summarize_session_async(session_id: str):
+    """Summarize a session in the background (doesn't block the bot)."""
+    try:
+        await asyncio.to_thread(summarize_session, session_id)
+    except Exception:
+        pass  # Never crash the bot
 
 
 def _split_long_message(text: str, max_chars: int = TELEGRAM_MAX_CHARS) -> list[str]:
@@ -261,6 +272,7 @@ RÈGLES POUR CE MESSAGE :
     # --- Étape 1: Charger l'utilisateur et la session ---
     profile = FALLBACK_PROFILE.copy()
     session = None
+    previous_summaries = []
 
     try:
         # Créer ou récupérer l'utilisateur
@@ -274,9 +286,39 @@ RÈGLES POUR CE MESSAGE :
             profile["name"] = prenom
 
         # Récupérer ou créer une session active
+        # Check for expired session first (for auto-summarization)
+        old_session = None
+        try:
+            old_session = await asyncio.to_thread(_get_active_session_id, user_id)
+        except Exception:
+            pass
+
         session = await asyncio.to_thread(
             get_or_create_active_session, user_id
         )
+
+        # If session changed (old one expired), trigger background summarization
+        if (
+            old_session
+            and old_session.get("message_count", 0) > 0
+            and not old_session.get("session_summary")
+            and old_session["id"] != session["id"]
+        ):
+            asyncio.create_task(_summarize_session_async(old_session["id"]))
+            logger.info(
+                "auto_summarize_triggered",
+                old_session=old_session["id"][:8],
+                new_session=session["id"][:8],
+            )
+
+        # Fetch previous session summaries for coaching context
+        previous_summaries = []
+        try:
+            previous_summaries = await asyncio.to_thread(
+                get_recent_summaries, user_id
+            )
+        except Exception:
+            pass
     except Exception as e:
         logger.warning("supabase_degraded", error=str(e))
 
@@ -311,10 +353,23 @@ RÈGLES POUR CE MESSAGE :
             reasoning=selection["reasoning"],
         )
 
+        # Build coaching context from session summaries
+        coaching_context_parts = []
+
+        if previous_summaries:
+            summary_lines = ["SESSIONS PRÉCÉDENTES :"]
+            for s in previous_summaries:
+                date_str = (s.get("started_at") or "?")[:10]
+                summary_lines.append(f"- {date_str}: {s['session_summary']}")
+            coaching_context_parts.append("\n".join(summary_lines))
+
+        coaching_context = "\n\n".join(coaching_context_parts) if coaching_context_parts else None
+
         # --- Étape 4: Construire le prompt système ---
         system_prompt = build_system_prompt(
             selection=selection,
             user_profile=profile,
+            coaching_context=coaching_context,
         )
 
         # --- Étape 5: Appeler le LLM coach ---
