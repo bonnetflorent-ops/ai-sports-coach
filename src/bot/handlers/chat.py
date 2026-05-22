@@ -419,6 +419,19 @@ RÈGLES POUR CE MESSAGE :
         result = await llm_chat_metrics(messages, max_tokens=2000)
         response = result["content"]
 
+        # Safety: handle null/empty LLM responses gracefully
+        if not response:
+            logger.warning(
+                "llm_empty_response",
+                user_id=user_id,
+                finish_reason=result.get("finish_reason"),
+                tokens_out=result.get("tokens_out"),
+            )
+            response = (
+                "Désolé, ma réponse a été coupée. "
+                "Peux-tu reformuler ta question plus simplement ?"
+            )
+
         # Track cost
         call_cost = track_cost(
             telegram_id=user_id,

@@ -115,6 +115,18 @@ async def chat_with_metrics(
             _failure_count = 0
             usage = response.usage
             finish_reason = response.choices[0].finish_reason
+            content = response.choices[0].message.content
+
+            # Safety: OpenRouter can return null content even with tokens generated
+            if content is None:
+                logger.warning(
+                    "llm_null_content: tokens_out=%s tokens_in=%s finish_reason=%s — falling back to empty string",
+                    usage.completion_tokens if usage else 0,
+                    usage.prompt_tokens if usage else 0,
+                    finish_reason,
+                )
+                content = ""
+
             if finish_reason == "length":
                 logger.warning(
                     "llm_truncated: tokens_out=%s tokens_in=%s finish_reason=%s",
@@ -123,7 +135,7 @@ async def chat_with_metrics(
                     finish_reason,
                 )
             return {
-                "content": response.choices[0].message.content,
+                "content": content,
                 "tokens_in": usage.prompt_tokens if usage else 0,
                 "tokens_out": usage.completion_tokens if usage else 0,
                 "model": response.model,
