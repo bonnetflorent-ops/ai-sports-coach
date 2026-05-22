@@ -17,10 +17,8 @@ class Onboarding(StatesGroup):
 
 @router.message(Command("start"))
 async def cmd_start(message: types.Message, state: FSMContext):
-    prenom = message.from_user.first_name
-
     await message.answer(
-        f"Salut {prenom} ! 👋\n\n"
+        "Salut ! 👋\n\n"
         f"Je suis ton assistant d'entraînement IA. "
         f"Je crée des plans, j'analyse tes séances, et surtout — je dialogue avec toi.\n\n"
         f"⚠️ *Important* : Je suis une IA, je ne remplace pas un médecin "

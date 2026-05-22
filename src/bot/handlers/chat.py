@@ -557,21 +557,54 @@ def _parse_onboarding(text: str, prenom: str) -> dict:
     }
 
     # Prénom — première ligne ou ligne qui commence par "1"
+    # Stratégie : chercher "1." / "1)" / "1 -", extraire le nom, puis nettoyer
+    import re
+
+    # Préfixes courants d'auto-présentation à supprimer
+    NAME_PREFIXES = [
+        r"je m['’]?appelle\s+",
+        r"je suis\s+(?!un|une|à|au|en|de|des|du|le|la|les|pas|très)",
+        r"mon (?:petit )?prénom\s+(?:c['’]?est|:)\s*",
+        r"moi\s+c['’]?est\s+",
+        r"alors\s+(?:mon\s+prénom\s+(?:c['’]?est|:)\s*)?",
+        r"c['’]?est\s+(?!un|une|à|au|en|de|des|du|le|la|les|pas|très)",
+    ]
+
+    def _clean_name(raw: str) -> str:
+        """Nettoie un prénom en supprimant les préfixes d'auto-présentation."""
+        raw = raw.strip()
+        for pattern in NAME_PREFIXES:
+            m = re.match(pattern, raw, re.IGNORECASE)
+            if m:
+                raw = raw[m.end():].strip()
+                break
+        # Si après nettoyage il reste des mots parasites, prendre le premier mot
+        if raw and " " in raw and len(raw) > 20:
+            # Probablement du texte libre, prendre le premier mot qui ressemble à un prénom
+            words = raw.split()
+            for w in words:
+                if w[0].isupper() and len(w) >= 2:
+                    return w
+            return words[0] if len(words[0]) < 20 else raw[:20]
+        # Si le résultat fait plus de 30 caractères, c'est pas un prénom
+        if len(raw) > 30:
+            return raw[:20]
+        return raw
+
     for line in lines:
         stripped = line.strip()
         if not stripped:
             continue
         # Pattern: "1. Florent" ou "1) Florent" ou "1 - Florent" ou juste "Florent" en première ligne
-        import re
         m = re.match(r"1[.)\-\s]+(.+)", stripped)
         if m:
-            name = m.group(1).strip()
+            name = _clean_name(m.group(1))
             # Nettoyer (pas de chiffres, pas plus de 30 chars)
             if name and len(name) < 30 and not name.isdigit():
                 profile["name"] = name
                 break
         elif lines.index(line) == 0 and len(stripped) < 30 and not any(kw in stripped.lower() for kw in ["cyclisme", "vélo", "running", "course", "triathlon", "fitness", "muscu", "crossfit", "débutant", "intermédiaire", "avancé", "expert", "objectif"]):
-            profile["name"] = stripped
+            profile["name"] = _clean_name(stripped)
             break
 
     # Extraction par mot-clé du sport
@@ -630,7 +663,23 @@ def _parse_details(text: str) -> dict:
     if text_lower.strip() in ("non", "plus tard", "non merci", "pas maintenant", ".", "nan"):
         return {}
 
-    # Poids — cherche un nombre suivi de "kg" ou "kilo"
+# --- Correction de prénom ---
+    # Si l'utilisateur redonne son prénom (ex: "Alors mon prénom c'est : Florent")
+    name_patterns = [
+        r"(?:alors\s+)?mon\s+(?:petit\s+)?prénom\s+(?:c[''']?est|:)[\s:]*(\w+)",
+        r"je\s+m[''']?appelle\s+(\w+)",
+        r"je\s+suis\s+(\w+)(?!\s+(?:un|une|à|au|en|de|des|du|le|la|les|pas|très))",
+        r"moi\s+c[''']?est\s+(\w+)",
+    ]
+    for pattern in name_patterns:
+        m = re.search(pattern, text_lower, re.IGNORECASE)
+        if m:
+            name = m.group(1).capitalize()
+            if len(name) >= 2 and len(name) < 30 and not name.isdigit():
+                details["name"] = name
+            break
+
+    # --- Poids ---
     m = re.search(r"(\d{2,3})\s*(?:kg|kilos?|k)", text_lower)
     if m:
         w = int(m.group(1))

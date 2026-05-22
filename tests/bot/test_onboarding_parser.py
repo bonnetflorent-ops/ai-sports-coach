@@ -125,3 +125,71 @@ class TestParseOnboarding:
             result = _parse_onboarding(text, "Fallback")
             assert result["level"] == 3, f"Failed for: '{level_word}'"
             assert result["experience"] == "expert", f"Failed for: '{level_word}'"
+
+    def test_name_with_je_m_appelle_prefix(self):
+        """"Je m'appelle Florent" → name = Florent."""
+        text = (
+            "1. Je m'appelle Florent\n"
+            "2. vélo\n"
+            "3. intermédiaire\n"
+            "4. être affûté\n"
+            "5. 4 créneaux\n"
+            "6. douleur au psoas"
+        )
+        result = _parse_onboarding(text, "Fallback")
+        assert result["name"] == "Florent"
+
+    def test_name_with_je_suis_prefix(self):
+        """"Je suis Paul" → name = Paul."""
+        text = (
+            "1. Je suis Paul\n"
+            "2. running\n"
+            "3. débutant\n"
+            "4. courir un 10km\n"
+            "5. 2 créneaux\n"
+            "6. non"
+        )
+        result = _parse_onboarding(text, "Fallback")
+        assert result["name"] == "Paul"
+
+    def test_name_with_mon_prenom_cest(self):
+        """"Mon prénom c'est Sophie" → name = Sophie."""
+        text = (
+            "1. Mon prénom c'est Sophie\n"
+            "2. fitness\n"
+            "3. débutant\n"
+            "4. prise de masse\n"
+            "5. 3 créneaux\n"
+            "6. rien"
+        )
+        result = _parse_onboarding(text, "Fallback")
+        assert result["name"] == "Sophie"
+
+    def test_name_with_moi_cest(self):
+        """"Moi c'est Marc" → name = Marc."""
+        text = (
+            "1. Moi c'est Marc\n"
+            "2. triathlon\n"
+            "3. expert\n"
+            "4. Ironman\n"
+            "5. 10 créneaux\n"
+            "6. tendinite"
+        )
+        result = _parse_onboarding(text, "Fallback")
+        assert result["name"] == "Marc"
+
+    def test_clean_name_fallback_on_multiline_answer(self):
+        """Long answer with name buried in text → still extracts."""
+        text = (
+            "1. Je m'appelle Florent \n"
+            "2. Je fais du vélo de route, du VTT, du home-trainer\n"
+            "3. J'ai un niveau intermédiaire\n"
+            "4. Mon objectif est d'être affûté pour le vélo\n"
+            "5. lundi, mardi, jeudi, vendredi\n"
+            "6. douleur au psoas gauche"
+        )
+        result = _parse_onboarding(text, "Fallback")
+        assert result["name"] == "Florent"
+        assert result["sport"] == "cyclisme"  # vélo → cyclisme
+        assert result["blessures"] is not None
+        assert "Aucune" not in result["blessures"]

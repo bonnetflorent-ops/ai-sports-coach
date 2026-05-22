@@ -98,3 +98,29 @@ class TestParseDetails:
         assert result["age"] == 42
         assert "height_cm" not in result
         assert "gender" not in result
+
+    def test_name_correction_mon_prenom_cest(self):
+        """User corrects name: 'Mon prénom c'est : Florent'."""
+        text = "alors mon prénom c'est : Florent\n73 kg 177 cm 32 ans homme"
+        result = _parse_details(text)
+        assert result["name"] == "Florent"
+        assert result["weight_kg"] == 73
+        assert result["height_cm"] == 177
+        assert result["age"] == 32
+        assert result["gender"] == "H"
+
+    def test_name_correction_je_m_appelle(self):
+        """User corrects name: 'Je m'appelle Paul' with other details."""
+        text = "je m'appelle Paul 70kg 175cm 28 ans H"
+        result = _parse_details(text)
+        assert result["name"] == "Paul"
+        assert result["weight_kg"] == 70
+        assert result["height_cm"] == 175
+        assert result["age"] == 28
+
+    def test_name_correction_not_triggered_without_prefix(self):
+        """Regular details without name prefix should NOT have name field."""
+        text = "73 kg 177 cm 32 ans H"
+        result = _parse_details(text)
+        # Should NOT set name when no name prefix is present
+        assert "name" not in result
