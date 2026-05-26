@@ -1,1819 +1,1951 @@
-# =============================================================================
-# INDEX DE LA BASE DE CONNAISSANCES — AI Sports Coach
-# =============================================================================
-# Version: 1.0
-# Généré le: 2026-05-12
-# Fichiers source: 7 domaines × ~2400 lignes de contenu scientifique
-#
-# UTILISATION:
-#   Cet index est la source unique pour le sélecteur LLM.
-#   À chaque message utilisateur, le sélecteur lit la question + le profil,
-#   puis retourne les `id` des 2-4 concepts les plus pertinents.
-#   Le prompt builder charge ensuite les lignes correspondantes dans les
-#   fichiers markdown pour le niveau cible.
-#
-# CONVENTION DE NOMMAGE DES ID: <domaine>/<slug-concept>
-#   Exemple: physiologie/systemes-energetiques
-#
-# DOMAINES:
-#   physiologie  → Physiologie de l'effort
-#   planification → Planification & périodisation
-#   seances     → Séances types par filière énergétique
-#   recuperation → Récupération & adaptation
-#   blessures   → Blessures & prévention
-#   nutrition   → Nutrition sportive
-#   psychologie → Psychologie & mental
-# =============================================================================
-
-version: "2.1"
-generated: "2026-05-26"
+version: '2.1'
+generated: '2026-05-26'
 total_concepts: 58
 total_domains: 13
-
-# =============================================================================
-# MAPPING DES INTENTIONS UTILISATEUR → CONCEPTS
-# Utilisé en fallback si le LLM classifieur échoue
-# =============================================================================
 intent_rules:
   echauffement_question:
-    description: "L'utilisateur pose une question sur l'échauffement"
+    description: L'utilisateur pose une question sur l'échauffement
     concepts:
-      - echauffement/principes-generaux
-      - echauffement/routines-par-sport
+    - echauffement/principes-generaux
+    - echauffement/routines-par-sport
     priority: medium
-
   chaleur_canicule:
-    description: "L'utilisateur s'interroge sur l'entraînement par temps chaud"
+    description: L'utilisateur s'interroge sur l'entraînement par temps chaud
     concepts:
-      - environnement/chaleur
-      - nutrition/hydratation-electrolytes
+    - environnement/chaleur
+    - nutrition/hydratation-electrolytes
     priority: high
-
   altitude_stage:
-    description: "Questions sur l'entraînement en altitude"
+    description: Questions sur l'entraînement en altitude
     concepts:
-      - environnement/altitude
-      - physiologie/vo2max-seuils
+    - environnement/altitude
+    - physiologie/vo2max-seuils
     priority: medium
-
   materiel_question:
-    description: "Questions sur le matériel d'entraînement"
+    description: Questions sur le matériel d'entraînement
     concepts:
-      - materiel/capteurs-de-puissance
-      - materiel/cardio-gps-montres
+    - materiel/capteurs-de-puissance
+    - materiel/cardio-gps-montres
     priority: low
-
   femme_athlete:
-    description: "Questions spécifiques aux femmes athlètes"
+    description: Questions spécifiques aux femmes athlètes
     concepts:
-      - populations/femmes-athletes
+    - populations/femmes-athletes
     priority: high
-
   senior_50_plus:
-    description: "Questions d'un sportif de plus de 50 ans"
+    description: Questions d'un sportif de plus de 50 ans
     concepts:
-      - populations/seniors-50-plus
-      - physiologie/adaptations-entrainement
+    - populations/seniors-50-plus
+    - physiologie/adaptations-entrainement
     priority: high
-
   reprise_sport:
-    description: "L'utilisateur reprend le sport après une longue pause"
+    description: L'utilisateur reprend le sport après une longue pause
     concepts:
-      - populations/reprise-apres-pause
-      - seances/endurance-fondamentale
+    - populations/reprise-apres-pause
+    - seances/endurance-fondamentale
     priority: high
-
   renforcement_musculation:
-    description: "Questions sur le renforcement musculaire pour l'endurance"
+    description: Questions sur le renforcement musculaire pour l'endurance
     concepts:
-      - entrainement-croise/renforcement-endurance
-      - seances/travail-neuromusculaire
+    - entrainement-croise/renforcement-endurance
+    - seances/travail-neuromusculaire
     priority: medium
   fatigue_surentrainement:
-    description: "L'utilisateur se sent fatigué, épuisé, pas en forme"
+    description: L'utilisateur se sent fatigué, épuisé, pas en forme
     concepts:
-      - recuperation/surcompensation-surentrainement
-      - recuperation/sommeil
-      - recuperation/outils-monitoring
-      - psychologie/gestion-effort-rpe
-      - norvegienne/controlled-intensity
+    - recuperation/surcompensation-surentrainement
+    - recuperation/sommeil
+    - recuperation/outils-monitoring
+    - psychologie/gestion-effort-rpe
+    - norvegienne/controlled-intensity
     priority: high
-
   planifier_saison:
-    description: "L'utilisateur veut organiser son entraînement sur plusieurs mois"
+    description: L'utilisateur veut organiser son entraînement sur plusieurs mois
     concepts:
-      - planification/modeles-periodisation
-      - planification/structure-temporelle
-      - planification/tapering-pic-forme
-      - norvegienne/periodisation-norvegienne
+    - planification/modeles-periodisation
+    - planification/structure-temporelle
+    - planification/tapering-pic-forme
+    - norvegienne/periodisation-norvegienne
     priority: medium
-
   ameliorer_performance:
-    description: "L'utilisateur veut progresser en vitesse/puissance/endurance"
+    description: L'utilisateur veut progresser en vitesse/puissance/endurance
     concepts:
+    - seances/intervalles-haute-intensite
+    - seances/travail-seuil
+    - physiologie/vo2max-seuils
+    - norvegienne/modele-polarise-80-20
+    - norvegienne/double-seuil-lactate
+    priority: medium
+  gerer_nutrition:
+    description: Questions sur quoi manger, quand, combien
+    concepts:
+    - nutrition/glucides-timing
+    - nutrition/proteines-besoins
+    - nutrition/hydratation-electrolytes
+    - nutrition/periodisation-nutritionnelle
+    - recuperation/nutrition-recuperation
+    - nutrition/supplements-preuve-a
+    priority: medium
+  blessure_douleur:
+    description: L'utilisateur signale une douleur ou une blessure
+    concepts:
+    - blessures/cyclisme
+    - blessures/running
+    - blessures/fitness-musculation
+    priority: critical
+  sommeil_recuperation:
+    description: Questions sur le sommeil, la récupération
+    concepts:
+    - recuperation/sommeil
+    - recuperation/outils-monitoring
+    - physiologie/frequence-cardiaque-hrv
+    priority: medium
+  motivation_mental:
+    description: Baisse de motivation, blocage mental, difficulté à s'engager
+    concepts:
+    - psychologie/motivation-autodetermination
+    - psychologie/fixation-objectifs
+    - psychologie/resilience-ennui-plateaux
+    priority: high
+  debutant_decouverte:
+    description: L'utilisateur débute, veut comprendre les bases
+    concepts:
+    - physiologie/systemes-energetiques
+    - planification/modeles-periodisation
+    - seances/endurance-fondamentale
+    - norvegienne/modele-polarise-80-20
+    - norvegienne/controlled-intensity
+    priority: medium
+  norvegienne_question:
+    description: L'utilisateur parle de la méthode norvégienne, d'entraînement polarisé 80/20, double seuil, ou s'inspire
+      du modèle scandinave
+    concepts:
+    - norvegienne/modele-polarise-80-20
+    - norvegienne/double-seuil-lactate
+    priority: high
+  courir_lentement:
+    description: L'utilisateur se demande pourquoi/comment courir lentement pour progresser, ou doute de l'utilité de l'endurance
+      fondamentale
+    concepts:
+    - norvegienne/modele-polarise-80-20
+    - norvegienne/controlled-intensity
+    - seances/endurance-fondamentale
+    priority: high
+  seuil_lactate_question:
+    description: L'utilisateur veut comprendre le travail au seuil, le lactate, ou les protocoles d'intervalles au seuil
+    concepts:
+    - norvegienne/double-seuil-lactate
+    - norvegienne/controlled-intensity
+    - seances/travail-seuil
+    priority: high
+  methode_norvegienne_pratique:
+    description: L'utilisateur veut appliquer la méthode norvégienne à son sport (plan concret, exemples de semaines)
+    concepts:
+    - norvegienne/application-pratique
+    - norvegienne/periodisation-norvegienne
+    - planification/modeles-periodisation
+    priority: medium
+domains:
+  physiologie:
+    name: Physiologie de l'effort
+    file: physiologie-effort.md
+    total_lines: 459
+    description: Fondements scientifiques du fonctionnement du corps à l'effort
+    concepts:
+    - id: physiologie/systemes-energetiques
+      name: Systèmes énergétiques (aérobie, anaérobie lactique, phosphocréatine)
+      lines:
+        layer1: 5-14
+        layer2: 15-40
+        layer3: 41-62
+      keywords:
+      - énergie
+      - ATP
+      - phosphocréatine
+      - anaérobie
+      - aérobie
+      - lactate
+      - acide lactique
+      - glycolyse
+      - mitochondries
+      - filière énergétique
+      - système énergétique
+      - endurance vs sprint
+      - combustion des graisses
+      - glycogène
+      triggers:
+      - Comment mon corps produit de l'énergie ?
+      - Pourquoi je brûle sur les sprints ?
+      - Différence entre aérobie et anaérobie
+      - C'est quoi le lactate ?
+      - Comment fonctionnent les muscles ?
+      connects_to:
+      - seances/endurance-fondamentale
       - seances/intervalles-haute-intensite
-      - seances/travail-seuil
+      - seances/travail-neuromusculaire
       - physiologie/vo2max-seuils
       - norvegienne/modele-polarise-80-20
+      applies_when: general | education | beginner onboarding
+      notes: Concept fondateur — souvent le premier à injecter pour les débutants
+    - id: physiologie/vo2max-seuils
+      name: VO2max, seuils ventilatoires (SV1/SV2) et FTP
+      lines:
+        layer1: 65-74
+        layer2: 75-105
+        layer3: 106-131
+      keywords:
+      - VO2max
+      - VO2 max
+      - seuil
+      - SV1
+      - SV2
+      - seuil ventilatoire
+      - FTP
+      - puissance
+      - PMA
+      - VMA
+      - capacité aérobie
+      - consommation d'oxygène
+      - test d'effort
+      - zone cardiaque
+      triggers:
+      - C'est quoi ma VO2max ?
+      - Comment calculer ma FTP ?
+      - Quelle est ma VMA ?
+      - Comment trouver mes seuils ?
+      - Comment interpréter un test d'effort ?
+      connects_to:
+      - seances/travail-seuil
+      - seances/intervalles-haute-intensite
+      - planification/gestion-charge
+      - physiologie/frequence-cardiaque-hrv
       - norvegienne/double-seuil-lactate
-    priority: medium
-
-  gerer_nutrition:
-    description: "Questions sur quoi manger, quand, combien"
+      - materiel/capteurs-de-puissance
+      - environnement/altitude
+      applies_when: testing | performance | intermediate onboarding
+    - id: physiologie/adaptations-entrainement
+      name: Adaptations physiologiques à l'entraînement (court terme / long terme)
+      lines:
+        layer1: 134-140
+        layer2: 141-161
+        layer3: 162-186
+      keywords:
+      - adaptation
+      - progression
+      - stagnation
+      - plateau
+      - mitochondries
+      - capillarisation
+      - volume d'éjection
+      - débit cardiaque
+      - fibres musculaires
+      - type I
+      - type II
+      - remodelage
+      - gains
+      - désentraînement
+      triggers:
+      - Pourquoi je ne progresse plus ?
+      - Combien de temps pour voir des résultats ?
+      - Comment le corps s'adapte ?
+      - Je stagne depuis des mois
+      connects_to:
+      - recuperation/surcompensation-surentrainement
+      - planification/modeles-periodisation
+      - psychologie/resilience-ennui-plateaux
+      applies_when: general | education | plateau
+    - id: physiologie/frequence-cardiaque-hrv
+      name: 'Fréquence cardiaque : zones, variabilité (HRV), dérive cardiaque'
+      lines:
+        layer1: 189-197
+        layer2: 198-223
+        layer3: 224-242
+      keywords:
+      - fréquence cardiaque
+      - FC
+      - cardio
+      - pulsations
+      - HRV
+      - variabilité cardiaque
+      - dérive cardiaque
+      - cardiac drift
+      - zones FC
+      - fréquence max
+      - FCM
+      - récupération cardiaque
+      triggers:
+      - Ma fréquence cardiaque est trop haute/basse
+      - Comment utiliser ma FC à l'entraînement ?
+      - C'est quoi la HRV ?
+      - Mon cœur bat bizarrement
+      - Pourquoi ma FC dérive pendant l'effort ?
+      connects_to:
+      - recuperation/outils-monitoring
+      - recuperation/surcompensation-surentrainement
+      - seances/endurance-fondamentale
+      - materiel/cardio-gps-montres
+      applies_when: monitoring | recovery | data-interpretation
+  planification:
+    name: Planification & périodisation
+    file: planification-periodisation.md
+    total_lines: 345
+    description: Comment structurer l'entraînement dans le temps pour progresser sans se blesser
     concepts:
+    - id: planification/modeles-periodisation
+      name: Modèles de périodisation
+      lines:
+        layer1: 7-12
+        layer2: 13-18
+        layer3: 19-24
+      keywords:
+      - périodisation
+      - planification
+      - programme
+      - plan d'entraînement
+      - organisation
+      - saison
+      - linéaire
+      - ondulatoire
+      - par blocs
+      - inversé
+      - Matveyev
+      - Issurin
+      - polarisé
+      - 80/20
+      - charge
+      triggers:
+      - Comment organiser ma saison ?
+      - Quel plan d'entraînement choisir ?
+      - Périodisation linéaire ou par blocs ?
+      - Comment progresser sur l'année ?
+      connects_to:
+      - planification/structure-temporelle
+      - planification/gestion-charge
+      - planification/tapering-pic-forme
+      - seances/endurance-fondamentale
+      - norvegienne/periodisation-norvegienne
+      applies_when: planning | season-start | new-goal
+    - id: planification/gestion-charge
+      name: Gestion de la charge (TRIMP, TSS, CTL/ATL/TSB)
+      lines:
+        layer1: 29-33
+        layer2: 35-39
+        layer3: 41-46
+      keywords:
+      - TRIMP
+      - TSS
+      - CTL
+      - ATL
+      - TSB
+      - charge d'entraînement
+      - training load
+      - acute load
+      - chronic load
+      - ACWR
+      - ratio charge
+      - Banister
+      - Coggan
+      - TrainingPeaks
+      - stress score
+      - fatigue
+      - forme
+      - fitness
+      triggers:
+      - Comment mesurer ma charge ?
+      - C'est quoi le TSS/CTL/TSB ?
+      - Suis-je en forme ou fatigué ?
+      - Mon TSB est à -30, c'est normal ?
+      - Comment interpréter la PMC ?
+      connects_to:
+      - recuperation/surcompensation-surentrainement
+      - recuperation/outils-monitoring
+      - planification/tapering-pic-forme
+      - norvegienne/controlled-intensity
+      - materiel/analyse-donnees-training
+      applies_when: monitoring | data-analysis | fatigue-check
+    - id: planification/structure-temporelle
+      name: 'Structure temporelle : microcycles, mésocycles, macrocycles'
+      lines:
+        layer1: 51-54
+        layer2: 56-60
+        layer3: 62-68
+      keywords:
+      - microcycle
+      - mésocycle
+      - macrocycle
+      - semaine d'entraînement
+      - bloc
+      - cycle
+      - '3:1'
+      - '2:1'
+      - semaine allégée
+      - semaine de récupération
+      - progression
+      triggers:
+      - Comment organiser ma semaine ?
+      - Combien de semaines avant une pause ?
+      - Fréquence des semaines allégées
+      - Structure d'un bloc d'entraînement
+      connects_to:
+      - planification/modeles-periodisation
+      - planification/tapering-pic-forme
+      - recuperation/surcompensation-surentrainement
+      applies_when: planning | weekly-organization
+    - id: planification/tapering-pic-forme
+      name: Tapering (affûtage) et pic de forme
+      lines:
+        layer1: 72-76
+        layer2: 77-82
+        layer3: 83-90
+      keywords:
+      - tapering
+      - affûtage
+      - pic de forme
+      - peak
+      - avant course
+      - avant compétition
+      - réduction charge
+      - fraîcheur
+      - surcompensation
+      triggers:
+      - Comment m'affûter avant une course ?
+      - Quand réduire l'entraînement ?
+      - Pic de forme pour une compétition
+      - Combien de temps de tapering ?
+      connects_to:
+      - planification/gestion-charge
+      - recuperation/surcompensation-surentrainement
+      applies_when: pre-competition | race-week | peaking
+    - id: planification/adaptations-amateurs
+      name: Adaptations et contraintes pour amateurs
+      lines:
+        layer1: 93-97
+        layer2: 98-102
+        layer3: 103-110
+      keywords:
+      - amateur
+      - contraintes
+      - travail
+      - famille
+      - temps limité
+      - emploi du temps
+      - vie pro
+      - conciliation
+      - minimum efficace
+      - dose minimale
+      triggers:
+      - Je n'ai que 3 séances par semaine
+      - Comment progresser avec peu de temps ?
+      - Entraînement et vie de famille
+      - Quel volume minimum pour progresser ?
+      connects_to:
+      - planification/modeles-periodisation
+      - seances/endurance-fondamentale
+      - seances/intervalles-haute-intensite
+      - materiel/choisir-son-equipement
+      - materiel/home-trainers
+      applies_when: planning | busy-lifestyle | time-constrained
+  seances:
+    name: Séances types par filière énergétique
+    file: seances-filieres.md
+    total_lines: 259
+    description: Bibliothèque de protocoles d'entraînement classés par intensité et filière
+    concepts:
+    - id: seances/endurance-fondamentale
+      name: Endurance fondamentale (base aérobie, Zone 2)
+      lines:
+        layer1: 7-10
+        layer2: 11-14
+        layer3: 15-19
+      keywords:
+      - endurance fondamentale
+      - zone 2
+      - Z2
+      - base aérobie
+      - sortie longue
+      - easy run
+      - footing
+      - endurance de base
+      - conversationnel
+      - lipoxmax
+      - fat max
+      - brûler les graisses
+      triggers:
+      - À quelle intensité faire ma sortie longue ?
+      - C'est quoi la zone 2 ?
+      - Pourquoi m'entraîner lentement ?
+      - Combien de temps en endurance fondamentale ?
+      - Zone 2 pour brûler des graisses
+      connects_to:
+      - physiologie/systemes-energetiques
+      - planification/modeles-periodisation
+      - physiologie/frequence-cardiaque-hrv
+      - norvegienne/modele-polarise-80-20
+      - populations/surpoids-obesite
+      - echauffement/retour-au-calme
+      applies_when: session-planning | training | base-building
+    - id: seances/travail-seuil
+      name: Tempo et travail au seuil (Sweet Spot, SV1, SV2, FTP)
+      lines:
+        layer1: 22-25
+        layer2: 26-29
+        layer3: 30-34
+      keywords:
+      - seuil
+      - threshold
+      - FTP
+      - sweet spot
+      - tempo
+      - SV1
+      - SV2
+      - allure spécifique
+      - PMA
+      - puissance au seuil
+      - rythme soutenu
+      triggers:
+      - Comment travailler mon seuil ?
+      - Qu'est-ce que le sweet spot ?
+      - Séance FTP typique
+      - Fractionné au seuil
+      - Quelle puissance au seuil ?
+      connects_to:
+      - physiologie/vo2max-seuils
+      - physiologie/systemes-energetiques
+      - planification/gestion-charge
+      - norvegienne/double-seuil-lactate
+      applies_when: session-planning | performance | threshold-training
+    - id: seances/intervalles-haute-intensite
+      name: Intervalles de haute intensité (VO2max, VMA, PMA, intervalles longs vs courts)
+      lines:
+        layer1: 37-40
+        layer2: 41-44
+        layer3: 45-49
+      keywords:
+      - HIIT
+      - intervalle
+      - fractionné
+      - VO2max
+      - VMA
+      - PMA
+      - 30/30
+      - 4x4
+      - haute intensité
+      - intensité max
+      - sprint
+      - intervalles longs
+      - intervalles courts
+      - travail lactique
+      triggers:
+      - Quel fractionné pour progresser ?
+      - HIIT ou endurance longue ?
+      - Séance VMA type
+      - 30/30 ou 4x4 ?
+      - Combien d'intervalles ?
+      connects_to:
+      - physiologie/vo2max-seuils
+      - physiologie/systemes-energetiques
+      - seances/travail-seuil
+      applies_when: session-planning | performance | intensity
+    - id: seances/travail-neuromusculaire
+      name: Travail neuromusculaire (force-vitesse, sprints courts, recrutement moteur)
+      lines:
+        layer1: 52-55
+        layer2: 56-59
+        layer3: 60-64
+      keywords:
+      - neuromusculaire
+      - sprint
+      - explosivité
+      - force-vitesse
+      - puissance max
+      - recrutement
+      - fibres rapides
+      - type II
+      - force
+      - gym
+      - musculation
+      - pliométrie
+      - starts
+      - départs
+      triggers:
+      - Comment travailler ma puissance ?
+      - Sprint en vélo/course
+      - Force pour l'endurance
+      - Musculation complémentaire
+      - Exercices de pliométrie
+      connects_to:
+      - physiologie/systemes-energetiques
+      - physiologie/adaptations-entrainement
+      - blessures/fitness-musculation
+      - entrainement-croise/renforcement-endurance
+      applies_when: session-planning | power | strength
+    - id: seances/recuperation-active
+      name: Récupération active
+      lines:
+        layer1: 67-70
+        layer2: 71-74
+        layer3: 75-79
+      keywords:
+      - récupération active
+      - décrassage
+      - sortie facile
+      - récup
+      - lendemain course
+      - jambes lourdes
+      - rouleau
+      - vélo facile
+      - récupération
+      - cool down
+      triggers:
+      - Faut-il sortir le lendemain d'une course ?
+      - Récupération active ou repos complet ?
+      - J'ai les jambes lourdes
+      - Décrassage après une course
+      connects_to:
+      - recuperation/surcompensation-surentrainement
+      - recuperation/nutrition-recuperation
+      - physiologie/adaptations-entrainement
+      - entrainement-croise/natation-cyclistes-coureurs
+      applies_when: post-session | recovery | heavy-legs
+  recuperation:
+    name: Récupération & adaptation
+    file: recuperation-adaptation.md
+    total_lines: 270
+    description: Mécanismes de récupération, sommeil, nutrition post-effort, monitoring
+    concepts:
+    - id: recuperation/sommeil
+      name: Sommeil
+      lines:
+        layer1: 7-11
+        layer2: 12-16
+        layer3: 17-23
+      keywords:
+      - sommeil
+      - dormir
+      - insomnie
+      - sieste
+      - réveil
+      - nuit
+      - endormissement
+      - qualité sommeil
+      - dette de sommeil
+      - routine coucher
+      - écran
+      - mélatonine
+      triggers:
+      - Je dors mal
+      - Combien d'heures de sommeil ?
+      - La sieste c'est utile ?
+      - Sommeil et récupération
+      - Insomnie avant une course
+      connects_to:
+      - recuperation/surcompensation-surentrainement
+      - recuperation/outils-monitoring
+      - psychologie/gestion-effort-rpe
+      - entrainement-croise/yoga-pilates
+      applies_when: daily | recovery | fatigue
+    - id: recuperation/nutrition-recuperation
+      name: Nutrition de récupération
+      lines:
+        layer1: 26-30
+        layer2: 31-35
+        layer3: 36-42
+      keywords:
+      - nutrition récupération
+      - fenêtre métabolique
+      - post-effort
+      - après entraînement
+      - glucides post
+      - protéines post
+      - recovery shake
+      - boisson récupération
+      - repas post-entraînement
+      triggers:
+      - Que manger après l'entraînement ?
+      - Fenêtre métabolique
+      - Quand prendre ma protéine ?
+      - Recovery shake maison
+      connects_to:
       - nutrition/glucides-timing
       - nutrition/proteines-besoins
       - nutrition/hydratation-electrolytes
-      - nutrition/periodisation-nutritionnelle
-      - recuperation/nutrition-recuperation
-    priority: medium
-
-  blessure_douleur:
-    description: "L'utilisateur signale une douleur ou une blessure"
-    concepts:
-      - blessures/cyclisme
-      - blessures/running
-      - blessures/fitness-musculation
-    priority: critical
-
-  sommeil_recuperation:
-    description: "Questions sur le sommeil, la récupération"
-    concepts:
+      applies_when: post-session | nutrition | recovery
+      note: RECOUVREMENT avec nutrition/proteines-besoins et nutrition/glucides-timing — injecter ensemble si pertinent
+    - id: recuperation/surcompensation-surentrainement
+      name: Surcompensation vs Surentraînement
+      lines:
+        layer1: 45-49
+        layer2: 50-54
+        layer3: 55-61
+      keywords:
+      - surcompensation
+      - surentraînement
+      - overtraining
+      - overreaching
+      - fatigue chronique
+      - baisse de performance
+      - régression
+      - trop d'entraînement
+      - syndrome surentraînement
+      - OTS
+      - burnout
+      - staleness
+      - épuisement
+      triggers:
+      - Suis-je surentraîné ?
+      - Je ne récupère plus
+      - Performance en baisse
+      - Fatigue qui ne passe pas
+      - Comment marche la surcompensation ?
+      connects_to:
       - recuperation/sommeil
       - recuperation/outils-monitoring
+      - planification/gestion-charge
+      - psychologie/resilience-ennui-plateaux
+      - norvegienne/controlled-intensity
+      - populations/seniors-50-plus
+      - populations/reprise-apres-pause
+      applies_when: fatigue | monitoring | alarm
+    - id: recuperation/outils-monitoring
+      name: Outils de monitoring
+      lines:
+        layer1: 64-68
+        layer2: 69-73
+        layer3: 74-80
+      keywords:
+      - monitoring
+      - suivi
+      - tracker
+      - montre
+      - capteur
+      - HRV
+      - RPE
+      - bien-être
+      - fatigue matinale
+      - questionnaire
+      - charge
+      - readiness
+      - recovery score
+      triggers:
+      - Comment suivre ma récupération ?
+      - Quels capteurs utiliser ?
+      - HRV le matin
+      - Comment savoir si je suis fatigué ?
+      - Application pour suivre la forme
+      connects_to:
       - physiologie/frequence-cardiaque-hrv
-    priority: medium
-
-  motivation_mental:
-    description: "Baisse de motivation, blocage mental, difficulté à s'engager"
+      - recuperation/surcompensation-surentrainement
+      - planification/gestion-charge
+      applies_when: monitoring | daily | data-driven
+  blessures:
+    name: Blessures & prévention
+    file: blessures-prevention.md
+    total_lines: 312
+    description: Blessures spécifiques par sport, prévention, retour au sport
     concepts:
-      - psychologie/motivation-autodetermination
+    - id: blessures/cyclisme
+      name: Cyclisme — blessures et prévention
+      lines:
+        layer1: 5-10
+        layer2: 11-23
+        layer3: 24-42
+      keywords:
+      - cyclisme
+      - vélo
+      - genou cycliste
+      - syndrome fémoro-patellaire
+      - tendinite
+      - rotule
+      - selle
+      - réglages vélo
+      - position vélo
+      - lombalgie vélo
+      - cervicalgie vélo
+      - douleur cou cycliste
+      - braquet
+      - cadence
+      triggers:
+      - Mal au genou à vélo
+      - Douleur position vélo
+      - Tendinite cycliste
+      - Réglage selle douleur
+      - Mal au dos en cyclisme
+      connects_to:
+      - blessures/running
+      - blessures/fitness-musculation
+      - populations/seniors-50-plus
+      - planification/gestion-charge
+      - physiologie/adaptations-entrainement
+      - materiel/choisir-son-equipement
+      applies_when: pain | injury | cycling
+      priority: critical
+    - id: blessures/running
+      name: Running — blessures et prévention
+      lines:
+        layer1: 45-56
+        layer2: 57-71
+        layer3: 72-92
+      keywords:
+      - running
+      - course à pied
+      - running blessure
+      - périostite
+      - syndrome essuie-glace
+      - aponévrose plantaire
+      - tendinite achille
+      - genou coureur
+      - foulée
+      - chaussures running
+      - drop
+      - minimaliste
+      - volume course
+      triggers:
+      - Mal au genou en courant
+      - Douleur tibia course
+      - Tendinite Achille
+      - Périostite
+      - Quelles chaussures running ?
+      connects_to:
+      - blessures/cyclisme
+      - planification/gestion-charge
+      - populations/jeunes-athletes
+      applies_when: pain | injury | running
+      priority: critical
+    - id: blessures/fitness-musculation
+      name: Fitness / Musculation — blessures et prévention
+      lines:
+        layer1: 95-100
+        layer2: 101-110
+        layer3: 111-124
+      keywords:
+      - musculation
+      - fitness
+      - salle
+      - squat
+      - deadlift
+      - développé
+      - blessure muscu
+      - dos
+      - épaules
+      - lombalgie
+      - hernie
+      - tendinite musculation
+      - haltérophilie
+      - renforcement
+      triggers:
+      - Mal au dos en musculation
+      - Blessure squat
+      - Prévention blessures salle
+      - Douleur épaule développé
+      connects_to:
+      - seances/travail-neuromusculaire
+      - planification/gestion-charge
+      applies_when: pain | injury | gym
+      priority: critical
+  nutrition:
+    name: Nutrition sportive
+    file: nutrition-sportive.md
+    total_lines: 420
+    description: Stratégies nutritionnelles pour la performance et la santé
+    concepts:
+    - id: nutrition/periodisation-nutritionnelle
+      name: Périodisation nutritionnelle — « Fuel for the work required »
+      lines:
+        layer1: 5-10
+        layer2: 11-26
+        layer3: 27-44
+      keywords:
+      - périodisation nutritionnelle
+      - fuel for work
+      - adapter alimentation
+      - nutrition entraînement
+      - charge glucidique
+      - low carb
+      - high carb
+      - train low
+      - sleep low
+      - keto
+      - cétogène
+      triggers:
+      - Adapter mon alimentation à l'entraînement
+      - Manger différemment selon les séances
+      - Low carb pour le sport
+      - Sleep low
+      - Périodisation glucidique
+      connects_to:
+      - nutrition/glucides-timing
+      - planification/modeles-periodisation
+      - physiologie/systemes-energetiques
+      - populations/femmes-athletes
+      applies_when: planning | nutrition | advanced
+    - id: nutrition/glucides-timing
+      name: 'Glucides : timing, cinétique et quantités cibles'
+      lines:
+        layer1: 47-52
+        layer2: 53-64
+        layer3: 65-84
+      keywords:
+      - glucides
+      - sucres
+      - pâtes
+      - riz
+      - gâteau
+      - energy
+      - avant effort
+      - pendant effort
+      - ravito
+      - gels
+      - boisson énergétique
+      - maltodextrine
+      - fructose
+      - glycogène
+      - carbo loading
+      - charge glucidique
+      triggers:
+      - Que manger avant une sortie ?
+      - Combien de glucides pendant l'effort ?
+      - Gels énergétiques
+      - Carbo loading avant course
+      - Que manger pendant un marathon ?
+      connects_to:
+      - nutrition/periodisation-nutritionnelle
+      - recuperation/nutrition-recuperation
+      - seances/endurance-fondamentale
+      - nutrition/supplements-preuve-a
+      applies_when: pre-workout | during-workout | nutrition
+    - id: nutrition/proteines-besoins
+      name: 'Protéines : besoins, MPS, timing'
+      lines:
+        layer1: 87-92
+        layer2: 93-106
+        layer3: 107-123
+      keywords:
+      - protéines
+      - whey
+      - MPS
+      - synthèse protéique
+      - récupération musculaire
+      - viande
+      - oeuf
+      - poulet
+      - acides aminés
+      - leucine
+      - BCAA
+      - EAA
+      - post-training
+      - shaker
+      - dose protéines
+      triggers:
+      - Combien de protéines par jour ?
+      - Whey oui ou non ?
+      - Quand prendre sa whey ?
+      - Protéines pour la récupération
+      - BCAA utiles ?
+      connects_to:
+      - recuperation/nutrition-recuperation
+      - nutrition/glucides-timing
+      - physiologie/adaptations-entrainement
+      applies_when: post-workout | daily | nutrition
+    - id: nutrition/hydratation-electrolytes
+      name: Hydratation et électrolytes
+      lines:
+        layer1: 126-131
+        layer2: 132-144
+        layer3: 145-171
+      keywords:
+      - hydratation
+      - eau
+      - boire
+      - déshydratation
+      - soif
+      - électrolytes
+      - sodium
+      - sel
+      - crampes
+      - transpiration
+      - boisson isotonique
+      - chaleur
+      - canicule
+      triggers:
+      - Combien boire à l'entraînement ?
+      - Crampes et hydratation
+      - Boisson isotonique
+      - Déshydratation symptômes
+      - Boire chaud ou froid ?
+      connects_to:
+      - recuperation/nutrition-recuperation
+      - physiologie/adaptations-entrainement
+      - populations/surpoids-obesite
+      - environnement/chaleur
+      applies_when: during-workout | pre-workout | hot-weather
+    - id: nutrition/supplements-preuve-a
+      name: 'Suppléments : niveau de preuve A'
+      lines:
+        layer1: 174-179
+        layer2: 180-193
+        layer3: 194-206
+      keywords:
+      - suppléments
+      - compléments
+      - créatine
+      - caféine
+      - beta-alanine
+      - nitrate
+      - betterave
+      - bicarbonate
+      - preuve scientifique
+      - dopage
+      - AIS
+      - ISSN
+      - ergogénique
+      triggers:
+      - Quels suppléments sont vraiment utiles ?
+      - Créatine pour l'endurance
+      - Caféine avant le sport
+      - Beta-alanine
+      - Le jus de betterave
+      connects_to:
+      - nutrition/glucides-timing
+      - physiologie/systemes-energetiques
+      applies_when: nutrition | supplements | advanced
+  psychologie:
+    name: Psychologie & mental
+    file: psychologie-mental.md
+    total_lines: 328
+    description: Aspects psychologiques de la performance et de l'adhésion à l'entraînement
+    concepts:
+    - id: psychologie/motivation-autodetermination
+      name: Motivation (Théorie de l'autodétermination)
+      lines:
+        layer1: 5-14
+        layer2: 16-25
+        layer3: 27-33
+      keywords:
+      - motivation
+      - autodétermination
+      - motivation intrinsèque
+      - motivation extrinsèque
+      - autonomie
+      - compétence
+      - appartenance
+      - pourquoi s'entraîner
+      - perte motivation
+      - démotivation
+      - plaisir
+      - récompense
+      - SDT
+      - BRSQ
+      - SMS-28
+      triggers:
+      - Je n'ai plus de motivation
+      - Pourquoi je m'entraîne ?
+      - Comment rester motivé ?
+      - Perte d'envie
+      - Je me force à m'entraîner
+      connects_to:
       - psychologie/fixation-objectifs
       - psychologie/resilience-ennui-plateaux
-    priority: high
-
-  debutant_decouverte:
-    description: "L'utilisateur débute, veut comprendre les bases"
-    concepts:
-      - physiologie/systemes-energetiques
+      - psychologie/preparation-mentale
       - planification/modeles-periodisation
-      - seances/endurance-fondamentale
-      - norvegienne/modele-polarise-80-20
-      - norvegienne/controlled-intensity
-    priority: medium
-
-  norvegienne_question:
-    description: "L'utilisateur parle de la méthode norvégienne, d'entraînement polarisé 80/20, double seuil, ou s'inspire du modèle scandinave"
-    concepts:
-      - norvegienne/modele-polarise-80-20
-      - norvegienne/double-seuil-lactate
-    priority: high
-
-  courir_lentement:
-    description: "L'utilisateur se demande pourquoi/comment courir lentement pour progresser, ou doute de l'utilité de l'endurance fondamentale"
-    concepts:
-      - norvegienne/modele-polarise-80-20
-      - norvegienne/controlled-intensity
-      - seances/endurance-fondamentale
-    priority: high
-
-  seuil_lactate_question:
-    description: "L'utilisateur veut comprendre le travail au seuil, le lactate, ou les protocoles d'intervalles au seuil"
-    concepts:
-      - norvegienne/double-seuil-lactate
-      - norvegienne/controlled-intensity
-      - seances/travail-seuil
-    priority: high
-
-  methode_norvegienne_pratique:
-    description: "L'utilisateur veut appliquer la méthode norvégienne à son sport (plan concret, exemples de semaines)"
-    concepts:
-      - norvegienne/application-pratique
-      - norvegienne/periodisation-norvegienne
+      - recuperation/surcompensation-surentrainement
+      applies_when: daily | motivation | onboarding
+    - id: psychologie/gestion-effort-rpe
+      name: Gestion de la douleur, de l'effort et RPE
+      lines:
+        layer1: 38-44
+        layer2: 46-53
+        layer3: 55-61
+      keywords:
+      - RPE
+      - perception effort
+      - douleur
+      - gérer douleur
+      - inconfort
+      - échelle Borg
+      - association
+      - dissociation
+      - distraction
+      - mental endurance
+      - tenir effort
+      - gouverneur central
+      - Noakes
+      - Marcora
+      - psychobiologique
+      triggers:
+      - Comment mieux gérer la douleur ?
+      - Mon RPE monte trop vite
+      - Je n'arrive pas à tenir l'effort
+      - Stratégies mentales pour tenir
+      - C'est dans la tête ou les jambes ?
+      connects_to:
+      - psychologie/motivation-autodetermination
+      - psychologie/preparation-mentale
+      - recuperation/surcompensation-surentrainement
+      applies_when: during-workout | intensity | mental-toughness
+    - id: psychologie/fixation-objectifs
+      name: Fixation d'objectifs (SMART, processus vs résultat)
+      lines:
+        layer1: 66-73
+        layer2: 74-81
+        layer3: 82-88
+      keywords:
+      - objectif
+      - SMART
+      - processus
+      - résultat
+      - but
+      - goal setting
+      - cible
+      - progression
+      - mesurer progrès
+      - motivation objectif
+      triggers:
+      - Comment fixer un objectif ?
+      - Méthode SMART
+      - Objectif de processus vs résultat
+      - Je n'atteins pas mes objectifs
+      - Quel objectif pour cette saison ?
+      connects_to:
+      - psychologie/motivation-autodetermination
       - planification/modeles-periodisation
-    priority: medium
-
-# =============================================================================
-# INDEX PRINCIPAL — Tous les concepts, classés par domaine
-# =============================================================================
-domains:
-
-  # ---------------------------------------------------------------------------
-  # DOMAINE 1: PHYSIOLOGIE DE L'EFFORT
-  # Fichier: physiologie-effort.md (459 lignes)
-  # ---------------------------------------------------------------------------
-  physiologie:
-    name: "Physiologie de l'effort"
-    file: "physiologie-effort.md"
-    total_lines: 459
-    description: "Fondements scientifiques du fonctionnement du corps à l'effort"
-    concepts:
-
-      - id: "physiologie/systemes-energetiques"
-        name: "Systèmes énergétiques (aérobie, anaérobie lactique, phosphocréatine)"
-        lines: {layer1: "5-14", layer2: "15-40", layer3: "41-62"}
-        keywords:
-          - énergie
-          - ATP
-          - phosphocréatine
-          - anaérobie
-          - aérobie
-          - lactate
-          - acide lactique
-          - glycolyse
-          - mitochondries
-          - filière énergétique
-          - système énergétique
-          - endurance vs sprint
-          - combustion des graisses
-          - glycogène
-        triggers:
-          - "Comment mon corps produit de l'énergie ?"
-          - "Pourquoi je brûle sur les sprints ?"
-          - "Différence entre aérobie et anaérobie"
-          - "C'est quoi le lactate ?"
-          - "Comment fonctionnent les muscles ?"
-        connects_to:
-          - "seances/endurance-fondamentale"
-          - "seances/intervalles-haute-intensite"
-          - "seances/travail-neuromusculaire"
-          - "physiologie/vo2max-seuils"
-          - "norvegienne/modele-polarise-80-20"
-        applies_when: "general | education | beginner onboarding"
-        notes: "Concept fondateur — souvent le premier à injecter pour les débutants"
-
-      - id: "physiologie/vo2max-seuils"
-        name: "VO2max, seuils ventilatoires (SV1/SV2) et FTP"
-        lines: {layer1: "65-74", layer2: "75-105", layer3: "106-131"}
-        keywords:
-          - VO2max
-          - VO2 max
-          - seuil
-          - SV1
-          - SV2
-          - seuil ventilatoire
-          - FTP
-          - puissance
-          - PMA
-          - VMA
-          - capacité aérobie
-          - consommation d'oxygène
-          - test d'effort
-          - zone cardiaque
-        triggers:
-          - "C'est quoi ma VO2max ?"
-          - "Comment calculer ma FTP ?"
-          - "Quelle est ma VMA ?"
-          - "Comment trouver mes seuils ?"
-          - "Comment interpréter un test d'effort ?"
-        connects_to:
-          - "seances/travail-seuil"
-          - "seances/intervalles-haute-intensite"
-          - "planification/gestion-charge"
-          - "physiologie/frequence-cardiaque-hrv"
-          - "norvegienne/double-seuil-lactate"
-        applies_when: "testing | performance | intermediate onboarding"
-
-      - id: "physiologie/adaptations-entrainement"
-        name: "Adaptations physiologiques à l'entraînement (court terme / long terme)"
-        lines: {layer1: "134-140", layer2: "141-161", layer3: "162-186"}
-        keywords:
-          - adaptation
-          - progression
-          - stagnation
-          - plateau
-          - mitochondries
-          - capillarisation
-          - volume d'éjection
-          - débit cardiaque
-          - fibres musculaires
-          - type I
-          - type II
-          - remodelage
-          - gains
-          - désentraînement
-        triggers:
-          - "Pourquoi je ne progresse plus ?"
-          - "Combien de temps pour voir des résultats ?"
-          - "Comment le corps s'adapte ?"
-          - "Je stagne depuis des mois"
-        connects_to:
-          - "recuperation/surcompensation-surentrainement"
-          - "planification/modeles-periodisation"
-          - "psychologie/resilience-ennui-plateaux"
-        applies_when: "general | education | plateau"
-
-      - id: "physiologie/frequence-cardiaque-hrv"
-        name: "Fréquence cardiaque : zones, variabilité (HRV), dérive cardiaque"
-        lines: {layer1: "189-197", layer2: "198-223", layer3: "224-242"}
-        keywords:
-          - fréquence cardiaque
-          - FC
-          - cardio
-          - pulsations
-          - HRV
-          - variabilité cardiaque
-          - dérive cardiaque
-          - cardiac drift
-          - zones FC
-          - fréquence max
-          - FCM
-          - récupération cardiaque
-        triggers:
-          - "Ma fréquence cardiaque est trop haute/basse"
-          - "Comment utiliser ma FC à l'entraînement ?"
-          - "C'est quoi la HRV ?"
-          - "Mon cœur bat bizarrement"
-          - "Pourquoi ma FC dérive pendant l'effort ?"
-        connects_to:
-          - "recuperation/outils-monitoring"
-          - "recuperation/surcompensation-surentrainement"
-          - "seances/endurance-fondamentale"
-        applies_when: "monitoring | recovery | data-interpretation"
-
-  # ---------------------------------------------------------------------------
-  # DOMAINE 2: PLANIFICATION & PÉRIODISATION
-  # Fichier: planification-periodisation.md (345 lignes)
-  # ---------------------------------------------------------------------------
-  planification:
-    name: "Planification & périodisation"
-    file: "planification-periodisation.md"
-    total_lines: 345
-    description: "Comment structurer l'entraînement dans le temps pour progresser sans se blesser"
-    concepts:
-
-      - id: "planification/modeles-periodisation"
-        name: "Modèles de périodisation"
-        lines: {layer1: "7-12", layer2: "13-18", layer3: "19-24"}
-        keywords:
-          - périodisation
-          - planification
-          - programme
-          - plan d'entraînement
-          - organisation
-          - saison
-          - linéaire
-          - ondulatoire
-          - par blocs
-          - inversé
-          - Matveyev
-          - Issurin
-          - polarisé
-          - 80/20
-          - charge
-        triggers:
-          - "Comment organiser ma saison ?"
-          - "Quel plan d'entraînement choisir ?"
-          - "Périodisation linéaire ou par blocs ?"
-          - "Comment progresser sur l'année ?"
-        connects_to:
-          - "planification/structure-temporelle"
-          - "planification/gestion-charge"
-          - "planification/tapering-pic-forme"
-          - "seances/endurance-fondamentale"
-          - "norvegienne/periodisation-norvegienne"
-        applies_when: "planning | season-start | new-goal"
-
-      - id: "planification/gestion-charge"
-        name: "Gestion de la charge (TRIMP, TSS, CTL/ATL/TSB)"
-        lines: {layer1: "29-33", layer2: "35-39", layer3: "41-46"}
-        keywords:
-          - TRIMP
-          - TSS
-          - CTL
-          - ATL
-          - TSB
-          - charge d'entraînement
-          - training load
-          - acute load
-          - chronic load
-          - ACWR
-          - ratio charge
-          - Banister
-          - Coggan
-          - TrainingPeaks
-          - stress score
-          - fatigue
-          - forme
-          - fitness
-        triggers:
-          - "Comment mesurer ma charge ?"
-          - "C'est quoi le TSS/CTL/TSB ?"
-          - "Suis-je en forme ou fatigué ?"
-          - "Mon TSB est à -30, c'est normal ?"
-          - "Comment interpréter la PMC ?"
-        connects_to:
-          - "recuperation/surcompensation-surentrainement"
-          - "recuperation/outils-monitoring"
-          - "planification/tapering-pic-forme"
-          - "norvegienne/controlled-intensity"
-        applies_when: "monitoring | data-analysis | fatigue-check"
-
-      - id: "planification/structure-temporelle"
-        name: "Structure temporelle : microcycles, mésocycles, macrocycles"
-        lines: {layer1: "51-54", layer2: "56-60", layer3: "62-68"}
-        keywords:
-          - microcycle
-          - mésocycle
-          - macrocycle
-          - semaine d'entraînement
-          - bloc
-          - cycle
-          - "3:1"
-          - "2:1"
-          - semaine allégée
-          - semaine de récupération
-          - progression
-        triggers:
-          - "Comment organiser ma semaine ?"
-          - "Combien de semaines avant une pause ?"
-          - "Fréquence des semaines allégées"
-          - "Structure d'un bloc d'entraînement"
-        connects_to:
-          - "planification/modeles-periodisation"
-          - "planification/tapering-pic-forme"
-          - "recuperation/surcompensation-surentrainement"
-        applies_when: "planning | weekly-organization"
-
-      - id: "planification/tapering-pic-forme"
-        name: "Tapering (affûtage) et pic de forme"
-        lines: {layer1: "72-76", layer2: "77-82", layer3: "83-90"}
-        keywords:
-          - tapering
-          - affûtage
-          - pic de forme
-          - peak
-          - avant course
-          - avant compétition
-          - réduction charge
-          - fraîcheur
-          - surcompensation
-        triggers:
-          - "Comment m'affûter avant une course ?"
-          - "Quand réduire l'entraînement ?"
-          - "Pic de forme pour une compétition"
-          - "Combien de temps de tapering ?"
-        connects_to:
-          - "planification/gestion-charge"
-          - "recuperation/surcompensation-surentrainement"
-        applies_when: "pre-competition | race-week | peaking"
-
-      - id: "planification/adaptations-amateurs"
-        name: "Adaptations et contraintes pour amateurs"
-        lines: {layer1: "93-97", layer2: "98-102", layer3: "103-110"}
-        keywords:
-          - amateur
-          - contraintes
-          - travail
-          - famille
-          - temps limité
-          - emploi du temps
-          - vie pro
-          - conciliation
-          - minimum efficace
-          - dose minimale
-        triggers:
-          - "Je n'ai que 3 séances par semaine"
-          - "Comment progresser avec peu de temps ?"
-          - "Entraînement et vie de famille"
-          - "Quel volume minimum pour progresser ?"
-        connects_to:
-          - "planification/modeles-periodisation"
-          - "seances/endurance-fondamentale"
-          - "seances/intervalles-haute-intensite"
-        applies_when: "planning | busy-lifestyle | time-constrained"
-
-  # ---------------------------------------------------------------------------
-  # DOMAINE 3: SÉANCES TYPES PAR FILIÈRE ÉNERGÉTIQUE
-  # Fichier: seances-filieres.md (259 lignes)
-  # ---------------------------------------------------------------------------
-  seances:
-    name: "Séances types par filière énergétique"
-    file: "seances-filieres.md"
-    total_lines: 259
-    description: "Bibliothèque de protocoles d'entraînement classés par intensité et filière"
-    concepts:
-
-      - id: "seances/endurance-fondamentale"
-        name: "Endurance fondamentale (base aérobie, Zone 2)"
-        lines: {layer1: "7-10", layer2: "11-14", layer3: "15-19"}
-        keywords:
-          - endurance fondamentale
-          - zone 2
-          - Z2
-          - base aérobie
-          - sortie longue
-          - easy run
-          - footing
-          - endurance de base
-          - conversationnel
-          - lipoxmax
-          - fat max
-          - brûler les graisses
-        triggers:
-          - "À quelle intensité faire ma sortie longue ?"
-          - "C'est quoi la zone 2 ?"
-          - "Pourquoi m'entraîner lentement ?"
-          - "Combien de temps en endurance fondamentale ?"
-          - "Zone 2 pour brûler des graisses"
-        connects_to:
-          - "physiologie/systemes-energetiques"
-          - "planification/modeles-periodisation"
-          - "physiologie/frequence-cardiaque-hrv"
-          - "norvegienne/modele-polarise-80-20"
-        applies_when: "session-planning | training | base-building"
-
-      - id: "seances/travail-seuil"
-        name: "Tempo et travail au seuil (Sweet Spot, SV1, SV2, FTP)"
-        lines: {layer1: "22-25", layer2: "26-29", layer3: "30-34"}
-        keywords:
-          - seuil
-          - threshold
-          - FTP
-          - sweet spot
-          - tempo
-          - SV1
-          - SV2
-          - allure spécifique
-          - PMA
-          - puissance au seuil
-          - rythme soutenu
-        triggers:
-          - "Comment travailler mon seuil ?"
-          - "Qu'est-ce que le sweet spot ?"
-          - "Séance FTP typique"
-          - "Fractionné au seuil"
-          - "Quelle puissance au seuil ?"
-        connects_to:
-          - "physiologie/vo2max-seuils"
-          - "physiologie/systemes-energetiques"
-          - "planification/gestion-charge"
-          - "norvegienne/double-seuil-lactate"
-        applies_when: "session-planning | performance | threshold-training"
-
-      - id: "seances/intervalles-haute-intensite"
-        name: "Intervalles de haute intensité (VO2max, VMA, PMA, intervalles longs vs courts)"
-        lines: {layer1: "37-40", layer2: "41-44", layer3: "45-49"}
-        keywords:
-          - HIIT
-          - intervalle
-          - fractionné
-          - VO2max
-          - VMA
-          - PMA
-          - 30/30
-          - 4x4
-          - haute intensité
-          - intensité max
-          - sprint
-          - intervalles longs
-          - intervalles courts
-          - travail lactique
-        triggers:
-          - "Quel fractionné pour progresser ?"
-          - "HIIT ou endurance longue ?"
-          - "Séance VMA type"
-          - "30/30 ou 4x4 ?"
-          - "Combien d'intervalles ?"
-        connects_to:
-          - "physiologie/vo2max-seuils"
-          - "physiologie/systemes-energetiques"
-          - "seances/travail-seuil"
-        applies_when: "session-planning | performance | intensity"
-
-      - id: "seances/travail-neuromusculaire"
-        name: "Travail neuromusculaire (force-vitesse, sprints courts, recrutement moteur)"
-        lines: {layer1: "52-55", layer2: "56-59", layer3: "60-64"}
-        keywords:
-          - neuromusculaire
-          - sprint
-          - explosivité
-          - force-vitesse
-          - puissance max
-          - recrutement
-          - fibres rapides
-          - type II
-          - force
-          - gym
-          - musculation
-          - pliométrie
-          - starts
-          - départs
-        triggers:
-          - "Comment travailler ma puissance ?"
-          - "Sprint en vélo/course"
-          - "Force pour l'endurance"
-          - "Musculation complémentaire"
-          - "Exercices de pliométrie"
-        connects_to:
-          - "physiologie/systemes-energetiques"
-          - "physiologie/adaptations-entrainement"
-          - "blessures/fitness-musculation"
-        applies_when: "session-planning | power | strength"
-
-      - id: "seances/recuperation-active"
-        name: "Récupération active"
-        lines: {layer1: "67-70", layer2: "71-74", layer3: "75-79"}
-        keywords:
-          - récupération active
-          - décrassage
-          - sortie facile
-          - récup
-          - lendemain course
-          - jambes lourdes
-          - rouleau
-          - vélo facile
-          - récupération
-          - cool down
-        triggers:
-          - "Faut-il sortir le lendemain d'une course ?"
-          - "Récupération active ou repos complet ?"
-          - "J'ai les jambes lourdes"
-          - "Décrassage après une course"
-        connects_to:
-          - "recuperation/surcompensation-surentrainement"
-          - "recuperation/nutrition-recuperation"
-          - "physiologie/adaptations-entrainement"
-        applies_when: "post-session | recovery | heavy-legs"
-
-  # ---------------------------------------------------------------------------
-  # DOMAINE 4: RÉCUPÉRATION & ADAPTATION
-  # Fichier: recuperation-adaptation.md (270 lignes)
-  # ---------------------------------------------------------------------------
-  recuperation:
-    name: "Récupération & adaptation"
-    file: "recuperation-adaptation.md"
-    total_lines: 270
-    description: "Mécanismes de récupération, sommeil, nutrition post-effort, monitoring"
-    concepts:
-
-      - id: "recuperation/sommeil"
-        name: "Sommeil"
-        lines: {layer1: "7-11", layer2: "12-16", layer3: "17-23"}
-        keywords:
-          - sommeil
-          - dormir
-          - insomnie
-          - sieste
-          - réveil
-          - nuit
-          - endormissement
-          - qualité sommeil
-          - dette de sommeil
-          - routine coucher
-          - écran
-          - mélatonine
-        triggers:
-          - "Je dors mal"
-          - "Combien d'heures de sommeil ?"
-          - "La sieste c'est utile ?"
-          - "Sommeil et récupération"
-          - "Insomnie avant une course"
-        connects_to:
-          - "recuperation/surcompensation-surentrainement"
-          - "recuperation/outils-monitoring"
-          - "psychologie/gestion-effort-rpe"
-        applies_when: "daily | recovery | fatigue"
-
-      - id: "recuperation/nutrition-recuperation"
-        name: "Nutrition de récupération"
-        lines: {layer1: "26-30", layer2: "31-35", layer3: "36-42"}
-        keywords:
-          - nutrition récupération
-          - fenêtre métabolique
-          - post-effort
-          - après entraînement
-          - glucides post
-          - protéines post
-          - recovery shake
-          - boisson récupération
-          - repas post-entraînement
-        triggers:
-          - "Que manger après l'entraînement ?"
-          - "Fenêtre métabolique"
-          - "Quand prendre ma protéine ?"
-          - "Recovery shake maison"
-        connects_to:
-          - "nutrition/glucides-timing"
-          - "nutrition/proteines-besoins"
-          - "nutrition/hydratation-electrolytes"
-        applies_when: "post-session | nutrition | recovery"
-        note: "RECOUVREMENT avec nutrition/proteines-besoins et nutrition/glucides-timing — injecter ensemble si pertinent"
-
-      - id: "recuperation/surcompensation-surentrainement"
-        name: "Surcompensation vs Surentraînement"
-        lines: {layer1: "45-49", layer2: "50-54", layer3: "55-61"}
-        keywords:
-          - surcompensation
-          - surentraînement
-          - overtraining
-          - overreaching
-          - fatigue chronique
-          - baisse de performance
-          - régression
-          - trop d'entraînement
-          - syndrome surentraînement
-          - OTS
-          - burnout
-          - staleness
-          - épuisement
-        triggers:
-          - "Suis-je surentraîné ?"
-          - "Je ne récupère plus"
-          - "Performance en baisse"
-          - "Fatigue qui ne passe pas"
-          - "Comment marche la surcompensation ?"
-        connects_to:
-          - "recuperation/sommeil"
-          - "recuperation/outils-monitoring"
-          - "planification/gestion-charge"
-          - "psychologie/resilience-ennui-plateaux"
-          - "norvegienne/controlled-intensity"
-        applies_when: "fatigue | monitoring | alarm"
-
-      - id: "recuperation/outils-monitoring"
-        name: "Outils de monitoring"
-        lines: {layer1: "64-68", layer2: "69-73", layer3: "74-80"}
-        keywords:
-          - monitoring
-          - suivi
-          - tracker
-          - montre
-          - capteur
-          - HRV
-          - RPE
-          - bien-être
-          - fatigue matinale
-          - questionnaire
-          - charge
-          - readiness
-          - recovery score
-        triggers:
-          - "Comment suivre ma récupération ?"
-          - "Quels capteurs utiliser ?"
-          - "HRV le matin"
-          - "Comment savoir si je suis fatigué ?"
-          - "Application pour suivre la forme"
-        connects_to:
-          - "physiologie/frequence-cardiaque-hrv"
-          - "recuperation/surcompensation-surentrainement"
-          - "planification/gestion-charge"
-        applies_when: "monitoring | daily | data-driven"
-
-  # ---------------------------------------------------------------------------
-  # DOMAINE 5: BLESSURES & PRÉVENTION
-  # Fichier: blessures-prevention.md (312 lignes)
-  # ---------------------------------------------------------------------------
-  blessures:
-    name: "Blessures & prévention"
-    file: "blessures-prevention.md"
-    total_lines: 312
-    description: "Blessures spécifiques par sport, prévention, retour au sport"
-    concepts:
-
-      - id: "blessures/cyclisme"
-        name: "Cyclisme — blessures et prévention"
-        lines: {layer1: "5-10", layer2: "11-23", layer3: "24-42"}
-        keywords:
-          - cyclisme
-          - vélo
-          - genou cycliste
-          - syndrome fémoro-patellaire
-          - tendinite
-          - rotule
-          - selle
-          - réglages vélo
-          - position vélo
-          - lombalgie vélo
-          - cervicalgie vélo
-          - douleur cou cycliste
-          - braquet
-          - cadence
-        triggers:
-          - "Mal au genou à vélo"
-          - "Douleur position vélo"
-          - "Tendinite cycliste"
-          - "Réglage selle douleur"
-          - "Mal au dos en cyclisme"
-        connects_to:
-          - "blessures/running"
-          - "blessures/fitness-musculation"
-        applies_when: "pain | injury | cycling"
-        priority: "critical"
-
-      - id: "blessures/running"
-        name: "Running — blessures et prévention"
-        lines: {layer1: "45-56", layer2: "57-71", layer3: "72-92"}
-        keywords:
-          - running
-          - course à pied
-          - running blessure
-          - périostite
-          - syndrome essuie-glace
-          - aponévrose plantaire
-          - tendinite achille
-          - genou coureur
-          - foulée
-          - chaussures running
-          - drop
-          - minimaliste
-          - volume course
-        triggers:
-          - "Mal au genou en courant"
-          - "Douleur tibia course"
-          - "Tendinite Achille"
-          - "Périostite"
-          - "Quelles chaussures running ?"
-        connects_to:
-          - "blessures/cyclisme"
-          - "planification/gestion-charge"
-        applies_when: "pain | injury | running"
-        priority: "critical"
-
-      - id: "blessures/fitness-musculation"
-        name: "Fitness / Musculation — blessures et prévention"
-        lines: {layer1: "95-100", layer2: "101-110", layer3: "111-124"}
-        keywords:
-          - musculation
-          - fitness
-          - salle
-          - squat
-          - deadlift
-          - développé
-          - blessure muscu
-          - dos
-          - épaules
-          - lombalgie
-          - hernie
-          - tendinite musculation
-          - haltérophilie
-          - renforcement
-        triggers:
-          - "Mal au dos en musculation"
-          - "Blessure squat"
-          - "Prévention blessures salle"
-          - "Douleur épaule développé"
-        connects_to:
-          - "seances/travail-neuromusculaire"
-          - "planification/gestion-charge"
-        applies_when: "pain | injury | gym"
-        priority: "critical"
-
-  # ---------------------------------------------------------------------------
-  # DOMAINE 6: NUTRITION SPORTIVE
-  # Fichier: nutrition-sportive.md (420 lignes)
-  # ---------------------------------------------------------------------------
-  nutrition:
-    name: "Nutrition sportive"
-    file: "nutrition-sportive.md"
-    total_lines: 420
-    description: "Stratégies nutritionnelles pour la performance et la santé"
-    concepts:
-
-      - id: "nutrition/periodisation-nutritionnelle"
-        name: "Périodisation nutritionnelle — « Fuel for the work required »"
-        lines: {layer1: "5-10", layer2: "11-26", layer3: "27-44"}
-        keywords:
-          - périodisation nutritionnelle
-          - fuel for work
-          - adapter alimentation
-          - nutrition entraînement
-          - charge glucidique
-          - low carb
-          - high carb
-          - train low
-          - sleep low
-          - keto
-          - cétogène
-        triggers:
-          - "Adapter mon alimentation à l'entraînement"
-          - "Manger différemment selon les séances"
-          - "Low carb pour le sport"
-          - "Sleep low"
-          - "Périodisation glucidique"
-        connects_to:
-          - "nutrition/glucides-timing"
-          - "planification/modeles-periodisation"
-          - "physiologie/systemes-energetiques"
-        applies_when: "planning | nutrition | advanced"
-
-      - id: "nutrition/glucides-timing"
-        name: "Glucides : timing, cinétique et quantités cibles"
-        lines: {layer1: "47-52", layer2: "53-64", layer3: "65-84"}
-        keywords:
-          - glucides
-          - sucres
-          - pâtes
-          - riz
-          - gâteau
-          - energy
-          - avant effort
-          - pendant effort
-          - ravito
-          - gels
-          - boisson énergétique
-          - maltodextrine
-          - fructose
-          - glycogène
-          - carbo loading
-          - charge glucidique
-        triggers:
-          - "Que manger avant une sortie ?"
-          - "Combien de glucides pendant l'effort ?"
-          - "Gels énergétiques"
-          - "Carbo loading avant course"
-          - "Que manger pendant un marathon ?"
-        connects_to:
-          - "nutrition/periodisation-nutritionnelle"
-          - "recuperation/nutrition-recuperation"
-          - "seances/endurance-fondamentale"
-        applies_when: "pre-workout | during-workout | nutrition"
-
-      - id: "nutrition/proteines-besoins"
-        name: "Protéines : besoins, MPS, timing"
-        lines: {layer1: "87-92", layer2: "93-106", layer3: "107-123"}
-        keywords:
-          - protéines
-          - whey
-          - MPS
-          - synthèse protéique
-          - récupération musculaire
-          - viande
-          - oeuf
-          - poulet
-          - acides aminés
-          - leucine
-          - BCAA
-          - EAA
-          - post-training
-          - shaker
-          - dose protéines
-        triggers:
-          - "Combien de protéines par jour ?"
-          - "Whey oui ou non ?"
-          - "Quand prendre sa whey ?"
-          - "Protéines pour la récupération"
-          - "BCAA utiles ?"
-        connects_to:
-          - "recuperation/nutrition-recuperation"
-          - "nutrition/glucides-timing"
-          - "physiologie/adaptations-entrainement"
-        applies_when: "post-workout | daily | nutrition"
-
-      - id: "nutrition/hydratation-electrolytes"
-        name: "Hydratation et électrolytes"
-        lines: {layer1: "126-131", layer2: "132-144", layer3: "145-171"}
-        keywords:
-          - hydratation
-          - eau
-          - boire
-          - déshydratation
-          - soif
-          - électrolytes
-          - sodium
-          - sel
-          - crampes
-          - transpiration
-          - boisson isotonique
-          - chaleur
-          - canicule
-        triggers:
-          - "Combien boire à l'entraînement ?"
-          - "Crampes et hydratation"
-          - "Boisson isotonique"
-          - "Déshydratation symptômes"
-          - "Boire chaud ou froid ?"
-        connects_to:
-          - "recuperation/nutrition-recuperation"
-          - "physiologie/adaptations-entrainement"
-        applies_when: "during-workout | pre-workout | hot-weather"
-
-      - id: "nutrition/supplements-preuve-a"
-        name: "Suppléments : niveau de preuve A"
-        lines: {layer1: "174-179", layer2: "180-193", layer3: "194-206"}
-        keywords:
-          - suppléments
-          - compléments
-          - créatine
-          - caféine
-          - beta-alanine
-          - nitrate
-          - betterave
-          - bicarbonate
-          - preuve scientifique
-          - dopage
-          - AIS
-          - ISSN
-          - ergogénique
-        triggers:
-          - "Quels suppléments sont vraiment utiles ?"
-          - "Créatine pour l'endurance"
-          - "Caféine avant le sport"
-          - "Beta-alanine"
-          - "Le jus de betterave"
-        connects_to:
-          - "nutrition/glucides-timing"
-          - "physiologie/systemes-energetiques"
-        applies_when: "nutrition | supplements | advanced"
-
-  # ---------------------------------------------------------------------------
-  # DOMAINE 7: PSYCHOLOGIE & MENTAL
-  # Fichier: psychologie-mental.md (328 lignes)
-  # ---------------------------------------------------------------------------
-  psychologie:
-    name: "Psychologie & mental"
-    file: "psychologie-mental.md"
-    total_lines: 328
-    description: "Aspects psychologiques de la performance et de l'adhésion à l'entraînement"
-    concepts:
-
-      - id: "psychologie/motivation-autodetermination"
-        name: "Motivation (Théorie de l'autodétermination)"
-        lines: {layer1: "5-14", layer2: "16-25", layer3: "27-33"}
-        keywords:
-          - motivation
-          - autodétermination
-          - motivation intrinsèque
-          - motivation extrinsèque
-          - autonomie
-          - compétence
-          - appartenance
-          - pourquoi s'entraîner
-          - perte motivation
-          - démotivation
-          - plaisir
-          - récompense
-          - SDT
-          - BRSQ
-          - SMS-28
-        triggers:
-          - "Je n'ai plus de motivation"
-          - "Pourquoi je m'entraîne ?"
-          - "Comment rester motivé ?"
-          - "Perte d'envie"
-          - "Je me force à m'entraîner"
-        connects_to:
-          - "psychologie/fixation-objectifs"
-          - "psychologie/resilience-ennui-plateaux"
-          - "psychologie/preparation-mentale"
-        applies_when: "daily | motivation | onboarding"
-
-      - id: "psychologie/gestion-effort-rpe"
-        name: "Gestion de la douleur, de l'effort et RPE"
-        lines: {layer1: "38-44", layer2: "46-53", layer3: "55-61"}
-        keywords:
-          - RPE
-          - perception effort
-          - douleur
-          - gérer douleur
-          - inconfort
-          - échelle Borg
-          - association
-          - dissociation
-          - distraction
-          - mental endurance
-          - tenir effort
-          - gouverneur central
-          - Noakes
-          - Marcora
-          - psychobiologique
-        triggers:
-          - "Comment mieux gérer la douleur ?"
-          - "Mon RPE monte trop vite"
-          - "Je n'arrive pas à tenir l'effort"
-          - "Stratégies mentales pour tenir"
-          - "C'est dans la tête ou les jambes ?"
-        connects_to:
-          - "psychologie/motivation-autodetermination"
-          - "psychologie/preparation-mentale"
-          - "recuperation/surcompensation-surentrainement"
-        applies_when: "during-workout | intensity | mental-toughness"
-
-      - id: "psychologie/fixation-objectifs"
-        name: "Fixation d'objectifs (SMART, processus vs résultat)"
-        lines: {layer1: "66-73", layer2: "74-81", layer3: "82-88"}
-        keywords:
-          - objectif
-          - SMART
-          - processus
-          - résultat
-          - but
-          - goal setting
-          - cible
-          - progression
-          - mesurer progrès
-          - motivation objectif
-        triggers:
-          - "Comment fixer un objectif ?"
-          - "Méthode SMART"
-          - "Objectif de processus vs résultat"
-          - "Je n'atteins pas mes objectifs"
-          - "Quel objectif pour cette saison ?"
-        connects_to:
-          - "psychologie/motivation-autodetermination"
-          - "planification/modeles-periodisation"
-        applies_when: "planning | season-start | goal-review"
-
-      - id: "psychologie/preparation-mentale"
-        name: "Préparation mentale : imagerie, self-talk, gestion du stress"
-        lines: {layer1: "91-99", layer2: "100-109", layer3: "110-118"}
-        keywords:
-          - imagerie mentale
-          - visualisation
-          - self-talk
-          - discours interne
-          - gestion stress
-          - anxiété performance
-          - respiration
-          - relaxation
-          - routine mentale
-          - positive
-          - confiance
-          - préparation mentale
-        triggers:
-          - "Comment me préparer mentalement ?"
-          - "Visualisation avant course"
-          - "Gérer le stress avant compétition"
-          - "Self-talk pour le sport"
-          - "Anxiété de performance"
-        connects_to:
-          - "psychologie/gestion-effort-rpe"
-          - "psychologie/motivation-autodetermination"
-        applies_when: "pre-competition | mental-preparation | anxiety"
-
-      - id: "psychologie/resilience-ennui-plateaux"
-        name: "Résilience, ennui, plateaux et blessure"
-        lines: {layer1: "121-129", layer2: "130-138", layer3: "139-149"}
-        keywords:
-          - résilience
-          - ennui
-          - lassitude
-          - plateau
-          - stagnation mentale
-          - blessure mentale
-          - retour blessure
-          - peur
-          - confiance après blessure
-          - monotonie
-          - lassitude entraînement
-          - routine
-        triggers:
-          - "Je m'ennuie à l'entraînement"
-          - "Stagnation mentale"
-          - "Peur après une blessure"
-          - "Comment rester engagé ?"
-          - "Je stagne, c'est démotivant"
-        connects_to:
-          - "psychologie/motivation-autodetermination"
-          - "psychologie/fixation-objectifs"
-          - "physiologie/adaptations-entrainement"
-        applies_when: "plateau | injury-recovery | motivation"
-
-  # ---------------------------------------------------------------------------
-  # DOMAINE 8: ÉCHAUFFEMENT & RETOUR AU CALME
-  # Fichier: echauffement-retour-au-calme.md (77 lignes)
-  # ---------------------------------------------------------------------------
+      applies_when: planning | season-start | goal-review
+    - id: psychologie/preparation-mentale
+      name: 'Préparation mentale : imagerie, self-talk, gestion du stress'
+      lines:
+        layer1: 91-99
+        layer2: 100-109
+        layer3: 110-118
+      keywords:
+      - imagerie mentale
+      - visualisation
+      - self-talk
+      - discours interne
+      - gestion stress
+      - anxiété performance
+      - respiration
+      - relaxation
+      - routine mentale
+      - positive
+      - confiance
+      - préparation mentale
+      triggers:
+      - Comment me préparer mentalement ?
+      - Visualisation avant course
+      - Gérer le stress avant compétition
+      - Self-talk pour le sport
+      - Anxiété de performance
+      connects_to:
+      - psychologie/gestion-effort-rpe
+      - psychologie/motivation-autodetermination
+      - planification/tapering-pic-forme
+      - recuperation/surcompensation-surentrainement
+      applies_when: pre-competition | mental-preparation | anxiety
+    - id: psychologie/resilience-ennui-plateaux
+      name: Résilience, ennui, plateaux et blessure
+      lines:
+        layer1: 121-129
+        layer2: 130-138
+        layer3: 139-149
+      keywords:
+      - résilience
+      - ennui
+      - lassitude
+      - plateau
+      - stagnation mentale
+      - blessure mentale
+      - retour blessure
+      - peur
+      - confiance après blessure
+      - monotonie
+      - lassitude entraînement
+      - routine
+      triggers:
+      - Je m'ennuie à l'entraînement
+      - Stagnation mentale
+      - Peur après une blessure
+      - Comment rester engagé ?
+      - Je stagne, c'est démotivant
+      connects_to:
+      - psychologie/motivation-autodetermination
+      - psychologie/fixation-objectifs
+      - physiologie/adaptations-entrainement
+      applies_when: plateau | injury-recovery | motivation
   echauffement:
-    name: "Échauffement & Retour au calme"
-    file: "echauffement-retour-au-calme.md"
+    name: Échauffement & Retour au calme
+    file: echauffement-retour-au-calme.md
     total_lines: 77
-    description: "Pourquoi et comment s'échauffer, routines par sport, étirements et retour au calme"
+    description: Pourquoi et comment s'échauffer, routines par sport, étirements et retour au calme
     concepts:
-
-      - id: "echauffement/principes-generaux"
-        name: "Pourquoi s'échauffer : principes physiologiques"
-        lines: {layer1: "7-10", layer2: "11-14", layer3: "15-18"}
-        keywords:
-          - échauffement
-          - warm-up
-          - préparation
-          - température musculaire
-          - PAP
-          - progressif
-          - avant séance
-          - routine
-          - activation
-        triggers:
-          - "Comment bien s'échauffer ?"
-          - "Pourquoi s'échauffer ?"
-          - "Combien de temps d'échauffement ?"
-          - "Est-ce que l'échauffement est vraiment utile ?"
-        connects_to:
-          - "echauffement/routines-par-sport"
-          - "seances/endurance-fondamentale"
-        applies_when: "pre-workout | general | beginner"
-
-      - id: "echauffement/routines-par-sport"
-        name: "Routines d'échauffement par sport"
-        lines: {layer1: "23-26", layer2: "27-30", layer3: "31-34"}
-        keywords:
-          - routine échauffement
-          - vélo
-          - course
-          - natation
-          - gammes
-          - accélérations
-          - footing
-          - spécifique sport
-        triggers:
-          - "Quel échauffement pour le vélo ?"
-          - "Comment m'échauffer avant de courir ?"
-          - "Routine échauffement natation"
-        connects_to:
-          - "echauffement/principes-generaux"
-        applies_when: "pre-workout"
-
-      - id: "echauffement/etirements-et-mobilite"
-        name: "Étirements et mobilité : quand, comment, pourquoi"
-        lines: {layer1: "39-42", layer2: "43-46", layer3: "47-50"}
-        keywords:
-          - étirements
-          - stretching
-          - mobilité
-          - dynamique
-          - statique
-          - foam roller
-          - PNF
-          - amplitude
-        triggers:
-          - "Faut-il s'étirer avant ou après le sport ?"
-          - "Étirements dynamiques ou statiques ?"
-          - "Le foam roller c'est utile ?"
-          - "Comment gagner en souplesse ?"
-        connects_to:
-          - "echauffement/principes-generaux"
-        applies_when: "pre-workout | post-workout | recovery"
-
-      - id: "echauffement/retour-au-calme"
-        name: "Retour au calme : pourquoi et comment"
-        lines: {layer1: "55-58", layer2: "59-62", layer3: "63-66"}
-        keywords:
-          - retour au calme
-          - cool down
-          - récupération active
-          - fin de séance
-          - étirements post
-          - drainage
-        triggers:
-          - "Faut-il faire un retour au calme ?"
-          - "Comment bien terminer une séance ?"
-          - "Pourquoi ne pas s'arrêter brutalement ?"
-        connects_to:
-          - "recuperation/surcompensation-surentrainement"
-          - "echauffement/etirements-et-mobilite"
-        applies_when: "post-workout | daily"
-
-  # ---------------------------------------------------------------------------
-  # DOMAINE 9: ENVIRONNEMENT & CONDITIONS
-  # Fichier: environnement-et-conditions.md (77 lignes)
-  # ---------------------------------------------------------------------------
+    - id: echauffement/principes-generaux
+      name: 'Pourquoi s''échauffer : principes physiologiques'
+      lines:
+        layer1: 7-10
+        layer2: 11-14
+        layer3: 15-18
+      keywords:
+      - échauffement
+      - warm-up
+      - préparation
+      - température musculaire
+      - PAP
+      - progressif
+      - avant séance
+      - routine
+      - activation
+      triggers:
+      - Comment bien s'échauffer ?
+      - Pourquoi s'échauffer ?
+      - Combien de temps d'échauffement ?
+      - Est-ce que l'échauffement est vraiment utile ?
+      connects_to:
+      - echauffement/routines-par-sport
+      - seances/endurance-fondamentale
+      applies_when: pre-workout | general | beginner
+    - id: echauffement/routines-par-sport
+      name: Routines d'échauffement par sport
+      lines:
+        layer1: 23-26
+        layer2: 27-30
+        layer3: 31-34
+      keywords:
+      - routine échauffement
+      - vélo
+      - course
+      - natation
+      - gammes
+      - accélérations
+      - footing
+      - spécifique sport
+      triggers:
+      - Quel échauffement pour le vélo ?
+      - Comment m'échauffer avant de courir ?
+      - Routine échauffement natation
+      connects_to:
+      - echauffement/principes-generaux
+      - seances/endurance-fondamentale
+      - seances/intervalles-haute-intensite
+      applies_when: pre-workout
+    - id: echauffement/etirements-et-mobilite
+      name: 'Étirements et mobilité : quand, comment, pourquoi'
+      lines:
+        layer1: 39-42
+        layer2: 43-46
+        layer3: 47-50
+      keywords:
+      - étirements
+      - stretching
+      - mobilité
+      - dynamique
+      - statique
+      - foam roller
+      - PNF
+      - amplitude
+      triggers:
+      - Faut-il s'étirer avant ou après le sport ?
+      - Étirements dynamiques ou statiques ?
+      - Le foam roller c'est utile ?
+      - Comment gagner en souplesse ?
+      connects_to:
+      - echauffement/principes-generaux
+      - recuperation/sommeil
+      - physiologie/adaptations-entrainement
+      applies_when: pre-workout | post-workout | recovery
+    - id: echauffement/retour-au-calme
+      name: 'Retour au calme : pourquoi et comment'
+      lines:
+        layer1: 55-58
+        layer2: 59-62
+        layer3: 63-66
+      keywords:
+      - retour au calme
+      - cool down
+      - récupération active
+      - fin de séance
+      - étirements post
+      - drainage
+      triggers:
+      - Faut-il faire un retour au calme ?
+      - Comment bien terminer une séance ?
+      - Pourquoi ne pas s'arrêter brutalement ?
+      connects_to:
+      - recuperation/surcompensation-surentrainement
+      - echauffement/etirements-et-mobilite
+      applies_when: post-workout | daily
   environnement:
-    name: "Environnement & Conditions"
-    file: "environnement-et-conditions.md"
+    name: Environnement & Conditions
+    file: environnement-et-conditions.md
     total_lines: 77
-    description: "Chaleur, froid, altitude, pluie et vent — adapter l'entraînement"
+    description: Chaleur, froid, altitude, pluie et vent — adapter l'entraînement
     concepts:
-
-      - id: "environnement/chaleur"
-        name: "Entraînement par forte chaleur"
-        lines: {layer1: "7-10", layer2: "11-14", layer3: "15-18"}
-        keywords:
-          - chaleur
-          - canicule
-          - été
-          - acclimatation
-          - déshydratation
-          - coup de chaleur
-          - transpiration
-        triggers:
-          - "Comment s'entraîner quand il fait chaud ?"
-          - "Acclimatation à la chaleur"
-          - "Hydratation canicule"
-        connects_to:
-          - "nutrition/hydratation-electrolytes"
-        applies_when: "hot-weather | summer"
-
-      - id: "environnement/froid"
-        name: "Entraînement par grand froid"
-        lines: {layer1: "23-26", layer2: "27-30", layer3: "31-34"}
-        keywords:
-          - froid
-          - hiver
-          - hypothermie
-          - windchill
-          - équipement hiver
-        triggers:
-          - "Courir par -10°C ?"
-          - "S'entraîner en hiver"
-          - "Équipement vélo hiver"
-        connects_to:
-          - "materiel/choisir-son-equipement"
-        applies_when: "cold-weather | winter"
-
-      - id: "environnement/altitude"
-        name: "Altitude et hypoxie"
-        lines: {layer1: "39-42", layer2: "43-46", layer3: "47-50"}
-        keywords:
-          - altitude
-          - hypoxie
-          - stage
-          - EPO
-          - LHTL
-          - live high train low
-        triggers:
-          - "Stage en altitude"
-          - "S'entraîner en montagne"
-          - "Combien de temps en altitude ?"
-        connects_to:
-          - "physiologie/vo2max-seuils"
-        applies_when: "altitude | pre-competition"
-
-      - id: "environnement/pluie-vent-securite"
-        name: "Pluie, vent et sécurité météo"
-        lines: {layer1: "55-58", layer2: "59-62", layer3: "63-66"}
-        keywords:
-          - pluie
-          - vent
-          - sécurité
-          - visibilité
-          - aérodynamisme
-          - météo
-        triggers:
-          - "Sortir sous la pluie ?"
-          - "Vent fort vélo"
-          - "Sécurité météo vélo"
-        connects_to:
-          - "environnement/froid"
-        applies_when: "bad-weather"
-
-  # ---------------------------------------------------------------------------
-  # DOMAINE 10: MATÉRIEL & ÉQUIPEMENT
-  # Fichier: materiel-et-equipement.md (95 lignes)
-  # ---------------------------------------------------------------------------
+    - id: environnement/chaleur
+      name: Entraînement par forte chaleur
+      lines:
+        layer1: 7-10
+        layer2: 11-14
+        layer3: 15-18
+      keywords:
+      - chaleur
+      - canicule
+      - été
+      - acclimatation
+      - déshydratation
+      - coup de chaleur
+      - transpiration
+      triggers:
+      - Comment s'entraîner quand il fait chaud ?
+      - Acclimatation à la chaleur
+      - Hydratation canicule
+      connects_to:
+      - nutrition/hydratation-electrolytes
+      applies_when: hot-weather | summer
+    - id: environnement/froid
+      name: Entraînement par grand froid
+      lines:
+        layer1: 23-26
+        layer2: 27-30
+        layer3: 31-34
+      keywords:
+      - froid
+      - hiver
+      - hypothermie
+      - windchill
+      - équipement hiver
+      triggers:
+      - Courir par -10°C ?
+      - S'entraîner en hiver
+      - Équipement vélo hiver
+      connects_to:
+      - materiel/choisir-son-equipement
+      applies_when: cold-weather | winter
+    - id: environnement/altitude
+      name: Altitude et hypoxie
+      lines:
+        layer1: 39-42
+        layer2: 43-46
+        layer3: 47-50
+      keywords:
+      - altitude
+      - hypoxie
+      - stage
+      - EPO
+      - LHTL
+      - live high train low
+      triggers:
+      - Stage en altitude
+      - S'entraîner en montagne
+      - Combien de temps en altitude ?
+      connects_to:
+      - physiologie/vo2max-seuils
+      applies_when: altitude | pre-competition
+    - id: environnement/pluie-vent-securite
+      name: Pluie, vent et sécurité météo
+      lines:
+        layer1: 55-58
+        layer2: 59-62
+        layer3: 63-66
+      keywords:
+      - pluie
+      - vent
+      - sécurité
+      - visibilité
+      - aérodynamisme
+      - météo
+      triggers:
+      - Sortir sous la pluie ?
+      - Vent fort vélo
+      - Sécurité météo vélo
+      connects_to:
+      - environnement/froid
+      - materiel/home-trainers
+      - seances/endurance-fondamentale
+      - planification/adaptations-amateurs
+      applies_when: bad-weather
   materiel:
-    name: "Matériel & Équipement"
-    file: "materiel-et-equipement.md"
+    name: Matériel & Équipement
+    file: materiel-et-equipement.md
     total_lines: 95
-    description: "Capteurs, montres, home-trainers et analyse de données"
+    description: Capteurs, montres, home-trainers et analyse de données
     concepts:
-
-      - id: "materiel/capteurs-de-puissance"
-        name: "Capteurs de puissance : comprendre et utiliser"
-        lines: {layer1: "7-10", layer2: "11-14", layer3: "15-18"}
-        keywords:
-          - capteur puissance
-          - wattmètre
-          - FTP
-          - watts
-          - Normalized Power
-          - SRM
-          - pédalier
-        triggers:
-          - "Quel capteur de puissance choisir ?"
-          - "Comment utiliser un wattmètre ?"
-          - "FTP comment le mesurer ?"
-        applies_when: "equipment | cycling"
-
-      - id: "materiel/cardio-gps-montres"
-        name: "Cardio, GPS et montres connectées"
-        lines: {layer1: "23-26", layer2: "27-30", layer3: "31-34"}
-        keywords:
-          - montre GPS
-          - cardiofréquencemètre
-          - Garmin
-          - ceinture cardio
-          - capteur optique
-        triggers:
-          - "Quelle montre GPS pour le sport ?"
-          - "Cardio poignet ou ceinture ?"
-        applies_when: "equipment"
-
-      - id: "materiel/home-trainers"
-        name: "Home-trainers et rouleaux"
-        lines: {layer1: "39-42", layer2: "43-46", layer3: "47-50"}
-        keywords:
-          - home-trainer
-          - rouleaux
-          - Zwift
-          - Wahoo
-          - Tacx
-          - intérieur
-        triggers:
-          - "Quel home-trainer acheter ?"
-          - "Rouleaux ou home-trainer ?"
-        applies_when: "equipment | indoor"
-
-      - id: "materiel/analyse-donnees-training"
-        name: "Analyser ses données d'entraînement"
-        lines: {layer1: "55-58", layer2: "59-62", layer3: "63-66"}
-        keywords:
-          - analyse données
-          - TrainingPeaks
-          - intervals.icu
-          - Strava
-          - PMC
-          - CTL
-          - découplage
-        triggers:
-          - "Comment analyser mes données ?"
-          - "PMC chart"
-          - "CTL ATL TSB"
-        applies_when: "analysis"
-
-      - id: "materiel/choisir-son-equipement"
-        name: "Choisir son équipement selon son budget"
-        lines: {layer1: "71-74", layer2: "75-78", layer3: "79-82"}
-        keywords:
-          - budget
-          - équipement
-          - acheter
-          - investissement
-        triggers:
-          - "Quel équipement pour débuter ?"
-          - "Priorités achat équipement sportif"
-        applies_when: "equipment"
-
-  # ---------------------------------------------------------------------------
-  # DOMAINE 11: POPULATIONS SPÉCIFIQUES
-  # Fichier: populations-specifiques.md (125 lignes)
-  # ---------------------------------------------------------------------------
+    - id: materiel/capteurs-de-puissance
+      name: 'Capteurs de puissance : comprendre et utiliser'
+      lines:
+        layer1: 7-10
+        layer2: 11-14
+        layer3: 15-18
+      keywords:
+      - capteur puissance
+      - wattmètre
+      - FTP
+      - watts
+      - Normalized Power
+      - SRM
+      - pédalier
+      triggers:
+      - Quel capteur de puissance choisir ?
+      - Comment utiliser un wattmètre ?
+      - FTP comment le mesurer ?
+      applies_when: equipment | cycling
+      connects_to:
+      - physiologie/vo2max-seuils
+      - planification/gestion-charge
+      - seances/travail-seuil
+    - id: materiel/cardio-gps-montres
+      name: Cardio, GPS et montres connectées
+      lines:
+        layer1: 23-26
+        layer2: 27-30
+        layer3: 31-34
+      keywords:
+      - montre GPS
+      - cardiofréquencemètre
+      - Garmin
+      - ceinture cardio
+      - capteur optique
+      triggers:
+      - Quelle montre GPS pour le sport ?
+      - Cardio poignet ou ceinture ?
+      applies_when: equipment
+      connects_to:
+      - physiologie/frequence-cardiaque-hrv
+      - recuperation/outils-monitoring
+      - planification/gestion-charge
+    - id: materiel/home-trainers
+      name: Home-trainers et rouleaux
+      lines:
+        layer1: 39-42
+        layer2: 43-46
+        layer3: 47-50
+      keywords:
+      - home-trainer
+      - rouleaux
+      - Zwift
+      - Wahoo
+      - Tacx
+      - intérieur
+      triggers:
+      - Quel home-trainer acheter ?
+      - Rouleaux ou home-trainer ?
+      applies_when: equipment | indoor
+      connects_to:
+      - seances/travail-seuil
+      - seances/intervalles-haute-intensite
+      - planification/adaptations-amateurs
+      - environnement/pluie-vent-securite
+    - id: materiel/analyse-donnees-training
+      name: Analyser ses données d'entraînement
+      lines:
+        layer1: 55-58
+        layer2: 59-62
+        layer3: 63-66
+      keywords:
+      - analyse données
+      - TrainingPeaks
+      - intervals.icu
+      - Strava
+      - PMC
+      - CTL
+      - découplage
+      triggers:
+      - Comment analyser mes données ?
+      - PMC chart
+      - CTL ATL TSB
+      applies_when: analysis
+      connects_to:
+      - planification/gestion-charge
+      - recuperation/outils-monitoring
+      - physiologie/frequence-cardiaque-hrv
+    - id: materiel/choisir-son-equipement
+      name: Choisir son équipement selon son budget
+      lines:
+        layer1: 71-74
+        layer2: 75-78
+        layer3: 79-82
+      keywords:
+      - budget
+      - équipement
+      - acheter
+      - investissement
+      triggers:
+      - Quel équipement pour débuter ?
+      - Priorités achat équipement sportif
+      applies_when: equipment
+      connects_to:
+      - blessures/running
+      - blessures/cyclisme
+      - planification/adaptations-amateurs
   populations:
-    name: "Populations spécifiques"
-    file: "populations-specifiques.md"
+    name: Populations spécifiques
+    file: populations-specifiques.md
     total_lines: 125
-    description: "Femmes, seniors, jeunes, reprise après pause, sport et surpoids"
+    description: Femmes, seniors, jeunes, reprise après pause, sport et surpoids
     concepts:
-
-      - id: "populations/femmes-athletes"
-        name: "Femmes athlètes : cycle menstruel, grossesse, ménopause"
-        lines: {layer1: "7-10", layer2: "11-16", layer3: "17-22"}
-        keywords:
-          - femme
-          - cycle menstruel
-          - règles
-          - grossesse
-          - post-partum
-          - ménopause
-          - RED-S
-        triggers:
-          - "Entraînement et règles"
-          - "Cycle menstruel performance"
-          - "Reprendre le sport après grossesse"
-        priority: critical
-        applies_when: "female-athlete | health"
-
-      - id: "populations/seniors-50-plus"
-        name: "Sportifs de 50 ans et plus"
-        lines: {layer1: "27-30", layer2: "31-36", layer3: "37-42"}
-        keywords:
-          - senior
-          - 50 ans
-          - sarcopénie
-          - âge
-          - vétéran
-          - récupération âge
-        triggers:
-          - "S'entraîner après 50 ans"
-          - "Sport et vieillissement"
-        priority: high
-        applies_when: "masters | senior"
-
-      - id: "populations/jeunes-athletes"
-        name: "Jeunes sportifs en croissance"
-        lines: {layer1: "47-50", layer2: "51-56", layer3: "57-62"}
-        keywords:
-          - jeune
-          - adolescent
-          - croissance
-          - enfant
-          - Osgood-Schlatter
-        triggers:
-          - "Mon enfant veut faire du sport"
-          - "Entraînement adolescent"
-        applies_when: "youth | junior"
-
-      - id: "populations/reprise-apres-pause"
-        name: "Reprise après une longue pause"
-        lines: {layer1: "67-72", layer2: "73-78", layer3: "79-84"}
-        keywords:
-          - reprise
-          - pause
-          - arrêt
-          - retour
-          - désentraînement
-          - mémoire musculaire
-        triggers:
-          - "Reprendre le sport après des années"
-          - "Je n'ai pas fait de sport depuis longtemps"
-        priority: high
-        applies_when: "comeback | detraining"
-
-      - id: "populations/surpoids-obesite"
-        name: "Sport et surpoids : approche bienveillante"
-        lines: {layer1: "89-94", layer2: "95-100", layer3: "101-106"}
-        keywords:
-          - surpoids
-          - obésité
-          - poids
-          - articulations
-          - bienveillance
-        triggers:
-          - "Quel sport quand on est en surpoids ?"
-          - "Perdre du poids par le sport"
-        applies_when: "weight-management | beginner"
-
-  # ---------------------------------------------------------------------------
-  # DOMAINE 12: ENTRAÎNEMENT CROISÉ & COMPLÉMENTAIRE
-  # Fichier: entrainement-croise.md (79 lignes)
-  # ---------------------------------------------------------------------------
+    - id: populations/femmes-athletes
+      name: 'Femmes athlètes : cycle menstruel, grossesse, ménopause'
+      lines:
+        layer1: 7-10
+        layer2: 11-16
+        layer3: 17-22
+      keywords:
+      - femme
+      - cycle menstruel
+      - règles
+      - grossesse
+      - post-partum
+      - ménopause
+      - RED-S
+      triggers:
+      - Entraînement et règles
+      - Cycle menstruel performance
+      - Reprendre le sport après grossesse
+      priority: critical
+      applies_when: female-athlete | health
+      connects_to:
+      - physiologie/adaptations-entrainement
+      - planification/modeles-periodisation
+      - nutrition/periodisation-nutritionnelle
+    - id: populations/seniors-50-plus
+      name: Sportifs de 50 ans et plus
+      lines:
+        layer1: 27-30
+        layer2: 31-36
+        layer3: 37-42
+      keywords:
+      - senior
+      - 50 ans
+      - sarcopénie
+      - âge
+      - vétéran
+      - récupération âge
+      triggers:
+      - S'entraîner après 50 ans
+      - Sport et vieillissement
+      priority: high
+      applies_when: masters | senior
+      connects_to:
+      - physiologie/adaptations-entrainement
+      - recuperation/surcompensation-surentrainement
+      - planification/gestion-charge
+      - seances/endurance-fondamentale
+    - id: populations/jeunes-athletes
+      name: Jeunes sportifs en croissance
+      lines:
+        layer1: 47-50
+        layer2: 51-56
+        layer3: 57-62
+      keywords:
+      - jeune
+      - adolescent
+      - croissance
+      - enfant
+      - Osgood-Schlatter
+      triggers:
+      - Mon enfant veut faire du sport
+      - Entraînement adolescent
+      applies_when: youth | junior
+      connects_to:
+      - planification/gestion-charge
+      - physiologie/adaptations-entrainement
+      - blessures/running
+    - id: populations/reprise-apres-pause
+      name: Reprise après une longue pause
+      lines:
+        layer1: 67-72
+        layer2: 73-78
+        layer3: 79-84
+      keywords:
+      - reprise
+      - pause
+      - arrêt
+      - retour
+      - désentraînement
+      - mémoire musculaire
+      triggers:
+      - Reprendre le sport après des années
+      - Je n'ai pas fait de sport depuis longtemps
+      priority: high
+      applies_when: comeback | detraining
+      connects_to:
+      - planification/gestion-charge
+      - seances/endurance-fondamentale
+      - norvegienne/controlled-intensity
+      - recuperation/surcompensation-surentrainement
+    - id: populations/surpoids-obesite
+      name: 'Sport et surpoids : approche bienveillante'
+      lines:
+        layer1: 89-94
+        layer2: 95-100
+        layer3: 101-106
+      keywords:
+      - surpoids
+      - obésité
+      - poids
+      - articulations
+      - bienveillance
+      triggers:
+      - Quel sport quand on est en surpoids ?
+      - Perdre du poids par le sport
+      applies_when: weight-management | beginner
+      connects_to:
+      - seances/endurance-fondamentale
+      - physiologie/adaptations-entrainement
+      - nutrition/hydratation-electrolytes
   entrainement-croise:
-    name: "Entraînement croisé & Complémentaire"
-    file: "entrainement-croise.md"
+    name: Entraînement croisé & Complémentaire
+    file: entrainement-croise.md
     total_lines: 79
-    description: "Renforcement, natation, yoga/Pilates et combinaison de sports"
+    description: Renforcement, natation, yoga/Pilates et combinaison de sports
     concepts:
-
-      - id: "entrainement-croise/renforcement-endurance"
-        name: "Renforcement musculaire pour l'endurance"
-        lines: {layer1: "7-10", layer2: "11-14", layer3: "15-18"}
-        keywords:
-          - renforcement
-          - musculation
-          - force
-          - gainage
-          - squat
-          - économie de course
-        triggers:
-          - "Faut-il faire de la musculation pour le vélo ?"
-          - "Renforcement pour coureurs"
-        applies_when: "strength | cross-training"
-
-      - id: "entrainement-croise/natation-cyclistes-coureurs"
-        name: "Natation pour cyclistes et coureurs"
-        lines: {layer1: "23-26", layer2: "27-30", layer3: "31-34"}
-        keywords:
-          - natation
-          - piscine
-          - pull-buoy
-          - récupération active
-        triggers:
-          - "La natation c'est bien pour les cyclistes ?"
-          - "Nager en complément de la course"
-        applies_when: "cross-training | recovery"
-
-      - id: "entrainement-croise/yoga-pilates"
-        name: "Yoga, Pilates et mobilité pour le sportif"
-        lines: {layer1: "39-42", layer2: "43-46", layer3: "47-50"}
-        keywords:
-          - yoga
-          - pilates
-          - mobilité
-          - souplesse
-          - gainage profond
-        triggers:
-          - "Le yoga c'est utile pour le sport ?"
-          - "Pilates pour coureurs"
-        applies_when: "mobility | recovery"
-
-      - id: "entrainement-croise/brick-triathlon"
-        name: "Combiner plusieurs sports : le brick workout"
-        lines: {layer1: "55-58", layer2: "59-62", layer3: "63-66"}
-        keywords:
-          - brick
-          - triathlon
-          - enchaînement
-          - vélo-course
-          - transition
-        triggers:
-          - "Comment enchaîner vélo et course ?"
-          - "Brick workout triathlon"
-        applies_when: "triathlon | multi-sport"
-
-  # ---------------------------------------------------------------------------
-  # DOMAINE 13: MÉTHODE NORVÉGIENNE
-  # Fichier: norvegienne.md (271 lignes)
-  # ---------------------------------------------------------------------------
+    - id: entrainement-croise/renforcement-endurance
+      name: Renforcement musculaire pour l'endurance
+      lines:
+        layer1: 7-10
+        layer2: 11-14
+        layer3: 15-18
+      keywords:
+      - renforcement
+      - musculation
+      - force
+      - gainage
+      - squat
+      - économie de course
+      triggers:
+      - Faut-il faire de la musculation pour le vélo ?
+      - Renforcement pour coureurs
+      applies_when: strength | cross-training
+      connects_to:
+      - seances/travail-neuromusculaire
+      - physiologie/adaptations-entrainement
+      - blessures/fitness-musculation
+      - norvegienne/application-pratique
+    - id: entrainement-croise/natation-cyclistes-coureurs
+      name: Natation pour cyclistes et coureurs
+      lines:
+        layer1: 23-26
+        layer2: 27-30
+        layer3: 31-34
+      keywords:
+      - natation
+      - piscine
+      - pull-buoy
+      - récupération active
+      triggers:
+      - La natation c'est bien pour les cyclistes ?
+      - Nager en complément de la course
+      applies_when: cross-training | recovery
+      connects_to:
+      - seances/recuperation-active
+      - recuperation/sommeil
+      - physiologie/adaptations-entrainement
+    - id: entrainement-croise/yoga-pilates
+      name: Yoga, Pilates et mobilité pour le sportif
+      lines:
+        layer1: 39-42
+        layer2: 43-46
+        layer3: 47-50
+      keywords:
+      - yoga
+      - pilates
+      - mobilité
+      - souplesse
+      - gainage profond
+      triggers:
+      - Le yoga c'est utile pour le sport ?
+      - Pilates pour coureurs
+      applies_when: mobility | recovery
+      connects_to:
+      - seances/recuperation-active
+      - recuperation/sommeil
+      - blessures/running
+      - psychologie/preparation-mentale
+    - id: entrainement-croise/brick-triathlon
+      name: 'Combiner plusieurs sports : le brick workout'
+      lines:
+        layer1: 55-58
+        layer2: 59-62
+        layer3: 63-66
+      keywords:
+      - brick
+      - triathlon
+      - enchaînement
+      - vélo-course
+      - transition
+      triggers:
+      - Comment enchaîner vélo et course ?
+      - Brick workout triathlon
+      applies_when: triathlon | multi-sport
+      connects_to:
+      - seances/endurance-fondamentale
+      - planification/gestion-charge
+      - physiologie/adaptations-entrainement
+      - norvegienne/application-pratique
   norvegienne:
-    name: "Méthode Norvégienne d'Entraînement"
-    file: "norvegienne.md"
+    name: Méthode Norvégienne d'Entraînement
+    file: norvegienne.md
     total_lines: 271
-    description: "Modèle polarisé 80/20, double seuil lactate, intensité contrôlée et périodisation à la norvégienne"
+    description: Modèle polarisé 80/20, double seuil lactate, intensité contrôlée et périodisation à la norvégienne
     concepts:
-
-      - id: "norvegienne/modele-polarise-80-20"
-        name: "Le modèle polarisé 80/20 (Seiler)"
-        lines: {layer1: "7-18", layer2: "19-30", layer3: "31-42"}
-        keywords:
-          - "80:20"
-          - "80/20"
-          - polarisé
-          - Seiler
-          - "zone 2"
-          - junk mileage
-          - endurance fondamentale
-          - "courir lentement"
-          - escargot
-          - Karp
-          - base aérobie
-          - Norvège
-          - norvégien
-          - norvégienne
-          - pyramidal
-          - pyramide
-          - distribution
-          - intensité basse
-          - "pourcentage facile"
-          - "pourcentage intensité"
-        triggers:
-          - "Pourquoi courir lentement pour aller plus vite ?"
-          - "C'est quoi le modèle 80/20 ?"
-          - "Comment les Norvégiens s'entraînent ?"
-          - "Pourquoi éviter de courir à allure modérée ?"
-          - "C'est quoi le junk mileage ?"
-          - "Quel pourcentage d'endurance fondamentale ?"
-        connects_to:
-          - "seances/endurance-fondamentale"
-          - "planification/modeles-periodisation"
-          - "physiologie/systemes-energetiques"
-        applies_when: "education | planning | base-building | beginner"
-
-      - id: "norvegienne/double-seuil-lactate"
-        name: "La méthode double seuil (Ingebrigtsen, lactate)"
-        lines: {layer1: "47-56", layer2: "57-76", layer3: "77-97"}
-        keywords:
-          - Ingebrigtsen
-          - double seuil
-          - threshold
-          - lactate
-          - "3x10"
-          - "5x6"
-          - "10x3"
-          - piqûre
-          - "mmol"
-          - Bakken
-          - Kristian
-          - Blummenfelt
-          - Gustav
-          - Iden
-          - seuil lactique
-          - MLSS
-          - "contrôle lactate"
-          - "lactate mètre"
-        triggers:
-          - "Comment fonctionne la méthode Ingebrigtsen ?"
-          - "C'est quoi le double seuil ?"
-          - "Pourquoi mesurer le lactate ?"
-          - "Comment faire une séance de seuil norvégienne ?"
-          - "Protocole 3x10 min seuil"
-          - "À quelle allure faire le seuil ?"
-        connects_to:
-          - "seances/travail-seuil"
-          - "physiologie/vo2max-seuils"
-          - "physiologie/systemes-energetiques"
-          - "planification/gestion-charge"
-        applies_when: "performance | threshold-training | lactate-testing"
-
-      - id: "norvegienne/controlled-intensity"
-        name: "L'intensité contrôlée : ne jamais se mettre dans le rouge"
-        lines: {layer1: "102-111", layer2: "112-127", layer3: "128-139"}
-        keywords:
-          - intensité contrôlée
-          - "pas à fond"
-          - "ne pas vider le réservoir"
-          - zone grise
-          - talk test
-          - conversation
-          - RPE
-          - facile
-          - allure modérée
-          - fatigue
-          - régularité
-          - "jour facile"
-          - "jour difficile"
-          - alternance
-          - Tønnessen
-          - charge allostatique
-        triggers:
-          - "Pourquoi ne pas s'entraîner à fond ?"
-          - "Comment savoir si je cours assez lentement ?"
-          - "C'est quoi l'intensité contrôlée ?"
-          - "Pourquoi alterner jour facile et jour difficile ?"
-          - "Comment utiliser le talk test ?"
-        connects_to:
-          - "norvegienne/modele-polarise-80-20"
-          - "seances/endurance-fondamentale"
-          - "recuperation/surcompensation-surentrainement"
-          - "psychologie/gestion-effort-rpe"
-        applies_when: "training | recovery | monitoring"
-
-      - id: "norvegienne/periodisation-norvegienne"
-        name: "La périodisation norvégienne (blocs, progression contrôlée)"
-        lines: {layer1: "144-156", layer2: "157-169", layer3: "170-183"}
-        keywords:
-          - périodisation norvégienne
-          - blocs
-          - "4-12 semaines"
-          - progression contrôlée
-          - préparation générale
-          - préparation spécifique
-          - macrocycle
-          - microcycle
-          - décharge
-          - semaine allégée
-          - "5-10%"
-          - surcompensation
-          - ACWR
-          - surnageabilité
-          - overreaching
-          - charge
-        triggers:
-          - "Comment organiser une saison à la norvégienne ?"
-          - "Quand introduire le double seuil ?"
-          - "Combien de semaines par bloc ?"
-          - "Comment progresser sans se blesser ?"
-          - "Périodisation norvégienne vs classique"
-        connects_to:
-          - "planification/modeles-periodisation"
-          - "planification/structure-temporelle"
-          - "planification/gestion-charge"
-          - "norvegienne/double-seuil-lactate"
-        applies_when: "planning | season-start | new-goal | macrocycle"
-
-      - id: "norvegienne/application-pratique"
-        name: "Applications pratiques : course, vélo, triathlon"
-        lines: {layer1: "188-200", layer2: "201-221", layer3: "222-252"}
-        keywords:
-          - application
-          - plan
-          - semaine type
-          - course à pied
-          - cyclisme
-          - triathlon
-          - brick
-          - programme
-          - exemple concret
-          - sortie longue
-          - séance type
-          - microcycle
-          - renforcement
-          - élastiques
-          - Karp
-          - bandes
-        triggers:
-          - "Donne-moi un exemple de semaine norvégienne"
-          - "Comment appliquer la méthode norvégienne en course/vélo/triathlon ?"
-          - "Plan d'entraînement norvégien concret"
-          - "Quel volume en vélo/course ?"
-          - "Comment faire un brick en méthode norvégienne ?"
-        connects_to:
-          - "norvegienne/modele-polarise-80-20"
-          - "norvegienne/double-seuil-lactate"
-          - "norvegienne/periodisation-norvegienne"
-          - "entrainement-croise/brick-triathlon"
-          - "entrainement-croise/renforcement-endurance"
-        applies_when: "session-planning | multi-sport | triathlon"
-
-# =============================================================================
-# MÉTADONNÉES POUR LE SÉLECTEUR LLM
-# =============================================================================
+    - id: norvegienne/modele-polarise-80-20
+      name: Le modèle polarisé 80/20 (Seiler)
+      lines:
+        layer1: 7-18
+        layer2: 19-30
+        layer3: 31-42
+      keywords:
+      - '80:20'
+      - 80/20
+      - polarisé
+      - Seiler
+      - zone 2
+      - junk mileage
+      - endurance fondamentale
+      - courir lentement
+      - escargot
+      - Karp
+      - base aérobie
+      - Norvège
+      - norvégien
+      - norvégienne
+      - pyramidal
+      - pyramide
+      - distribution
+      - intensité basse
+      - pourcentage facile
+      - pourcentage intensité
+      triggers:
+      - Pourquoi courir lentement pour aller plus vite ?
+      - C'est quoi le modèle 80/20 ?
+      - Comment les Norvégiens s'entraînent ?
+      - Pourquoi éviter de courir à allure modérée ?
+      - C'est quoi le junk mileage ?
+      - Quel pourcentage d'endurance fondamentale ?
+      connects_to:
+      - seances/endurance-fondamentale
+      - planification/modeles-periodisation
+      - physiologie/systemes-energetiques
+      applies_when: education | planning | base-building | beginner
+    - id: norvegienne/double-seuil-lactate
+      name: La méthode double seuil (Ingebrigtsen, lactate)
+      lines:
+        layer1: 47-56
+        layer2: 57-76
+        layer3: 77-97
+      keywords:
+      - Ingebrigtsen
+      - double seuil
+      - threshold
+      - lactate
+      - 3x10
+      - 5x6
+      - 10x3
+      - piqûre
+      - mmol
+      - Bakken
+      - Kristian
+      - Blummenfelt
+      - Gustav
+      - Iden
+      - seuil lactique
+      - MLSS
+      - contrôle lactate
+      - lactate mètre
+      triggers:
+      - Comment fonctionne la méthode Ingebrigtsen ?
+      - C'est quoi le double seuil ?
+      - Pourquoi mesurer le lactate ?
+      - Comment faire une séance de seuil norvégienne ?
+      - Protocole 3x10 min seuil
+      - À quelle allure faire le seuil ?
+      connects_to:
+      - seances/travail-seuil
+      - physiologie/vo2max-seuils
+      - physiologie/systemes-energetiques
+      - planification/gestion-charge
+      applies_when: performance | threshold-training | lactate-testing
+    - id: norvegienne/controlled-intensity
+      name: 'L''intensité contrôlée : ne jamais se mettre dans le rouge'
+      lines:
+        layer1: 102-111
+        layer2: 112-127
+        layer3: 128-139
+      keywords:
+      - intensité contrôlée
+      - pas à fond
+      - ne pas vider le réservoir
+      - zone grise
+      - talk test
+      - conversation
+      - RPE
+      - facile
+      - allure modérée
+      - fatigue
+      - régularité
+      - jour facile
+      - jour difficile
+      - alternance
+      - Tønnessen
+      - charge allostatique
+      triggers:
+      - Pourquoi ne pas s'entraîner à fond ?
+      - Comment savoir si je cours assez lentement ?
+      - C'est quoi l'intensité contrôlée ?
+      - Pourquoi alterner jour facile et jour difficile ?
+      - Comment utiliser le talk test ?
+      connects_to:
+      - norvegienne/modele-polarise-80-20
+      - seances/endurance-fondamentale
+      - recuperation/surcompensation-surentrainement
+      - psychologie/gestion-effort-rpe
+      applies_when: training | recovery | monitoring
+    - id: norvegienne/periodisation-norvegienne
+      name: La périodisation norvégienne (blocs, progression contrôlée)
+      lines:
+        layer1: 144-156
+        layer2: 157-169
+        layer3: 170-183
+      keywords:
+      - périodisation norvégienne
+      - blocs
+      - 4-12 semaines
+      - progression contrôlée
+      - préparation générale
+      - préparation spécifique
+      - macrocycle
+      - microcycle
+      - décharge
+      - semaine allégée
+      - 5-10%
+      - surcompensation
+      - ACWR
+      - surnageabilité
+      - overreaching
+      - charge
+      triggers:
+      - Comment organiser une saison à la norvégienne ?
+      - Quand introduire le double seuil ?
+      - Combien de semaines par bloc ?
+      - Comment progresser sans se blesser ?
+      - Périodisation norvégienne vs classique
+      connects_to:
+      - planification/modeles-periodisation
+      - planification/structure-temporelle
+      - planification/gestion-charge
+      - norvegienne/double-seuil-lactate
+      applies_when: planning | season-start | new-goal | macrocycle
+    - id: norvegienne/application-pratique
+      name: 'Applications pratiques : course, vélo, triathlon'
+      lines:
+        layer1: 188-200
+        layer2: 201-221
+        layer3: 222-252
+      keywords:
+      - application
+      - plan
+      - semaine type
+      - course à pied
+      - cyclisme
+      - triathlon
+      - brick
+      - programme
+      - exemple concret
+      - sortie longue
+      - séance type
+      - microcycle
+      - renforcement
+      - élastiques
+      - Karp
+      - bandes
+      triggers:
+      - Donne-moi un exemple de semaine norvégienne
+      - Comment appliquer la méthode norvégienne en course/vélo/triathlon ?
+      - Plan d'entraînement norvégien concret
+      - Quel volume en vélo/course ?
+      - Comment faire un brick en méthode norvégienne ?
+      connects_to:
+      - norvegienne/modele-polarise-80-20
+      - norvegienne/double-seuil-lactate
+      - norvegienne/periodisation-norvegienne
+      - entrainement-croise/brick-triathlon
+      - entrainement-croise/renforcement-endurance
+      applies_when: session-planning | multi-sport | triathlon
 selector_config:
   max_concepts_per_query: 4
   min_concepts_per_query: 1
   default_level_for_new_user: 1
   concepts_with_priority_critical:
-    - "blessures/cyclisme"
-    - "blessures/running"
-    - "blessures/fitness-musculation"
-    - "recuperation/surcompensation-surentrainement"
+  - blessures/cyclisme
+  - blessures/running
+  - blessures/fitness-musculation
+  - recuperation/surcompensation-surentrainement
   concepts_always_consider:
-    - "recuperation/surcompensation-surentrainement"  # si l'utilisateur mentionne fatigue
-    - "psychologie/motivation-autodetermination"       # si l'utilisateur semble démotivé
+  - recuperation/surcompensation-surentrainement
+  - psychologie/motivation-autodetermination
   cross_domain_overlaps:
-    - group: "fatigue_system"
-      concepts:
-        - "recuperation/surcompensation-surentrainement"
-        - "recuperation/sommeil"
-        - "planification/gestion-charge"
-        - "psychologie/gestion-effort-rpe"
-      description: "Quand l'utilisateur parle de fatigue — injecter ce groupe"
-    - group: "nutrition_post_effort"
-      concepts:
-        - "recuperation/nutrition-recuperation"
-        - "nutrition/proteines-besoins"
-        - "nutrition/glucides-timing"
-        - "nutrition/hydratation-electrolytes"
-      description: "Quand l'utilisateur demande quoi manger après l'effort"
-    - group: "planning_global"
-      concepts:
-        - "planification/modeles-periodisation"
-        - "planification/structure-temporelle"
-        - "planification/gestion-charge"
-      description: "Quand l'utilisateur veut organiser son entraînement"
-    - group: "endurance_method"
-      concepts:
-        - "norvegienne/modele-polarise-80-20"
-        - "norvegienne/controlled-intensity"
-        - "seances/endurance-fondamentale"
-        - "planification/gestion-charge"
-      description: "Quand l'utilisateur veut comprendre comment structurer l'endurance (intensité, distribution, zones)"
-
+  - group: fatigue_system
+    concepts:
+    - recuperation/surcompensation-surentrainement
+    - recuperation/sommeil
+    - planification/gestion-charge
+    - psychologie/gestion-effort-rpe
+    description: Quand l'utilisateur parle de fatigue — injecter ce groupe
+  - group: nutrition_post_effort
+    concepts:
+    - recuperation/nutrition-recuperation
+    - nutrition/proteines-besoins
+    - nutrition/glucides-timing
+    - nutrition/hydratation-electrolytes
+    description: Quand l'utilisateur demande quoi manger après l'effort
+  - group: planning_global
+    concepts:
+    - planification/modeles-periodisation
+    - planification/structure-temporelle
+    - planification/gestion-charge
+    description: Quand l'utilisateur veut organiser son entraînement
+  - group: endurance_method
+    concepts:
+    - norvegienne/modele-polarise-80-20
+    - norvegienne/controlled-intensity
+    - seances/endurance-fondamentale
+    - planification/gestion-charge
+    description: Quand l'utilisateur veut comprendre comment structurer l'endurance (intensité, distribution, zones)
+  - group: echauffement_blessure
+    concepts:
+    - echauffement/principes-generaux
+    - echauffement/routines-par-sport
+    - blessures/running
+    - blessures/cyclisme
+    description: Quand l'utilisateur parle de préparation de séance ou de prévention des blessures
+  - group: materiel_performance
+    concepts:
+    - materiel/capteurs-de-puissance
+    - materiel/cardio-gps-montres
+    - physiologie/vo2max-seuils
+    - physiologie/frequence-cardiaque-hrv
+    description: Quand l'utilisateur s'interroge sur le matos de mesure et la performance
+  - group: populations_adaptations
+    concepts:
+    - populations/seniors-50-plus
+    - populations/reprise-apres-pause
+    - planification/gestion-charge
+    - recuperation/surcompensation-surentrainement
+    description: Quand l'utilisateur a un profil spécifique (âge, reprise, condition particulière)
+  - group: cross_training_recovery
+    concepts:
+    - entrainement-croise/natation-cyclistes-coureurs
+    - entrainement-croise/yoga-pilates
+    - seances/recuperation-active
+    - recuperation/sommeil
+    description: Quand l'utilisateur cherche des activités complémentaires pour la récupération
+  - group: environnement_conditions
+    concepts:
+    - environnement/chaleur
+    - environnement/froid
+    - environnement/altitude
+    - nutrition/hydratation-electrolytes
+    description: Quand l'utilisateur s'interroge sur l'entraînement en conditions spécifiques
+  - group: physiologie_fondamentaux
+    concepts:
+    - physiologie/systemes-energetiques
+    - physiologie/vo2max-seuils
+    - physiologie/adaptations-entrainement
+    - seances/endurance-fondamentale
+    description: Quand l'utilisateur veut comprendre les bases physiologiques de l'entraînement
