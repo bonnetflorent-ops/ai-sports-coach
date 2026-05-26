@@ -268,6 +268,25 @@ INTENT_KEYWORDS = {
         "débutant", "débuter", "débute", "commencer", "base", "découvrir",
         "première fois", "comment faire", "novice",
     ],
+    "norvegienne_question": [
+        "norvégien", "norvégienne", "norvège", "méthode norvégienne",
+        "polarisé", "polarisée", "80/20", "80:20", "seiler",
+        "inge brigtsen", "jacob", "jakob", "blummenfelt",
+    ],
+    "courir_lentement": [
+        "courir lentement", "lentement", "escargot", "endurance fondamentale",
+        "footing", "zone 2", "zone deux", "endurance de base",
+        "base aérobie", "courir doucement", "allure facile",
+    ],
+    "seuil_lactate_question": [
+        "seuil", "lactate", "lactique", "double seuil", "3x10",
+        "5x6", "10x3", "mmol", "mlss", "seuil aérobie",
+        "seuil anaérobie", "sv1", "sv2",
+    ],
+    "methode_norvegienne_pratique": [
+        "semaine type", "exemple semaine", "plan norvégien",
+        "double séance", "bi-quotidien", "application",
+    ],
 }
 
 

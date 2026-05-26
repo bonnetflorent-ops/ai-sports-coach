@@ -25,10 +25,10 @@
 #   psychologie → Psychologie & mental
 # =============================================================================
 
-version: "2.0"
-generated: "2026-05-14"
-total_concepts: 53
-total_domains: 12
+version: "2.1"
+generated: "2026-05-26"
+total_concepts: 58
+total_domains: 13
 
 # =============================================================================
 # MAPPING DES INTENTIONS UTILISATEUR → CONCEPTS
@@ -154,6 +154,37 @@ intent_rules:
       - physiologie/systemes-energetiques
       - planification/modeles-periodisation
       - seances/endurance-fondamentale
+    priority: medium
+
+  norvegienne_question:
+    description: "L'utilisateur parle de la méthode norvégienne, d'entraînement polarisé 80/20, double seuil, ou s'inspire du modèle scandinave"
+    concepts:
+      - norvegienne/modele-polarise-80-20
+      - norvegienne/double-seuil-lactate
+    priority: high
+
+  courir_lentement:
+    description: "L'utilisateur se demande pourquoi/comment courir lentement pour progresser, ou doute de l'utilité de l'endurance fondamentale"
+    concepts:
+      - norvegienne/modele-polarise-80-20
+      - norvegienne/controlled-intensity
+      - seances/endurance-fondamentale
+    priority: high
+
+  seuil_lactate_question:
+    description: "L'utilisateur veut comprendre le travail au seuil, le lactate, ou les protocoles d'intervalles au seuil"
+    concepts:
+      - norvegienne/double-seuil-lactate
+      - norvegienne/controlled-intensity
+      - seances/travail-seuil
+    priority: high
+
+  methode_norvegienne_pratique:
+    description: "L'utilisateur veut appliquer la méthode norvégienne à son sport (plan concret, exemples de semaines)"
+    concepts:
+      - norvegienne/application-pratique
+      - norvegienne/periodisation-norvegienne
+      - planification/modeles-periodisation
     priority: medium
 
 # =============================================================================
@@ -1544,6 +1575,190 @@ domains:
           - "Comment enchaîner vélo et course ?"
           - "Brick workout triathlon"
         applies_when: "triathlon | multi-sport"
+
+  # ---------------------------------------------------------------------------
+  # DOMAINE 13: MÉTHODE NORVÉGIENNE
+  # Fichier: norvegienne.md (271 lignes)
+  # ---------------------------------------------------------------------------
+  norvegienne:
+    name: "Méthode Norvégienne d'Entraînement"
+    file: "norvegienne.md"
+    total_lines: 271
+    description: "Modèle polarisé 80/20, double seuil lactate, intensité contrôlée et périodisation à la norvégienne"
+    concepts:
+
+      - id: "norvegienne/modele-polarise-80-20"
+        name: "Le modèle polarisé 80/20 (Seiler)"
+        lines: {layer1: "7-18", layer2: "19-30", layer3: "31-42"}
+        keywords:
+          - "80:20"
+          - "80/20"
+          - polarisé
+          - Seiler
+          - "zone 2"
+          - junk mileage
+          - endurance fondamentale
+          - "courir lentement"
+          - escargot
+          - Karp
+          - base aérobie
+          - Norvège
+          - norvégien
+          - norvégienne
+          - pyramidal
+          - pyramide
+          - distribution
+          - intensité basse
+          - "pourcentage facile"
+          - "pourcentage intensité"
+        triggers:
+          - "Pourquoi courir lentement pour aller plus vite ?"
+          - "C'est quoi le modèle 80/20 ?"
+          - "Comment les Norvégiens s'entraînent ?"
+          - "Pourquoi éviter de courir à allure modérée ?"
+          - "C'est quoi le junk mileage ?"
+          - "Quel pourcentage d'endurance fondamentale ?"
+        connects_to:
+          - "seances/endurance-fondamentale"
+          - "planification/modeles-periodisation"
+          - "physiologie/systemes-energetiques"
+        applies_when: "education | planning | base-building | beginner"
+
+      - id: "norvegienne/double-seuil-lactate"
+        name: "La méthode double seuil (Ingebrigtsen, lactate)"
+        lines: {layer1: "47-56", layer2: "57-76", layer3: "77-97"}
+        keywords:
+          - Ingebrigtsen
+          - double seuil
+          - threshold
+          - lactate
+          - "3x10"
+          - "5x6"
+          - "10x3"
+          - piqûre
+          - "mmol"
+          - Bakken
+          - Kristian
+          - Blummenfelt
+          - Gustav
+          - Iden
+          - seuil lactique
+          - MLSS
+          - "contrôle lactate"
+          - "lactate mètre"
+        triggers:
+          - "Comment fonctionne la méthode Ingebrigtsen ?"
+          - "C'est quoi le double seuil ?"
+          - "Pourquoi mesurer le lactate ?"
+          - "Comment faire une séance de seuil norvégienne ?"
+          - "Protocole 3x10 min seuil"
+          - "À quelle allure faire le seuil ?"
+        connects_to:
+          - "seances/travail-seuil"
+          - "physiologie/vo2max-seuils"
+          - "physiologie/systemes-energetiques"
+          - "planification/gestion-charge"
+        applies_when: "performance | threshold-training | lactate-testing"
+
+      - id: "norvegienne/controlled-intensity"
+        name: "L'intensité contrôlée : ne jamais se mettre dans le rouge"
+        lines: {layer1: "102-111", layer2: "112-127", layer3: "128-139"}
+        keywords:
+          - intensité contrôlée
+          - "pas à fond"
+          - "ne pas vider le réservoir"
+          - zone grise
+          - talk test
+          - conversation
+          - RPE
+          - facile
+          - allure modérée
+          - fatigue
+          - régularité
+          - "jour facile"
+          - "jour difficile"
+          - alternance
+          - Tønnessen
+          - charge allostatique
+        triggers:
+          - "Pourquoi ne pas s'entraîner à fond ?"
+          - "Comment savoir si je cours assez lentement ?"
+          - "C'est quoi l'intensité contrôlée ?"
+          - "Pourquoi alterner jour facile et jour difficile ?"
+          - "Comment utiliser le talk test ?"
+        connects_to:
+          - "norvegienne/modele-polarise-80-20"
+          - "seances/endurance-fondamentale"
+          - "recuperation/surcompensation-surentrainement"
+          - "psychologie/gestion-effort-rpe"
+        applies_when: "training | recovery | monitoring"
+
+      - id: "norvegienne/periodisation-norvegienne"
+        name: "La périodisation norvégienne (blocs, progression contrôlée)"
+        lines: {layer1: "144-156", layer2: "157-169", layer3: "170-183"}
+        keywords:
+          - périodisation norvégienne
+          - blocs
+          - "4-12 semaines"
+          - progression contrôlée
+          - préparation générale
+          - préparation spécifique
+          - macrocycle
+          - microcycle
+          - décharge
+          - semaine allégée
+          - "5-10%"
+          - surcompensation
+          - ACWR
+          - surnageabilité
+          - overreaching
+          - charge
+        triggers:
+          - "Comment organiser une saison à la norvégienne ?"
+          - "Quand introduire le double seuil ?"
+          - "Combien de semaines par bloc ?"
+          - "Comment progresser sans se blesser ?"
+          - "Périodisation norvégienne vs classique"
+        connects_to:
+          - "planification/modeles-periodisation"
+          - "planification/structure-temporelle"
+          - "planification/gestion-charge"
+          - "norvegienne/double-seuil-lactate"
+        applies_when: "planning | season-start | new-goal | macrocycle"
+
+      - id: "norvegienne/application-pratique"
+        name: "Applications pratiques : course, vélo, triathlon"
+        lines: {layer1: "188-200", layer2: "201-221", layer3: "222-252"}
+        keywords:
+          - application
+          - plan
+          - semaine type
+          - course à pied
+          - cyclisme
+          - triathlon
+          - brick
+          - programme
+          - exemple concret
+          - sortie longue
+          - séance type
+          - microcycle
+          - renforcement
+          - élastiques
+          - Karp
+          - bandes
+        triggers:
+          - "Donne-moi un exemple de semaine norvégienne"
+          - "Comment appliquer la méthode norvégienne en course/vélo/triathlon ?"
+          - "Plan d'entraînement norvégien concret"
+          - "Quel volume en vélo/course ?"
+          - "Comment faire un brick en méthode norvégienne ?"
+        connects_to:
+          - "norvegienne/modele-polarise-80-20"
+          - "norvegienne/double-seuil-lactate"
+          - "norvegienne/periodisation-norvegienne"
+          - "entrainement-croise/brick-triathlon"
+          - "entrainement-croise/renforcement-endurance"
+        applies_when: "session-planning | multi-sport | triathlon"
 
 # =============================================================================
 # MÉTADONNÉES POUR LE SÉLECTEUR LLM
