@@ -237,15 +237,17 @@ INTENT_KEYWORDS = {
     "fatigue_surentrainement": [
         "fatigué", "fatigue", "épuisé", "crevé", "pas en forme",
         "récupère pas", "sommeil", "dors mal", "insomnie",
-        "surentraînement", "récupération",
+        "surentraînement", "récupération", "trop dur", "à fond",
     ],
     "planifier_saison": [
         "planifier", "saison", "organiser", "programme", "plan",
-        "préparation", "période", "objectif saison",
+        "préparation", "période", "objectif saison", "bloc",
+        "périodisation",
     ],
     "ameliorer_performance": [
         "progresser", "performance", "plus vite", "puissance",
         "endurance", "améliorer", "perf", "chrono", "temps",
+        "intensité", "allure", "zones", "zone", "fondamental",
     ],
     "gerer_nutrition": [
         "manger", "nutrition", "repas", "protéine", "glucide",
@@ -266,26 +268,27 @@ INTENT_KEYWORDS = {
     ],
     "debutant_decouverte": [
         "débutant", "débuter", "débute", "commencer", "base", "découvrir",
-        "première fois", "comment faire", "novice",
-    ],
-    "norvegienne_question": [
-        "norvégien", "norvégienne", "norvège", "méthode norvégienne",
-        "polarisé", "polarisée", "80/20", "80:20", "seiler",
-        "inge brigtsen", "jacob", "jakob", "blummenfelt",
+        "première fois", "comment faire", "novice", "footing",
+        "courir", "lentement", "doucement", "facile",
     ],
     "courir_lentement": [
-        "courir lentement", "lentement", "escargot", "endurance fondamentale",
-        "footing", "zone 2", "zone deux", "endurance de base",
-        "base aérobie", "courir doucement", "allure facile",
+        "endurance fondamentale", "zone 2", "zone deux", "z2",
+        "endurance de base", "base aérobie", "allure facile",
+        "escargot", "courir lentement",
     ],
     "seuil_lactate_question": [
         "seuil", "lactate", "lactique", "double seuil", "3x10",
         "5x6", "10x3", "mmol", "mlss", "seuil aérobie",
         "seuil anaérobie", "sv1", "sv2",
     ],
+    "norvegienne_question": [
+        "norvégien", "norvégienne", "norvège", "méthode norvégienne",
+        "polarisé", "polarisée", "80/20", "80:20", "seiler",
+        "inge brigtsen", "jacob", "jakob", "blummenfelt",
+    ],
     "methode_norvegienne_pratique": [
         "semaine type", "exemple semaine", "plan norvégien",
-        "double séance", "bi-quotidien", "application",
+        "double séance", "bi-quotidien",
     ],
 }
 

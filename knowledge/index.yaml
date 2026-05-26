@@ -96,6 +96,7 @@ intent_rules:
       - recuperation/sommeil
       - recuperation/outils-monitoring
       - psychologie/gestion-effort-rpe
+      - norvegienne/controlled-intensity
     priority: high
 
   planifier_saison:
@@ -104,6 +105,7 @@ intent_rules:
       - planification/modeles-periodisation
       - planification/structure-temporelle
       - planification/tapering-pic-forme
+      - norvegienne/periodisation-norvegienne
     priority: medium
 
   ameliorer_performance:
@@ -112,6 +114,8 @@ intent_rules:
       - seances/intervalles-haute-intensite
       - seances/travail-seuil
       - physiologie/vo2max-seuils
+      - norvegienne/modele-polarise-80-20
+      - norvegienne/double-seuil-lactate
     priority: medium
 
   gerer_nutrition:
@@ -154,6 +158,8 @@ intent_rules:
       - physiologie/systemes-energetiques
       - planification/modeles-periodisation
       - seances/endurance-fondamentale
+      - norvegienne/modele-polarise-80-20
+      - norvegienne/controlled-intensity
     priority: medium
 
   norvegienne_question:
@@ -232,6 +238,7 @@ domains:
           - "seances/intervalles-haute-intensite"
           - "seances/travail-neuromusculaire"
           - "physiologie/vo2max-seuils"
+          - "norvegienne/modele-polarise-80-20"
         applies_when: "general | education | beginner onboarding"
         notes: "Concept fondateur — souvent le premier à injecter pour les débutants"
 
@@ -264,6 +271,7 @@ domains:
           - "seances/intervalles-haute-intensite"
           - "planification/gestion-charge"
           - "physiologie/frequence-cardiaque-hrv"
+          - "norvegienne/double-seuil-lactate"
         applies_when: "testing | performance | intermediate onboarding"
 
       - id: "physiologie/adaptations-entrainement"
@@ -363,6 +371,7 @@ domains:
           - "planification/gestion-charge"
           - "planification/tapering-pic-forme"
           - "seances/endurance-fondamentale"
+          - "norvegienne/periodisation-norvegienne"
         applies_when: "planning | season-start | new-goal"
 
       - id: "planification/gestion-charge"
@@ -397,6 +406,7 @@ domains:
           - "recuperation/surcompensation-surentrainement"
           - "recuperation/outils-monitoring"
           - "planification/tapering-pic-forme"
+          - "norvegienne/controlled-intensity"
         applies_when: "monitoring | data-analysis | fatigue-check"
 
       - id: "planification/structure-temporelle"
@@ -510,6 +520,7 @@ domains:
           - "physiologie/systemes-energetiques"
           - "planification/modeles-periodisation"
           - "physiologie/frequence-cardiaque-hrv"
+          - "norvegienne/modele-polarise-80-20"
         applies_when: "session-planning | training | base-building"
 
       - id: "seances/travail-seuil"
@@ -537,6 +548,7 @@ domains:
           - "physiologie/vo2max-seuils"
           - "physiologie/systemes-energetiques"
           - "planification/gestion-charge"
+          - "norvegienne/double-seuil-lactate"
         applies_when: "session-planning | performance | threshold-training"
 
       - id: "seances/intervalles-haute-intensite"
@@ -716,6 +728,7 @@ domains:
           - "recuperation/outils-monitoring"
           - "planification/gestion-charge"
           - "psychologie/resilience-ennui-plateaux"
+          - "norvegienne/controlled-intensity"
         applies_when: "fatigue | monitoring | alarm"
 
       - id: "recuperation/outils-monitoring"
@@ -1796,4 +1809,11 @@ selector_config:
         - "planification/structure-temporelle"
         - "planification/gestion-charge"
       description: "Quand l'utilisateur veut organiser son entraînement"
+    - group: "endurance_method"
+      concepts:
+        - "norvegienne/modele-polarise-80-20"
+        - "norvegienne/controlled-intensity"
+        - "seances/endurance-fondamentale"
+        - "planification/gestion-charge"
+      description: "Quand l'utilisateur veut comprendre comment structurer l'endurance (intensité, distribution, zones)"
 
