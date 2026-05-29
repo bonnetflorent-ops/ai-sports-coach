@@ -46,6 +46,38 @@ logger = structlog.get_logger(__name__)
 TELEGRAM_MAX_CHARS = 4000
 
 
+async def _safe_telegram_send(
+    edit_or_send, text: str, *, edit: bool = False, orig_message=None
+):
+    """Send a Telegram message safely, handling markdown parse errors.
+
+    If Telegram rejects the message due to unbalanced markdown entities,
+    retries with parse_mode=None (plain text).
+
+    Args:
+        edit_or_send: Either a message object (for edit) or the original message (for answer).
+                      When edit=True, this is the ack message to edit.
+                      When edit=False, orig_message must be provided for .answer().
+        text: The text to send.
+        edit: If True, call edit_text on edit_or_send. If False, call answer on orig_message.
+        orig_message: Required when edit=False; the message object to reply to.
+    """
+    from aiogram.exceptions import TelegramBadRequest
+
+    try:
+        if edit:
+            return await edit_or_send.edit_text(text)
+        else:
+            return await orig_message.answer(text)
+    except TelegramBadRequest as e:
+        if "can't parse entities" in str(e):
+            if edit:
+                return await edit_or_send.edit_text(text, parse_mode=None)
+            else:
+                return await orig_message.answer(text, parse_mode=None)
+        raise
+
+
 async def _summarize_session_async(session_id: str):
     """Summarize a session in the background (doesn't block the bot)."""
     try:
@@ -247,9 +279,9 @@ RÈGLES POUR CE MESSAGE :
             ], max_tokens=2000)
 
             chunks = _split_long_message(welcome_response)
-            await ack.edit_text(chunks[0])
+            await _safe_telegram_send(ack, chunks[0], edit=True)
             for chunk in chunks[1:]:
-                await message.answer(chunk)
+                await _safe_telegram_send(None, chunk, orig_message=message)
             logger.info("onboarding_complete", user_id=user_id, parq_oui=parq_oui or [])
 
         except Exception as e:
@@ -540,9 +572,9 @@ RÈGLES POUR CE MESSAGE :
 
         # Remplacer le "..." par la vraie réponse (split si > 4000 chars)
         chunks = _split_long_message(response)
-        await ack_msg.edit_text(chunks[0])
+        await _safe_telegram_send(ack_msg, chunks[0], edit=True)
         for chunk in chunks[1:]:
-            await message.answer(chunk)
+            await _safe_telegram_send(None, chunk, orig_message=message)
 
     except Exception as e:
         logger.error("chat_error", user_id=user_id, error=str(e), exc_info=True)
@@ -649,17 +681,21 @@ def _parse_onboarding(text: str, prenom: str) -> dict:
     for line in text.split("\n"):
         line_lower = line.lower().strip()
         if re.match(r"4[.)\-\s]", line_lower) or "objectif" in line_lower:
-            profile["goal"] = line_lower
+            # Strip the "4." / "4)" / "4 -" prefix
+            goal = re.sub(r"^4[.)\-\s]+", "", line_lower).strip()
+            profile["goal"] = goal
             break
 
     # Blessures — chercher "6" ou "blessure"
     for line in text.split("\n"):
         line_lower = line.lower().strip()
         if re.match(r"6[.)\-\s]", line_lower) or "blessure" in line_lower or "contrainte" in line_lower:
-            if any(w in line_lower for w in ["non", "aucun", "pas de", "ras", "rien"]):
+            # Strip the "6." / "6)" / "6 -" prefix
+            injury_text = re.sub(r"^6[.)\-\s]+", "", line_lower).strip()
+            if any(w in injury_text for w in ["non", "aucun", "pas de", "ras", "rien"]):
                 profile["blessures"] = "Aucune"
             else:
-                profile["blessures"] = line_lower.strip()
+                profile["blessures"] = injury_text
             break
 
     return profile

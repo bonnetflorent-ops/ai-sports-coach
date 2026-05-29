@@ -193,3 +193,21 @@ class TestParseOnboarding:
         assert result["sport"] == "cyclisme"  # vélo → cyclisme
         assert result["blessures"] is not None
         assert "Aucune" not in result["blessures"]
+
+    def test_goal_and_injury_prefix_stripped(self):
+        """Numeric prefixes '4.' and '6.' are stripped from goal and injuries."""
+        text = (
+            "1. Florent\n"
+            "2. cyclisme\n"
+            "3. intermédiaire\n"
+            "4. Être affûté pour le vélo et avoir un physique athlétique\n"
+            "5. 4 créneaux\n"
+            "6. douleur au psoas gauche"
+        )
+        result = _parse_onboarding(text, "Fallback")
+        # Goal should NOT start with "4."
+        assert not result["goal"].startswith("4"), f"Goal still has prefix: {result['goal']}"
+        assert "affûté" in result["goal"]
+        # Injuries should NOT start with "6."
+        assert not result["blessures"].startswith("6"), f"Injuries still has prefix: {result['blessures']}"
+        assert "psoas" in result["blessures"]
