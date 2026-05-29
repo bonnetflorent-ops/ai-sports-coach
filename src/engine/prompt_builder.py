@@ -105,7 +105,7 @@ def _load_knowledge_blocks(concepts: list[str], level: int) -> str:
 
 
 def _build_profile_block(profile: dict, level: int) -> str:
-    """Construit le bloc profil utilisateur."""
+    """Construit le bloc profil utilisateur avec données physiologiques."""
     name = profile.get("name", "Athlète")
     sport = profile.get("sport", "non spécifié")
     goal = profile.get("goal", "non spécifié")
@@ -121,17 +121,52 @@ def _build_profile_block(profile: dict, level: int) -> str:
         f"- Expérience : {experience}",
     ]
 
-    # Métriques si disponibles
+    # Métriques d'entraînement
     ctl = profile.get("ctl")
     tsb = profile.get("tsb")
-    if ctl is not None:
-        lines.append(f"- Charge actuelle : CTL={ctl}" + (f", TSB={tsb}" if tsb is not None else ""))
+    ftp = profile.get("ftp_watts")
+    vdot = profile.get("vdot")
+    resting_hr = profile.get("resting_hr")
 
+    if any([ctl is not None, ftp, vdot]):
+        lines.append("")
+        lines.append("MÉTRIQUES :")
+        if ctl is not None:
+            lines.append(f"- CTL={ctl}" + (f", TSB={tsb}" if tsb is not None else ""))
+        if ftp:
+            weight = profile.get("weight_kg")
+            pwr = round(ftp / weight, 1) if weight else None
+            lines.append(f"- FTP : {ftp}W" + (f" ({pwr} W/kg)" if pwr else ""))
+        if vdot:
+            lines.append(f"- VDOT : {vdot}")
+        if resting_hr:
+            lines.append(f"- FC repos : {resting_hr} bpm")
+
+    # Données physiologiques
+    weight = profile.get("weight_kg")
+    height = profile.get("height_cm")
+    age = profile.get("age")
+    gender = profile.get("gender")
+
+    if any([weight, height, age, gender]):
+        lines.append("")
+        lines.append("PHYSIOLOGIE :")
+        if weight:
+            lines.append(f"- Poids : {weight} kg")
+        if height:
+            lines.append(f"- Taille : {height} cm")
+        if age:
+            lines.append(f"- Âge : {age} ans")
+        if gender:
+            lines.append(f"- Sexe : {gender}")
+
+    # Blessures
     blessures = profile.get("blessures")
-    if blessures:
-        lines.append(f"- Blessures/contraintes : {blessures}")
+    if blessures and blessures != "Aucune":
+        lines.append("")
+        lines.append(f"⚠️ BLESSURES/CONTRAINTES : {blessures}")
 
-    # Dernières séances si disponibles
+    # Dernières séances
     recent = profile.get("recent_sessions")
     if recent:
         lines.append(f"- Dernières séances : {recent}")
@@ -155,24 +190,31 @@ def _build_rules_block(level: int, profile: dict) -> str:
    PMA, VMA, VO2max, FC, RPE, TSS, IF, NP, VI, SV1, SV2, PMC, HRV, etc.), donne sa
    définition complète entre parenthèses. Exemple : "ta FTP (Functional Threshold Power,
    puissance maximale soutenable 1h)". Ne présume JAMAIS que l'athlète connaît un sigle,
-   même pour des termes que tu juges courants."""
+   même pour des termes que tu juges courants.
+6. PERSONNALISATION ACTIVE : les données du profil ne sont PAS décoratives.
+   Utilise-les POUR JUSTIFIER chaque conseil chiffré. Exemples :
+   - "Avec tes 73kg et ta FTP de 260W (3.6W/kg), ta zone endurance est à 145-170W"
+   - "À 32 ans, prévois 48h de récupération entre deux séances intenses"
+   - "Ton TSB à -5 indique une fatigue modérée, donc je limite l'intensité aujourd'hui"
+   - "Pour ton objectif de 120km, avec 3.6W/kg, tu peux viser 4h30-5h"
+   Ne JAMAIS lister les données sans les utiliser — ancre chaque recommandation dedans."""
 
     # Règle spécifique si on a les métriques de charge
     if ctl is not None:
         tsb = profile.get("tsb", 0)
         base_rules += f"""
-6. CHARGE ACTUELLE : CTL (Charge d'entraînement chronique)={ctl}, TSB (Balance de stress)={tsb}.
+7. CHARGE ACTUELLE : CTL (Charge d'entraînement chronique)={ctl}, TSB (Balance de stress)={tsb}.
    Adapte tes recommandations d'intensité :
    - Si TSB < -20 : privilégie la récupération, ne propose pas de haute intensité
    - Si TSB entre -10 et +5 : zone optimale pour du travail de qualité
    - Si TSB > +10 : l'athlète est frais, peut encaisser une charge élevée"""
         base_rules += f"""
-7. Sois encourageant mais honnête. Pas de positivité toxique.
-8. Si la question est hors de ton champ (médical, légal), oriente vers un professionnel."""
+8. Sois encourageant mais honnête. Pas de positivité toxique.
+9. Si la question est hors de ton champ (médical, légal), oriente vers un professionnel."""
     else:
         base_rules += f"""
-6. Sois encourageant mais honnête. Pas de positivité toxique.
-7. Si la question est hors de ton champ (médical, légal), oriente vers un professionnel."""
+7. Sois encourageant mais honnête. Pas de positivité toxique.
+8. Si la question est hors de ton champ (médical, légal), oriente vers un professionnel."""
 
     return base_rules
 

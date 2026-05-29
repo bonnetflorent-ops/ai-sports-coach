@@ -59,7 +59,7 @@ class TestBuildSystemPrompt:
         assert "préparer l'Étape du Tour" in prompt
         assert "CTL=75" in prompt
         assert "TSB=-5" in prompt
-        assert "Aucune" in prompt
+        assert "PERSONNALISATION ACTIVE" in prompt
         assert "SIGLES TECHNIQUES" in prompt
 
     def test_beginner_prompt_pedagogue(self):
