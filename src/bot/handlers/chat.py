@@ -45,14 +45,116 @@ logger = structlog.get_logger(__name__)
 # Telegram message limit (4096 chars, with safety margin)
 TELEGRAM_MAX_CHARS = 4000
 
+# Telegram markdown inline entities — longest first for greedy matching
+_MD_ENTITIES = ['||', '~~', '__', '**', '_', '*']
+_MD_CODE = '`'
+
+
+def _fix_markdown_entities(text: str) -> str:
+    """Balance Telegram markdown inline entities to prevent parse errors.
+
+    Two-pass approach: first balance long entities (**, __, ~~, ||),
+    then balance short entities (*, _) on the result.  This avoids the
+    ambiguity where *** could be parsed as **+* or *+**.
+    Also handles backtick code (`).
+
+    Returns the corrected text (may be identical if already balanced).
+    """
+    # ── Passe 1 : entités de longueur 2 ──
+    ENTITIES_2 = ['||', '~~', '__', '**']
+    text = _balance_entities(text, ENTITIES_2)
+
+    # ── Passe 2 : entités de longueur 1 (*, _) ──
+    # On saute les caractères qui font déjà partie d'une entité de longueur 2
+    ENTITIES_1 = ['_', '*']
+    skip_prefixes = {'**', '__', '~~', '||'}  # si on est dans une entité longue, ignorer
+    text = _balance_entities(text, ENTITIES_1, skip_prefixes=skip_prefixes)
+
+    # ── Passe 3 : backticks ──
+    text = _balance_entities(text, ['`'])
+
+    return text
+
+
+def _balance_entities(text: str, entities: list[str], skip_prefixes: set[str] | None = None) -> str:
+    """Balance a set of same-length entities in text using a stack.
+
+    Args:
+        text: Input text.
+        entities: List of entity strings of the same length (e.g., ['**','__'] or ['*','_']).
+        skip_prefixes: If set, skip characters that are part of one of these prefixes.
+                       Example: when balancing '*', skip positions where '**' starts.
+    """
+    n = len(text)
+    stack = []           # positions of openers (indices in original text)
+    result = list(text)  # mutable working copy
+    i = 0
+
+    while i < n:
+        # Skip characters that belong to a longer entity
+        if skip_prefixes:
+            for sp in skip_prefixes:
+                if i + len(sp) <= n and text[i:i+len(sp)] == sp:
+                    i += len(sp)
+                    break
+            else:
+                pass  # no skip needed
+            if i < n and any(
+                i + len(sp) <= n and text[i:i+len(sp)] == sp
+                for sp in skip_prefixes
+            ):
+                continue  # already advanced i inside the loop; re-evaluate
+
+        # Try to match an entity at current position
+        matched = None
+        ent_len = 0
+        for ent in entities:
+            ent_len = len(ent)
+            if i + ent_len <= n and text[i:i+ent_len] == ent:
+                # Escaped: \* or \_ etc.
+                if i > 0 and text[i-1] == '\\':
+                    i += ent_len
+                    matched = True  # handled
+                    break
+                matched = ent
+                break
+
+        if matched is None or matched is True:
+            i += 1 if matched is None else 0
+            continue
+
+        # Standard open/close logic
+        if stack and text[stack[-1]:stack[-1]+ent_len] == matched:
+            stack.pop()   # close
+        else:
+            stack.append(i)   # open
+
+        i += ent_len
+
+    # Close remaining openers (append in reverse order at end of string)
+    if not stack:
+        return text
+
+    # Build result: walk through original text, insert closers at the end
+    offset = 0
+    for pos in reversed(stack):
+        ent = text[pos:pos+ent_len]
+        close_pos = n + offset
+        result.insert(close_pos, ent)
+        offset += len(ent)
+
+    return ''.join(result)
+
 
 async def _safe_telegram_send(
     edit_or_send, text: str, *, edit: bool = False, orig_message=None
 ):
     """Send a Telegram message safely, handling markdown parse errors.
 
-    If Telegram rejects the message due to unbalanced markdown entities,
-    retries with parse_mode=None (plain text).
+    Tries in order:
+      1. Send with original text (markdown parse mode — default).
+      2. If rejected, attempt to fix unbalanced entities via _fix_markdown_entities().
+      3. If still rejected, fall back to parse_mode=None (plain text).
 
     Args:
         edit_or_send: Either a message object (for edit) or the original message (for answer).
@@ -71,6 +173,15 @@ async def _safe_telegram_send(
             return await orig_message.answer(text)
     except TelegramBadRequest as e:
         if "can't parse entities" in str(e):
+            # Try fixing unbalanced markdown before falling back to plain text
+            try:
+                fixed = _fix_markdown_entities(text)
+                if edit:
+                    return await edit_or_send.edit_text(fixed)
+                else:
+                    return await orig_message.answer(fixed)
+            except TelegramBadRequest:
+                pass  # Even fixed markdown fails — use plain text
             if edit:
                 return await edit_or_send.edit_text(text, parse_mode=None)
             else:
