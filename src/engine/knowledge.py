@@ -23,7 +23,7 @@ def _load_index() -> dict:
     """Charge l'index YAML (avec cache)."""
     global _index_cache
     if _index_cache is None:
-        with open(INDEX_PATH) as f:
+        with open(INDEX_PATH, encoding='utf-8') as f:
             _index_cache = yaml.safe_load(f)
     return _index_cache
 
@@ -32,7 +32,7 @@ def _read_file(filepath: str) -> str:
     """Lit un fichier markdown (avec cache)."""
     path = str(DOMAINS_DIR / filepath)
     if path not in _files_cache:
-        with open(path) as f:
+        with open(path, encoding='utf-8') as f:
             _files_cache[path] = f.read()
     return _files_cache[path]
 
