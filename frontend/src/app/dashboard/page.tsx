@@ -1,19 +1,19 @@
 'use client';
 
-import { useState } from 'react';
 import { Header } from '@/components/layout/Header';
 import { TabNavigation } from '@/components/layout/TabNavigation';
 import { BottomNav } from '@/components/layout/BottomNav';
-import { ChatView } from '@/components/chat/ChatView';
 
-export default function HomePage() {
-  const [badgeCount, setBadgeCount] = useState(0);
+export default function DashboardPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Header badgeCount={badgeCount} />
+      <Header />
       <TabNavigation />
-      <main className="flex-1 overflow-hidden">
-        <ChatView />
+      <main className="flex-1 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-4xl mb-4">📊</p>
+          <p className="text-slate-400 text-lg">Dashboard — bientôt disponible</p>
+        </div>
       </main>
       <BottomNav />
     </div>
