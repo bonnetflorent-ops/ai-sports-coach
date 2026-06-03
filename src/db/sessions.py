@@ -310,6 +310,114 @@ def end_session(session_id: str):
     logger.debug(f"Session terminée: {session_id}")
 
 
+def create_session_for_user(user_id: str, topic: Optional[str] = None) -> dict:
+    """
+    Crée une nouvelle session de chat par UUID utilisateur.
+    Retourne la session créée.
+    """
+    admin = get_supabase_admin()
+    session_data = {"user_id": user_id, "topic": topic}
+    result = admin.table("chat_sessions").insert(session_data).execute()
+    session = result.data[0]
+    logger.debug(f"Session créée: {session['id']} pour user={user_id}")
+    return session
+
+
+def get_or_create_active_session_for_user(user_id: str) -> dict:
+    """
+    Récupère la session active la plus récente par UUID, ou en crée une nouvelle.
+    Une session est "active" si elle a moins de 24h et pas encore terminée.
+    """
+    admin = get_supabase_admin()
+
+    result = (
+        admin.table("chat_sessions")
+        .select("*")
+        .eq("user_id", user_id)
+        .is_("ended_at", "null")
+        .order("started_at", desc=True)
+        .limit(1)
+        .execute()
+    )
+
+    if result.data:
+        session = result.data[0]
+        started = datetime.fromisoformat(session["started_at"].replace("+00:00", ""))
+        age = datetime.now(timezone.utc) - started.replace(tzinfo=timezone.utc)
+        if age.total_seconds() < 86400:  # 24h
+            return session
+
+    return create_session_for_user(user_id)
+
+
+def get_user_messages_paginated(user_id: str, page: int = 1, per_page: int = 20) -> dict:
+    """
+    Récupère les messages paginés d'un utilisateur (toutes sessions confondues).
+    Tri chronologique inverse (les plus récents en premier).
+    """
+    admin = get_supabase_admin()
+
+    # Récupérer les sessions de l'utilisateur
+    sessions = (
+        admin.table("chat_sessions")
+        .select("id")
+        .eq("user_id", user_id)
+        .execute()
+    )
+    if not sessions.data:
+        return {"messages": [], "total": 0, "page": page, "per_page": per_page}
+
+    session_ids = [s["id"] for s in sessions.data]
+
+    # Compter le total
+    count_result = (
+        admin.table("chat_messages")
+        .select("id", count="exact")
+        .in_("session_id", session_ids)
+        .execute()
+    )
+    total = count_result.count if hasattr(count_result, "count") else 0
+
+    # Messages paginés
+    start = (page - 1) * per_page
+    end = start + per_page - 1
+    result = (
+        admin.table("chat_messages")
+        .select("id, role, content, created_at, session_id")
+        .in_("session_id", session_ids)
+        .order("created_at", desc=True)
+        .range(start, end)
+        .execute()
+    )
+
+    messages = list(reversed(result.data)) if result.data else []
+
+    return {
+        "messages": messages,
+        "total": total,
+        "page": page,
+        "per_page": per_page,
+    }
+
+
+def get_user_sessions(user_id: str, limit: int = 20) -> list[dict]:
+    """
+    Récupère les sessions d'un utilisateur par UUID, triées par date de création.
+    """
+    admin = get_supabase_admin()
+
+    result = (
+        admin.table("chat_sessions")
+        .select("id, started_at, ended_at, topic, message_count")
+        .eq("user_id", user_id)
+        .order("started_at", desc=True)
+        .limit(limit)
+        .execute()
+    )
+
+    return result.data
+
+
 def get_session_history(telegram_id: int, limit: int = 5) -> list[dict]:
     """
     Récupère l'historique des dernières sessions pour un utilisateur.

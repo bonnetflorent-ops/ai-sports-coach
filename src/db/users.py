@@ -131,6 +131,52 @@ def update_user_profile(telegram_id: int, profile: dict) -> dict:
     return result.data[0] if result.data else {}
 
 
+def get_user_by_id(user_id: str) -> dict | None:
+    """
+    Récupère un utilisateur par son UUID (auth.users id).
+    Retourne le dict complet ou None si introuvable.
+    """
+    admin = get_supabase_admin()
+    result = admin.table("users").select("*").eq("id", user_id).execute()
+    return result.data[0] if result.data else None
+
+
+def get_user_by_email(email: str) -> dict | None:
+    """
+    Récupère un utilisateur par son email.
+    Retourne le dict complet ou None si introuvable.
+    """
+    admin = get_supabase_admin()
+    result = admin.table("users").select("*").eq("email", email).execute()
+    return result.data[0] if result.data else None
+
+
+def create_user(user_id: str, email: str, first_name: str) -> dict:
+    """
+    Crée un utilisateur dans la table `users` avec l'UUID fourni.
+    Utilisé après création du compte auth Supabase.
+    """
+    admin = get_supabase_admin()
+    new_user = {
+        "id": user_id,
+        "email": email,
+        "first_name": first_name,
+    }
+    result = admin.table("users").insert(new_user).execute()
+    return result.data[0]
+
+
+def update_user(user_id: str, updates: dict) -> dict:
+    """
+    Met à jour un utilisateur par son UUID.
+    Retourne l'utilisateur mis à jour.
+    """
+    admin = get_supabase_admin()
+    updates["updated_at"] = "now()"
+    result = admin.table("users").update(updates).eq("id", user_id).execute()
+    return result.data[0] if result.data else {}
+
+
 def get_user_profile(telegram_id: int) -> dict:
     """
     Récupère le profil complet d'un utilisateur, formaté pour le prompt builder.

@@ -15,6 +15,7 @@ class Settings(BaseModel):
     supabase_url: str = os.getenv("SUPABASE_URL", "")
     supabase_anon_key: str = os.getenv("SUPABASE_ANON_KEY", "")
     supabase_service_key: str = os.getenv("SUPABASE_SERVICE_KEY", "")
+    cors_origins: list[str] = os.getenv("CORS_ORIGINS", "http://localhost:5173,http://localhost:3000").split(",")
 
 
 settings = Settings()
