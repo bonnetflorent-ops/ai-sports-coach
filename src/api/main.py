@@ -53,11 +53,15 @@ def create_app() -> FastAPI:
     app.include_router(chat_router)
     app.include_router(profile_router)
 
-    # Routers à implémenter dans les phases suivantes :
-    # from src.api.dashboard import router as dashboard_router
-    # from src.api.athlete import router as athlete_router
-    # from src.api.onboarding import router as onboarding_router
-    # from src.api.feedback import router as feedback_router
+    from src.api.dashboard import router as dashboard_router
+    from src.api.athlete import router as athlete_router
+    from src.api.onboarding import router as onboarding_router
+    from src.api.feedback import router as feedback_router
+
+    app.include_router(dashboard_router)
+    app.include_router(athlete_router)
+    app.include_router(onboarding_router)
+    app.include_router(feedback_router)
 
     # ── Routes de base ───────────────────────────────────────────────
 
