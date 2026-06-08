@@ -1,51 +1,23 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { Skeleton } from '@/components/ui/skeleton';
 import { User } from '@/types';
 import { BugReport } from './BugReport';
 
-function ProfileSkeleton() {
-  return (
-    <div className="space-y-4 p-4 max-w-2xl mx-auto w-full">
-      <div className="flex flex-col items-center gap-3 py-6">
-        <Skeleton className="h-16 w-16 rounded-full bg-slate-800" />
-        <Skeleton className="h-5 w-32 bg-slate-800" />
-      </div>
-      <div className="rounded-xl bg-slate-900/50 border border-slate-800 p-4 space-y-3">
-        <Skeleton className="h-4 w-36 bg-slate-800" />
-        <Skeleton className="h-4 w-24 bg-slate-800" />
-        <Skeleton className="h-4 w-28 bg-slate-800" />
-      </div>
-    </div>
-  );
-}
-
 export function ProfileView() {
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [bugReportOpen, setBugReportOpen] = useState(false);
-
-  useEffect(() => {
+  const [user] = useState<User | null>(() => {
     try {
       const stored = localStorage.getItem('user');
-      if (stored) {
-        setUser(JSON.parse(stored));
-      }
+      return stored ? JSON.parse(stored) : null;
     } catch {
-      // ignore parse errors
-    } finally {
-      setLoading(false);
+      return null;
     }
-  }, []);
-
-  if (loading) {
-    return <ProfileSkeleton />;
-  }
+  });
+  const [bugReportOpen, setBugReportOpen] = useState(false);
 
   if (!user) {
     return (

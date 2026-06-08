@@ -1,0 +1,141 @@
+# CLAUDE.md
+
+Ce fichier fournit des directives à Claude Code (claude.ai/code) pour travailler dans ce dépôt.
+
+## Démarrage rapide
+
+```bash
+# Frontend (Next.js dev server → localhost:3000)
+cd frontend && npm run dev
+
+# Backend (FastAPI → localhost:8000)
+/c/Users/bonne/AppData/Local/Python/pythoncore-3.14-64/python.exe -m uvicorn src.api.main:app --reload --port 8000
+```
+
+## Commandes essentielles
+
+```bash
+# Backend : tous les tests unitaires (exclut bot/ et integration/)
+/c/Users/bonne/AppData/Local/Python/pythoncore-3.14-64/python.exe -m pytest tests/ --ignore=tests/bot --ignore=tests/integration -v
+
+# Backend : un seul fichier de test
+/c/Users/bonne/AppData/Local/Python/pythoncore-3.14-64/python.exe -m pytest tests/api/test_auth.py -v
+
+# Backend : une seule fonction de test
+/c/Users/bonne/AppData/Local/Python/pythoncore-3.14-64/python.exe -m pytest tests/api/test_auth.py::test_register_success -v
+
+# Backend : avec couverture
+/c/Users/bonne/AppData/Local/Python/pythoncore-3.14-64/python.exe -m pytest tests/ --ignore=tests/bot --ignore=tests/integration -v --cov=src --cov-report=term-missing
+
+# Frontend : vérification du build (obligatoire : --webpack, pas Turbopack)
+cd frontend && SERWIST_SUPPRESS_TURBOPACK_WARNING=1 npx next build --webpack
+
+# Frontend : lint
+cd frontend && npm run lint
+
+# Vérification rapide backend
+curl http://localhost:8000/api/health
+```
+
+## Variables d'environnement
+
+### Backend (`backend/.env`)
+Les variables essentielles au développement local :
+- `OPENROUTER_API_KEY` — clé API OpenRouter
+- `LLM_MODEL` — modèle coach principal (défaut: `deepseek/deepseek-v4-pro`)
+- `SELECTOR_MODEL` — petit modèle pour tâches auxiliaires (défaut: `deepseek/deepseek-chat`)
+- `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_KEY` — connexion Supabase
+- `GEMINI_API_KEY` — embeddings
+- `CORS_ORIGINS` — origines autorisées (défaut: `http://localhost:5173,http://localhost:3000`)
+- `VAPID_PRIVATE_KEY`, `VAPID_PUBLIC_KEY`, `VAPID_SUBJECT` — push notifications web
+- `HEALTH_ENCRYPTION_KEY` — chiffrement des données de santé
+
+⚠️ **Gotcha** : La variable s'appelle `SUPABASE_SERVICE_KEY` dans le code (`src/utils/config.py`), mais `SUPABASE_SERVICE_ROLE_KEY` dans `docs/deploy.md`. Le code lit `SUPABASE_SERVICE_KEY`.
+
+### Frontend (`frontend/.env.local`)
+```
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+NEXT_PUBLIC_API_URL=http://localhost:8000
+```
+
+## Architecture
+
+Le projet est une application **double interface** : un bot Telegram (aiogram 3, l'interface d'origine) et une **API REST FastAPI** (la nouvelle PWA). Les deux partagent les couches `src/engine/`, `src/db/` et `src/utils/`.
+
+**Architecture de déploiement cible :**
+```
+Frontend Vercel (Next.js 16) → Backend VPS Docker (FastAPI) → Supabase (DB + Auth)
+                                                                OpenRouter (DeepSeek)
+```
+
+> **Next.js 16 :** Le frontend utilise Next.js 16.2.7, qui a des breaking changes par rapport à Next.js 15 et aux versions antérieures. Consulter [frontend/AGENTS.md](frontend/AGENTS.md) et `frontend/node_modules/next/dist/docs/` avant d'écrire du code frontend. Les APIs, conventions et structures de fichiers peuvent différer de tes connaissances d'entraînement.
+
+```
+frontend/src/app/           → Next.js 16 App Router (tout en client-side, pas de server components)
+frontend/src/components/    → chat/, dashboard/, onboarding/, profile/, layout/, ui/
+frontend/src/hooks/         → useChat, useDashboard, useAthleteModel
+frontend/src/lib/           → api.ts (fetch + SSE), supabase.ts, utils.ts
+
+src/api/                    → Routes FastAPI (auth, chat, profile, dashboard, athlete, onboarding, feedback)
+src/engine/                 → Logique métier (appels LLM, construction de prompts, connaissances, sécurité, etc.)
+src/db/                     → CRUD Supabase (un fichier par table)
+src/bot/                    → Bot Telegram (handlers aiogram, middleware, keyboards)
+src/cli/                    → Points d'entrée cron (proactive.py)
+src/migrations/             → Migrations SQL brutes (ordre: 001_pwa_tables → 002_rls_policies → 003_enable_vault)
+```
+
+### Flux et patterns clés
+
+**Authentification :** Le frontend POST les credentials → le backend crée/valide l'utilisateur Supabase Auth via la clé `service_role` → retourne un JWT `access_token` + `refresh_token`. Le frontend stocke les tokens dans `localStorage` et les attache via `Authorization: Bearer` à chaque requête. La dépendance `get_current_user()` valide le JWT auprès de Supabase Auth, puis récupère la ligne utilisateur dans la table `users`. Pas de middleware de protection de route côté frontend — les pages vérifient `localStorage` directement.
+
+**Streaming SSE du chat :** `POST /api/chat/message` → vérification rate limit (sliding window en mémoire) → récupération/création de session (expiration 24h) → sauvegarde du message utilisateur → chargement des 15 derniers messages (mémoire chaude) → `select_concepts()` (3 niveaux : détection de mots-clés critiques → matching par mots-clés → sélecteur LLM) → `build_system_prompt()` (blocs de connaissances + profil + règles) → `stream_llm_response()` émet des événements SSE `event: token` → le bloc `finally` sauvegarde le message assistant + suit les coûts. Côté frontend, `sseStream()` parse le flux manuellement via `ReadableStream` (pas `EventSource`, qui ne supporte que GET).
+
+**Système de connaissances :** Les connaissances de coaching sont stockées en markdown dans `knowledge/domains/`, indexées par `knowledge/index.yaml`. Le `Selector` choisit les concepts pertinents par message via trois stratégies en ordre de priorité : (1) détection de mots-clés de douleur/blessure (gratuit), (2) matching par mots-clés contre `INTENT_KEYWORDS` (gratuit, ~80% de couverture), (3) sélection par LLM via `deepseek/deepseek-chat` (payant). Les concepts sélectionnés sont chargés au niveau approprié (1-3) et injectés dans le system prompt. L'architecture complète du sélecteur est documentée dans [knowledge/selector-spec.md](knowledge/selector-spec.md).
+
+**Deux modèles LLM distincts :** Le backend utilise deux modèles OpenRouter différents, chacun avec un rôle précis. `LLM_MODEL` (défaut `deepseek/deepseek-v4-pro`) est le coach principal — raisonnement complexe, réponses longues. `SELECTOR_MODEL` (défaut `deepseek/deepseek-chat`) est le petit modèle rapide/économique pour les tâches auxiliaires : sélection de connaissances, summarization de session, extraction de faits. Les deux sont configurables indépendamment dans les variables d'environnement.
+
+**Modèle athlète :** Un document JSON versionné qui stocke tout ce que le coach sait sur l'athlète (physique, etat_actuel, blessures, patterns, preferences, objectifs). Mis à jour via `update_model_from_summary()` après chaque session, avec résolution de conflits par priorité de source : `corrected_by_human` (5) > `measured` (4) > `reported` (3) > `estimated` (2) > `auto_extracted` (1). Les corrections humaines passent par `PATCH /api/athlete/model` avec des chemins en notation pointée. Gère les contradictions quand différentes sources donnent des valeurs différentes pour le même champ.
+
+## Conventions
+
+- **Codebase en français** : Tous les commentaires, docstrings, messages de log, textes UI et messages de commit sont en français. Les noms de variables/fonctions sont en anglais.
+- **Tout en client components** : Chaque page Next.js est `'use client'`. Pas de server components, pas d'exports `generateMetadata`, pas de pages async. L'app est une SPA client-side qui communique avec un backend séparé.
+- **DB synchrone dans un contexte async** : `supabase-py` est synchrone. Les handlers FastAPI l'appellent directement (bloquant brièvement l'event loop). Le bot Telegram wrappe les appels dans `asyncio.to_thread()`. C'est accepté pour le moment.
+- **Pas d'ORM** : Toutes les opérations DB utilisent directement le query builder Supabase (`.table().select().eq().execute()`). Pas de SQLAlchemy.
+- **Client admin partout** : Les fonctions repository utilisent `get_supabase_admin()` (service_role, bypass RLS). Le client anon n'est utilisé que pour `auth.sign_in_with_password()` et `auth.refresh_session()`.
+- **Singletons au niveau module** : Les clients LLM, clients Supabase, caches de connaissances, compteurs de circuit breaker et dicts de rate limit sont des variables globales de module. Pas d'injection de dépendances.
+- **État en mémoire** : Le rate limiting et le suivi des coûts sont en mémoire uniquement — ils sont réinitialisés au redémarrage du serveur. Pas de Redis.
+- **Dark mode uniquement** : Le `<html>` a `.dark` en dur. Le CSS définit les deux thèmes mais seul le dark est actif.
+- **Tâches d'arrière-plan fire-and-forget** : La summarization de session et l'extraction de faits utilisent `asyncio.create_task()` sans await. Les erreurs sont silencieusement ignorées.
+- **Tests backend : mock, pas de DB réelle** : Tous les tests unitaires mockent Supabase via `unittest.mock.patch`. Les clients admin et anon sont mockés à chaque point d'import (`patch("src.api.auth.get_supabase_admin", ...)`). Voir `tests/api/test_auth.py` pour le pattern. Les tests d'intégration (`tests/bot/`, `tests/integration/`) sont exclus par défaut.
+- **Pas de tests frontend** : Il n'y a pas de suite de tests Jest/Vitest côté frontend. La seule vérification est le build (`next build --webpack`).
+- **shadcn/ui v4 sur @base-ui/react** : Les composants UI utilisent shadcn/ui v4 (style new-york), qui est construit sur `@base-ui/react` (pas Radix UI). Tailwind CSS v4 avec espace colorimétrique OKLCH.
+
+## Docker
+
+```bash
+# Build
+docker build -t ai-sports-coach -f docker/Dockerfile .
+
+# Run
+docker run -d --name coach-api --env-file .env -p 8000:8000 --restart unless-stopped ai-sports-coach
+```
+
+## Gotchas
+
+- **Chemin Python** : Python 3.14 est dans `C:\Users\bonne\AppData\Local\Python\pythoncore-3.14-64\python.exe`. Toujours utiliser le chemin complet.
+- **Shell** : Git Bash sur Windows — utiliser les chemins Unix (`/c/...`). Les warnings CRLF sont normaux, les ignorer.
+- **`@serwist/next` exige `--webpack`** : Turbopack est incompatible. Toujours ajouter `--webpack` aux commandes de build Next.js.
+- **`pyiceberg` ne build pas sur Windows** : Installer supabase avec `--no-deps`, puis les sous-paquets individuellement.
+- **Fix d'encodage UTF-8** : Déjà appliqué dans `knowledge.py` — essentiel sur Windows. Ne pas retirer la gestion d'encodage.
+- **Deux époques de l'API DB** : `src/db/sessions.py` a des familles de fonctions parallèles — une indexée par `telegram_id` (ère bot), une par `user_id` UUID (ère FastAPI). Les routes FastAPI utilisent uniquement celles basées sur UUID. Ne pas les mélanger.
+- **Pas de routes API dans le frontend** : Il n'y a pas de `middleware.ts`, pas de `route.ts`, pas de server actions. Toute la communication backend passe par le serveur FastAPI séparé.
+- **SSE sur POST** : Le SSE du chat utilise POST (pas GET comme le `EventSource` standard). Cela nécessite le parseur `sseStream()` personnalisé dans le frontend plutôt que l'API native `EventSource` du navigateur.
+- **Circuit breaker sur le LLM** : Après 5 échecs consécutifs, `get_client()` refuse les appels pendant 60 secondes. C'est un compteur global au niveau module — il affecte tous les utilisateurs.
+- **Nom de variable Supabase incohérent** : Le code (`src/utils/config.py`) utilise `SUPABASE_SERVICE_KEY`, mais `docs/deploy.md` et `.env.example` référencent `SUPABASE_SERVICE_ROLE_KEY`. Vérifier lequel est utilisé dans le `.env` réel.
+- **README.md obsolète** : Le README ne mentionne que le bot Telegram et l'installation Docker simple. L'architecture PWA (FastAPI + Next.js + migrations Supabase) n'y est pas documentée. Se référer à ce CLAUDE.md et à `docs/deploy.md` pour l'état réel du projet.
+- **`public/sw.js` est généré** : Le fichier `frontend/public/sw.js` est compilé par Serwist à partir de `frontend/src/app/sw.ts` lors du `next build`. Ne jamais l'éditer directement — toute modification sera écrasée au prochain build.
+- **Stubs connus** : `/api/dashboard/chart` retourne `series: []` en dur (les daily_summaries ne sont pas encore historisées). Le commentaire `# Résumé de la veille (stub)` dans `src/api/chat.py` signale que l'intégration du summarizer n'est pas finalisée.
+- **`/api/admin/feedback` sans contrôle admin** : L'endpoint est accessible à tout utilisateur authentifié (pas de vérification de rôle). C'est intentionnel pour le MVP, marqué comme temporaire.
+- **Planification du projet** : `plan.md` et `SESSION_STATE.md` contiennent la roadmap et l'état des tâches. Consulter ces fichiers avant de planifier du nouveau travail.

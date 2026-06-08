@@ -157,12 +157,13 @@ async def register(request: RegisterRequest):
         )
 
     return {
-        "access_token": session.access_token,
-        "refresh_token": session.refresh_token,
+        "access_token": session.session.access_token,
+        "refresh_token": session.session.refresh_token,
         "user": {
             "id": user_id,
             "email": email,
             "first_name": request.first_name,
+            "onboarding_completed": False,
         },
     }
 
@@ -188,15 +189,16 @@ async def login(request: LoginRequest):
             detail="Erreur lors de la connexion",
         )
 
-    user = get_user_by_id(session.user.id) if session.user else None
+    user = get_user_by_id(session.session.user.id) if session.session and session.session.user else None
 
     return {
-        "access_token": session.access_token,
-        "refresh_token": session.refresh_token,
+        "access_token": session.session.access_token,
+        "refresh_token": session.session.refresh_token,
         "user": {
-            "id": session.user.id if session.user else None,
-            "email": session.user.email if session.user else request.email,
+            "id": session.session.user.id if session.session and session.session.user else None,
+            "email": session.session.user.email if session.session and session.session.user else request.email,
             "first_name": user.get("first_name", "") if user else "",
+            "onboarding_completed": user.get("onboarding_completed", False) if user else False,
         },
     }
 
@@ -216,11 +218,11 @@ async def refresh(request: RefreshRequest):
         )
 
     return {
-        "access_token": session.access_token,
-        "refresh_token": session.refresh_token,
+        "access_token": session.session.access_token,
+        "refresh_token": session.session.refresh_token,
         "user": {
-            "id": session.user.id if session.user else None,
-            "email": session.user.email if session.user else None,
+            "id": session.session.user.id if session.session and session.session.user else None,
+            "email": session.session.user.email if session.session and session.session.user else None,
         },
     }
 

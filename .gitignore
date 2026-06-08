@@ -1,11 +1,18 @@
 # Fichiers générés
 *.egg-info/
 __pycache__/
+*.pyc
+.pytest_cache/
 logs/
 *.log
 
+# Frontend (aussi couvert par frontend/.gitignore, sécurité supplémentaire)
+node_modules/
+.next/
+
 # Secrets & config
 .env
+.env.*
 *.pem
 *.key
 
@@ -22,3 +29,7 @@ venv/
 # Builds
 dist/
 build/
+
+# OS
+.DS_Store
+Thumbs.db

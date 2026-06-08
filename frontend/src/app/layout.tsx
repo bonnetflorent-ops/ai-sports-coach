@@ -17,6 +17,15 @@ export const metadata: Metadata = {
   title: 'AI Sports Coach',
   description: "Assistant d'entraînement IA personnel",
   manifest: '/manifest.json',
+  icons: {
+    icon: '/favicon.ico',
+    apple: '/icons/apple-touch-icon.png',
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Coach Sportif',
+  },
 };
 
 export const viewport: Viewport = {

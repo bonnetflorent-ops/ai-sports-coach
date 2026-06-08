@@ -13,9 +13,9 @@ ALTER TABLE chat_sessions
   ADD COLUMN IF NOT EXISTS summary_json jsonb,
   ADD COLUMN IF NOT EXISTS date date DEFAULT CURRENT_DATE;
 
--- 3. Ajout colonne à chat_messages
+-- 3. Ajout colonne à chat_messages (le défaut est géré par l'application)
 ALTER TABLE chat_messages
-  ADD COLUMN IF NOT EXISTS expires_at timestamptz DEFAULT (created_at + interval '90 days');
+  ADD COLUMN IF NOT EXISTS expires_at timestamptz;
 
 -- 4. Nouvelle table: athlete_models
 CREATE TABLE IF NOT EXISTS athlete_models (

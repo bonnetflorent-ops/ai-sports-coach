@@ -64,11 +64,13 @@ d0d3cbb feat(a.2): add PWA database tables + RLS policies
 - [ ] Configurer les variables d'environnement réelles
 
 ### Polish
-- [ ] Icônes PWA réelles (placeholder 1x1 actuellement)
-- [ ] Tests end-to-end (register → onboarding → chat → dashboard)
-- [ ] Lighthouse PWA audit ≥ 90%
+- [x] Icônes PWA réelles (placeholder 1x1 remplacé)
+- [x] Tests end-to-end (scaffolding Playwright créé)
+- [x] VAPID config + endpoint push API + hook usePush
+- [x] Mode hors-ligne amélioré (offline.html + fallback navigation)
+- [ ] Lighthouse PWA audit ≥ 90% (nécessite backend réel + HTTPS local)
 - [ ] Tests de performance (taille des bundles, chargement)
-- [ ] Vérifier la config VAPID pour les push notifications
+- [ ] Exécuter les tests E2E Playwright (nécessite backend local)
 
 ### Optionnel / Phase 2
 - [ ] Mode hors-ligne amélioré (cache plus agressif)

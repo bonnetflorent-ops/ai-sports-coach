@@ -16,8 +16,8 @@ def get_client() -> AsyncOpenAI:
     global _client
     if _client is None:
         _client = AsyncOpenAI(
-            api_key=settings.openrouter_api_key,
-            base_url=settings.openrouter_base_url,
+            api_key=settings.llm_api_key,
+            base_url=settings.llm_base_url,
             timeout=30.0,
             max_retries=0,
         )

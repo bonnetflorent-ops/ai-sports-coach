@@ -56,11 +56,11 @@ class TestRegister:
             data=[{"id": "test-uuid-123", "email": "test@example.com", "first_name": "Test"}]
         )
 
-        # Mock sign_in after register
-        mock_session = MagicMock()
-        mock_session.access_token = "access-token-123"
-        mock_session.refresh_token = "refresh-token-456"
-        anon.auth.sign_in_with_password.return_value = mock_session
+        # Mock sign_in after register (supabase-py 2.x: session est imbriqué)
+        mock_response = MagicMock()
+        mock_response.session.access_token = "access-token-123"
+        mock_response.session.refresh_token = "refresh-token-456"
+        anon.auth.sign_in_with_password.return_value = mock_response
 
         response = client.post(
             "/api/auth/register",
@@ -128,13 +128,13 @@ class TestLogin:
         anon = mock_supabase["anon"]
         admin = mock_supabase["admin"]
 
-        # Mock sign_in
-        mock_session = MagicMock()
-        mock_session.access_token = "access-token-789"
-        mock_session.refresh_token = "refresh-token-000"
-        mock_session.user.id = "user-uuid"
-        mock_session.user.email = "test@example.com"
-        anon.auth.sign_in_with_password.return_value = mock_session
+        # Mock sign_in (supabase-py 2.x: session est imbriqué)
+        mock_response = MagicMock()
+        mock_response.session.access_token = "access-token-789"
+        mock_response.session.refresh_token = "refresh-token-000"
+        mock_response.session.user.id = "user-uuid"
+        mock_response.session.user.email = "test@example.com"
+        anon.auth.sign_in_with_password.return_value = mock_response
 
         # Mock get_user_by_id (called to get full profile)
         admin.table.return_value.select.return_value.eq.return_value.execute.return_value = MagicMock(
@@ -177,13 +177,13 @@ class TestRefresh:
         """Refresh with valid token should return new tokens."""
         anon = mock_supabase["anon"]
 
-        # Mock refresh_session
-        mock_session = MagicMock()
-        mock_session.access_token = "new-access-token"
-        mock_session.refresh_token = "new-refresh-token"
-        mock_session.user.id = "user-uuid"
-        mock_session.user.email = "test@example.com"
-        anon.auth.refresh_session.return_value = mock_session
+        # Mock refresh_session (supabase-py 2.x: session est imbriqué)
+        mock_response = MagicMock()
+        mock_response.session.access_token = "new-access-token"
+        mock_response.session.refresh_token = "new-refresh-token"
+        mock_response.session.user.id = "user-uuid"
+        mock_response.session.user.email = "test@example.com"
+        anon.auth.refresh_session.return_value = mock_response
 
         response = client.post(
             "/api/auth/refresh",
