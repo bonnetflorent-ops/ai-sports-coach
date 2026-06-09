@@ -6,6 +6,7 @@ import { Header } from '@/components/layout/Header';
 import { TabNavigation } from '@/components/layout/TabNavigation';
 import { BottomNav } from '@/components/layout/BottomNav';
 import { ChatView } from '@/components/chat/ChatView';
+import { PwaInstallBanner } from '@/components/layout/PwaInstallBanner';
 
 export default function HomePage() {
   const router = useRouter();
@@ -31,6 +32,7 @@ export default function HomePage() {
         <ChatView />
       </main>
       <BottomNav />
+      <PwaInstallBanner />
     </div>
   );
 }
