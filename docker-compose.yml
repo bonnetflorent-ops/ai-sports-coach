@@ -1,5 +1,43 @@
 services:
-  bot:
-    build: .
+  # ── Backend FastAPI ──────────────────────────────────
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
     env_file: .env
     restart: unless-stopped
+    labels:
+      # Domaine principal: api.sport-assistant.app
+      - traefik.enable=true
+      - traefik.http.routers.pwa-api.rule=Host(`api.sport-assistant.app`)
+      - traefik.http.routers.pwa-api.entrypoints=websecure
+      - traefik.http.routers.pwa-api.tls.certresolver=letsencrypt
+      - traefik.http.services.pwa-api.loadbalancer.server.port=8000
+      # Fallback Hostinger: pwa-api.srv780916.hstgr.cloud
+      - traefik.http.routers.pwa-api-hstgr.rule=Host(`pwa-api.srv780916.hstgr.cloud`)
+      - traefik.http.routers.pwa-api-hstgr.entrypoints=websecure
+      - traefik.http.routers.pwa-api-hstgr.tls.certresolver=letsencrypt
+      - traefik.http.routers.pwa-api-hstgr.service=pwa-api
+
+  # ── Frontend Next.js PWA ────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_SUPABASE_URL: https://qorxhwpoxcdxbnnlfjpp.supabase.co
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFvcnhod3BveGNkeGJubmxmanBwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NDY1NDAsImV4cCI6MjA5NDIyMjU0MH0.D_WHanPOrzqM1jjdryiiC7aIIMOvLvSbo9SmOt4mOLM
+        NEXT_PUBLIC_API_URL: https://pwa-api.srv780916.hstgr.cloud
+    restart: unless-stopped
+    labels:
+      # Domaine principal: sport-assistant.app
+      - traefik.enable=true
+      - traefik.http.routers.pwa.rule=Host(`sport-assistant.app`)
+      - traefik.http.routers.pwa.entrypoints=websecure
+      - traefik.http.routers.pwa.tls.certresolver=letsencrypt
+      - traefik.http.services.pwa.loadbalancer.server.port=3000
+      # Fallback Hostinger: pwa.srv780916.hstgr.cloud
+      - traefik.http.routers.pwa-hstgr.rule=Host(`pwa.srv780916.hstgr.cloud`)
+      - traefik.http.routers.pwa-hstgr.entrypoints=websecure
+      - traefik.http.routers.pwa-hstgr.tls.certresolver=letsencrypt
+      - traefik.http.routers.pwa-hstgr.service=pwa

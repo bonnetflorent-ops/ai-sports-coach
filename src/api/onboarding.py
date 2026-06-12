@@ -70,6 +70,7 @@ LEVEL_MAP = {
     "debutante": 1,
     "intermediaire": 2,
     "avance": 3,
+    "expert": 3,
 }
 
 
@@ -79,7 +80,7 @@ async def phase1(
     user: dict = Depends(get_current_user),
 ):
     """Première phase d'onboarding: informations sportives générales."""
-    level_int = LEVEL_MAP.get(body.level, 1)
+    level_int = LEVEL_MAP.get(body.level.lower(), 1)
     updates = {
         "sport": body.sport,
         "level": level_int,
