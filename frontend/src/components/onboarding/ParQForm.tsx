@@ -46,7 +46,7 @@ export function ParQForm({ onSuccess }: ParQFormProps) {
     try {
       await apiFetch('/api/onboarding/parq', {
         method: 'POST',
-        body: JSON.stringify({ answers: parqAnswers }),
+        body: JSON.stringify({ items: parqAnswers }),
       });
       setSubmitted(true);
       onSuccess();

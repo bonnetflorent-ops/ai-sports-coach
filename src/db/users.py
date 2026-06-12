@@ -97,9 +97,20 @@ def update_user_profile(telegram_id: int, profile: dict) -> dict:
 
     updates = {"updated_at": datetime.utcnow().isoformat()}
 
+    # Mapping niveau string → entier (colonne SMALLINT en DB)
+    level_map = {
+        "debutant": 1, "debutante": 1,
+        "intermediaire": 2,
+        "avance": 3,
+    }
+
     for profile_key, db_col in field_map.items():
         if profile_key in profile and profile[profile_key] is not None:
-            updates[db_col] = profile[profile_key]
+            value = profile[profile_key]
+            # Convertir le niveau texte en entier si nécessaire
+            if profile_key == "level" and isinstance(value, str):
+                value = level_map.get(value, 1)
+            updates[db_col] = value
 
     # Convertir l'expérience texte en années si pas déjà numérique
     if "experience" in profile and "experience_years" not in profile:

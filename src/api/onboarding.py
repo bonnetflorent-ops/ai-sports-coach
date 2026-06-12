@@ -64,15 +64,25 @@ class ParqRequest(BaseModel):
 # ── Endpoints ───────────────────────────────────────────────────────
 
 
+# Mapping niveau string → entier (colonne SMALLINT en DB)
+LEVEL_MAP = {
+    "debutant": 1,
+    "debutante": 1,
+    "intermediaire": 2,
+    "avance": 3,
+}
+
+
 @router.post("/phase1")
 async def phase1(
     body: Phase1Request,
     user: dict = Depends(get_current_user),
 ):
     """Première phase d'onboarding: informations sportives générales."""
+    level_int = LEVEL_MAP.get(body.level, 1)
     updates = {
         "sport": body.sport,
-        "level": body.level,
+        "level": level_int,
         "goal": body.goal,
         "injuries": body.injuries,
         "equipment": body.equipment,
