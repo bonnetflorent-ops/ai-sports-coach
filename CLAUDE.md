@@ -47,12 +47,13 @@ Les variables essentielles au développement local :
 - `SELECTOR_MODEL` — petit modèle pour tâches auxiliaires (défaut: `deepseek-chat`)
 - `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_KEY` — connexion Supabase
 - `GEMINI_API_KEY` — embeddings (⚠️ utilisé uniquement par le bot Telegram, pas par la PWA)
-- `CORS_ORIGINS` — origines autorisées (défaut: `http://localhost:5173,http://localhost:3000`)
+- `CORS_ORIGINS` — origines autorisées (local: `http://localhost:3000`, production: `https://pwa.srv780916.hstgr.cloud`). Format: liste séparée par virgules.
 - `VAPID_PRIVATE_KEY`, `VAPID_PUBLIC_KEY`, `VAPID_SUBJECT` — push notifications web (générer avec `npx web-push generate-vapid-keys`)
 - `OPENROUTER_API_KEY`, `OPENROUTER_BASE_URL` — backward compat, `LLM_API_KEY` et `LLM_BASE_URL` prennent le dessus si définis
 
 ⚠️ **Gotcha** : La variable s'appelle `SUPABASE_SERVICE_KEY` dans le code (`src/utils/config.py`), mais `SUPABASE_SERVICE_ROLE_KEY` dans `docs/deploy.md`. Le code lit `SUPABASE_SERVICE_KEY`.
 ⚠️ **Gotcha** : Le `.env` est à la racine du projet, pas dans `backend/`. Le fichier est dans `.gitignore`.
+⚠️ **Gotcha** : `CORS_ORIGINS` doit inclure l'URL de production du frontend (ex: `https://pwa.srv780916.hstgr.cloud`). En local: `http://localhost:3000`. Le format est une liste séparée par des virgules, sans guillemets ni crochets.
 
 ### Frontend (`frontend/.env.local`)
 ```
@@ -65,10 +66,14 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 
 Le projet est une application **double interface** : un bot Telegram (aiogram 3, l'interface d'origine) et une **API REST FastAPI** (la nouvelle PWA). Les deux partagent les couches `src/engine/`, `src/db/` et `src/utils/`.
 
-**Architecture de déploiement cible :**
+**Architecture de déploiement réelle :**
 ```
-Frontend Vercel (Next.js 16) → Backend VPS Docker (FastAPI) → Supabase (DB + Auth)
-                                                                DeepSeek (direct, plus OpenRouter)
+Navigateur ──HTTPS──▶ Traefik VPS Hostinger (:443) ──▶ conteneur frontend Next.js (:3000)
+                                                   ──▶ conteneur backend FastAPI (:8000)
+
+Frontend + Backend sur le même VPS Hostinger, routés par sous-domaine via Traefik.
+Supabase (DB + Auth) → externe, géré par Supabase
+DeepSeek (direct, pas OpenRouter) → api.deepseek.com
 ```
 
 > **Next.js 16 :** Le frontend utilise Next.js 16.2.7, qui a des breaking changes par rapport à Next.js 15 et aux versions antérieures. Consulter [frontend/AGENTS.md](frontend/AGENTS.md) et `frontend/node_modules/next/dist/docs/` avant d'écrire du code frontend. Les APIs, conventions et structures de fichiers peuvent différer de tes connaissances d'entraînement.
@@ -84,7 +89,7 @@ src/engine/                 → Logique métier (appels LLM, construction de pro
 src/db/                     → CRUD Supabase (un fichier par table)
 src/bot/                    → Bot Telegram (handlers aiogram, middleware, keyboards)
 src/cli/                    → Points d'entrée cron (proactive.py)
-src/migrations/             → Migrations SQL brutes (ordre: 001_pwa_tables → 002_rls_policies → 003_enable_vault)
+src/migrations/             → Migrations SQL brutes (ordre: 001_pwa_tables → 002_rls_policies → 003_enable_vault → 004_onboarding_columns)
 ```
 
 ### Flux et patterns clés
@@ -120,9 +125,19 @@ src/migrations/             → Migrations SQL brutes (ordre: 001_pwa_tables →
 # Build
 docker build -t ai-sports-coach -f docker/Dockerfile .
 
-# Run
+# Run (local)
 docker run -d --name coach-api --env-file .env -p 8000:8000 --restart unless-stopped ai-sports-coach
+
+# Run (VPS Hostinger, avec Traefik — pas de -p, Traefik route en HTTPS)
+docker run -d --name coach-api --env-file .env --restart unless-stopped \
+  --label "traefik.enable=true" \
+  --label "traefik.http.routers.coach-api.rule=Host(\`pwa-api.srv780916.hstgr.cloud\`)" \
+  --label "traefik.http.routers.coach-api.entrypoints=websecure" \
+  --label "traefik.http.routers.coach-api.tls.certresolver=letsencrypt" \
+  ai-sports-coach
 ```
+
+Le VPS utilise **Traefik** comme reverse proxy (pas Nginx). Traefik écoute sur 80/443 en `network_mode: host` et route par sous-domaine vers les conteneurs. Pas de proxy `/api/*` — le frontend appelle l'API directement via son sous-domaine.
 
 ## Gotchas
 
@@ -145,6 +160,8 @@ docker run -d --name coach-api --env-file .env -p 8000:8000 --restart unless-sto
 - **`telegram_id` NOT NULL** : La colonne `telegram_id` de la table `users` a une contrainte `NOT NULL` héritée de l'ère bot. Les utilisateurs PWA (sans compte Telegram) échouent à l'insertion. Exécuter `ALTER TABLE users ALTER COLUMN telegram_id DROP NOT NULL;` une fois pour toutes.
 - **PWA = build production uniquement** : Le Service Worker, le mode hors-ligne, les push notifications et l'installation ne fonctionnent qu'après `next build --webpack && next start`. En `next dev`, seule l'UI est testable, pas les fonctionnalités PWA.
 - **Dev server instable** : `next dev` recompile constamment chaque fichier modifié, provoquant des rafraîchissements en boucle. Pour tester l'UI, préférer un build production + `next start` ou déployer sur le VPS.
-- **Migrations SQL** : `src/migrations/combined.sql` contient le script combiné (001+002+003) à copier-coller dans le SQL Editor de Supabase. Les migrations individuelles sont gardées pour référence.
+- **Migrations SQL** : `src/migrations/combined.sql` contient le script combiné (001+002+003) mais **pas encore la 004**. Pour l'onboarding PWA, exécuter aussi `004_onboarding_columns.sql` séparément. Les migrations individuelles sont gardées pour référence.
 - **`npm run dev` et `npm run build` incluent déjà `--webpack`** dans `package.json`. Ne pas ajouter le flag en double.
+- **`level` est SMALLINT en DB (1,2,3)** : La colonne `level` de `users` est un entier, pas une string. Le frontend envoie `"debutant"`, `"intermediaire"`, `"avance"` — le backend doit convertir via `LEVEL_MAP` dans `src/api/onboarding.py`. Si on ajoute de nouveaux endpoints qui modifient `level`, utiliser le même mapping.
+- **Colonnes onboarding** : `equipment`, `weekly_slots`, `onboarding_phase`, `parq_responses`, `parq_any_yes` ont été ajoutées par la migration 004. Sans cette migration, tout appel aux endpoints onboarding (phase1, phase2, parq) retourne une erreur 500.
 - **Embeddings = bot uniquement** : `src/engine/embeddings.py` n'est pas utilisé par les routes API PWA. Si `GEMINI_API_KEY` est vide, la PWA fonctionne normalement. Seul le bot Telegram utilise les embeddings pour la recherche de faits similaires.

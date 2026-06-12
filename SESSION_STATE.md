@@ -1,6 +1,6 @@
 # Session State — PWA AI Sports Coach
 
-> Reprise session 2026-06-03. Tout le code est dans ce worktree.
+> Reprise session 2026-06-09. Tout le code est dans ce worktree.
 
 ## Worktree
 
@@ -8,9 +8,14 @@
 - **Branche** : `feature/pwa-implementation`
 - **Base** : `master` (commit `5db8697`)
 
-## Commits (9 au total)
+## Commits (14 au total)
 
 ```
+f0e3dbf fix: correction onboarding — level string→int, colonnes manquantes, ParQForm answers→items
+bf5255c docs: mettre à jour CLAUDE.md — DeepSeek direct, supabase-py 2.x, gotchas PWA
+8add033 feat: bannière d'installation PWA (PwaInstallBanner)
+10907c6 feat: intégration réelle — PWA, auth, chat DeepSeek, push notifications
+36a8eaf docs: session state file for resumption
 edfdc5c feat(c-g): remaining frontend — dashboard, onboarding, profile, error handling
 5614165 fix: UTF-8 encoding for knowledge loader on Windows
 59d32dc feat(c-e): remaining API endpoints — athlete, onboarding, dashboard, feedback, summarizer
@@ -25,7 +30,21 @@ d0d3cbb feat(a.2): add PWA database tables + RLS policies
 ## État des tests
 
 - **Backend** : 95/95 passent (excluant bot/ et integration/)
-- **Frontend** : Build Next.js propre, 6 routes, 0 erreur TypeScript
+- **Frontend** : Build Next.js propre, 6 routes, 0 erreur TypeScript. Pas de tests Jest/Vitest.
+
+## Déploiement réel
+
+L'app est déployée sur un **VPS Hostinger** (srv780916, IP 195.35.24.232) :
+
+```
+Navigateur ──HTTPS──▶ Traefik (:443) ──▶ pwa.srv780916.hstgr.cloud      → conteneur frontend (:3000)
+                                      ──▶ pwa-api.srv780916.hstgr.cloud  → conteneur backend (:8000)
+```
+
+- **Reverse proxy** : Traefik (pas Nginx), network_mode: host, écoute 80/443
+- **Pas de proxy /api/*** : le frontend appelle l'API directement via son sous-domaine
+- **Supabase** : externe, projet `qorxhwpoxcdxbnnlfjpp`
+- **LLM** : DeepSeek direct (`api.deepseek.com`), pas OpenRouter
 
 ## Ce qui est fait (checklist du plan)
 
@@ -54,14 +73,19 @@ d0d3cbb feat(a.2): add PWA database tables + RLS policies
 - [x] G.2 : Bug report page
 - [x] G.3 : Analytics tracking
 - [x] G.4 : Deployment setup (Dockerfile, deploy.md, .env.example)
+- [x] Intégration réelle : auth, chat DeepSeek, push notifications, icônes PWA
+- [x] Bannière d'installation PWA (PwaInstallBanner)
+- [x] Déploiement sur VPS Hostinger avec Traefik
 
 ## Reste à faire (avant merge)
 
-### Intégration réelle (vs stubs/mocks)
-- [ ] Tester auth avec une vraie DB Supabase
-- [ ] Tester chat SSE avec OpenRouter réel
-- [ ] Exécuter les migrations SQL sur Supabase
-- [ ] Configurer les variables d'environnement réelles
+### Corrections production
+- [x] Fix onboarding : level string→int + colonnes manquantes (migration 004)
+- [x] Fix ParQForm : `answers` → `items` pour matcher le backend
+- [ ] Exécuter la migration 004 (`equipment`, `weekly_slots`, `onboarding_phase`, `parq_responses`, `parq_any_yes`)
+- [ ] Rebuilder et redéployer le backend suite aux corrections onboarding
+- [ ] Rebuilder et redéployer le frontend suite au fix ParQForm
+- [ ] Vérifier `telegram_id` NOT NULL : exécuter `ALTER TABLE users ALTER COLUMN telegram_id DROP NOT NULL;` si pas déjà fait
 
 ### Polish
 - [x] Icônes PWA réelles (placeholder 1x1 remplacé)
@@ -91,20 +115,27 @@ cd C:\Projets\ai-sports-coach\.worktrees\pwa-implementation
 cd frontend && npm run dev
 
 # Lancer le backend
-uvicorn src.api.main:app --reload --port 8000
+/c/Users/bonne/AppData/Local/Python/pythoncore-3.14-64/python.exe -m uvicorn src.api.main:app --reload --port 8000
 
-# Tests backend (Python dans AppData)
+# Tests backend
 /c/Users/bonne/AppData/Local/Python/pythoncore-3.14-64/python.exe -m pytest tests/ --ignore=tests/bot --ignore=tests/integration -v
 
 # Build frontend
-cd frontend && SERWIST_SUPPRESS_TURBOPACK_WARNING=1 npx next build --webpack
+cd frontend && npm run build
+
+# Vérifier l'API en production
+curl https://pwa-api.srv780916.hstgr.cloud/api/health
+
+# Connexion directe à Supabase (pooler PgBouncer)
+# Host: aws-0-eu-west-3.pooler.supabase.com, port 6543
+# User: postgres.qorxhwpoxcdxbnnlfjpp, DB: postgres
 ```
 
 ## Architecture du projet
 
 ```
 ai-sports-coach/
-├── frontend/          # Next.js 16 PWA (App Router, shadcn/ui, Tailwind)
+├── frontend/          # Next.js 16 PWA (App Router, shadcn/ui, Tailwind v4)
 │   └── src/
 │       ├── app/       # Routes: /, /dashboard, /onboarding, /profile, /auth/*
 │       ├── components/# chat/, dashboard/, onboarding/, profile/, layout/, ui/
@@ -112,13 +143,14 @@ ai-sports-coach/
 │       ├── lib/       # api.ts (SSE), supabase.ts, utils.ts
 │       └── types/     # TypeScript types
 ├── src/               # Backend Python (FastAPI)
-│   ├── api/           # Endpoints: auth, chat, dashboard, athlete, onboarding, feedback, profile
+│   ├── api/           # Endpoints: auth, chat, dashboard, athlete, onboarding, feedback, profile, push
 │   ├── engine/        # Logic: summarizer, athlete_model, safety, proactive, weekly_rollup
 │   ├── db/            # Supabase CRUD
 │   ├── cli/           # proactive.py (cron entrypoint)
-│   └── migrations/    # SQL: tables, RLS, vault
+│   └── migrations/    # SQL: 001_tables, 002_rls, 003_vault, 004_onboarding
 ├── docker/            # Dockerfile
-└── docs/              # deploy.md, spec-pwa.md, memoire.md
+├── knowledge/         # Base de connaissances coaching (markdown + index.yaml)
+└── docs/              # deploy.md, architecture.md, coaching.md, spec-pwa.md
 ```
 
 ## Notes importantes
@@ -128,4 +160,6 @@ ai-sports-coach/
 - Les warnings CRLF/LF sont normaux sur Windows, ignorer
 - pyiceberg ne build pas sur Windows → installer supabase avec `--no-deps` puis les sous-packages individuellement
 - Le encoding fix (UTF-8) dans knowledge.py est essentiel sur Windows
-- @serwist/next nécessite `--webpack` (pas compatible Turbopack)
+- Les scripts `npm run dev` et `npm run build` incluent déjà `--webpack`, ne pas le rajouter
+- `level` est SMALLINT en DB (1,2,3) — le backend convertit via LEVEL_MAP
+- migration 004 (`equipment`, `weekly_slots`, `onboarding_phase`, `parq_responses`, `parq_any_yes`) doit être exécutée pour l'onboarding
