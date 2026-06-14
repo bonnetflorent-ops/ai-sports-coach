@@ -1,7 +1,7 @@
-version: '2.1'
-generated: '2026-05-26'
-total_concepts: 58
-total_domains: 13
+version: '2.2'
+generated: '2026-06-14'
+total_concepts: 64
+total_domains: 14
 intent_rules:
   echauffement_question:
     description: L'utilisateur pose une question sur l'échauffement
@@ -144,6 +144,29 @@ intent_rules:
     - norvegienne/application-pratique
     - norvegienne/periodisation-norvegienne
     - planification/modeles-periodisation
+    priority: medium
+  foulée_technique_question:
+    description: L'utilisateur pose une question sur sa foulée, sa technique de course, sa posture
+    concepts:
+    - biomecanique/economie-course
+    - biomecanique/cinematique-foulee
+    - biomecanique/types-de-foulee
+    - biomecanique/variabilite-individualisation
+    priority: high
+  douleur_course:
+    description: L'utilisateur signale une douleur spécifique à la course à pied (genou, tibia, cheville, pied)
+    concepts:
+    - blessures/running
+    - biomecanique/cinetique-forces
+    - biomecanique/posture-alignement
+    priority: critical
+  ameliorer_efficacite:
+    description: L'utilisateur veut améliorer son économie de course, son efficacité, moins se fatiguer
+    concepts:
+    - biomecanique/economie-course
+    - biomecanique/cinematique-foulee
+    - biomecanique/cinetique-forces
+    - entrainement-croise/renforcement-endurance
     priority: medium
 domains:
   physiologie:
@@ -1867,6 +1890,182 @@ domains:
       - entrainement-croise/brick-triathlon
       - entrainement-croise/renforcement-endurance
       applies_when: session-planning | multi-sport | triathlon
+  biomecanique:
+    name: Biomécanique de la course à pied
+    file: biomecanique-course.md
+    total_lines: 413
+    description: Biomécanique du coureur — foulée, forces, posture, types d'appui
+    concepts:
+    - id: biomecanique/economie-course
+      name: Économie de course (consommation d'oxygène par km)
+      lines:
+        layer1: 7-13
+        layer2: 14-32
+        layer3: 33-52
+      keywords:
+      - économie de course
+      - consommation oxygène
+      - coût énergétique
+      - efficacité
+      - rendement
+      - ml O2 par kg par km
+      - dépense énergétique
+      - VO2 course
+      - endurance fondamentale
+      triggers:
+      - Comment moins me fatiguer en courant ?
+      - Pourquoi je consomme plus que les autres ?
+      - Comment améliorer mon économie de course ?
+      - Quel est mon coût énergétique ?
+      connects_to:
+      - physiologie/systemes-energetiques
+      - physiologie/vo2max-seuils
+      - planification/gestion-charge
+      - seances/endurance-fondamentale
+      - norvegienne/modele-polarise-80-20
+      applies_when: performance | technique | running
+      notes: Déterminant clé de la performance en endurance — s'améliore avec la force et le volume
+    - id: biomecanique/cinematique-foulee
+      name: Cinématique de la foulée (cadence, longueur, temps de contact, oscillation)
+      lines:
+        layer1: 57-65
+        layer2: 66-92
+        layer3: 93-112
+      keywords:
+      - cadence
+      - foulée
+      - pas par minute
+      - temps de contact
+      - oscillation verticale
+      - longueur de foulée
+      - overstriding
+      - fréquence
+      - GCT
+      - métronome
+      triggers:
+      - Comment améliorer ma foulée ?
+      - Quelle est ma cadence idéale ?
+      - Je cours trop lourd, comment être plus léger ?
+      - Comment réduire mon temps de contact au sol ?
+      connects_to:
+      - biomecanique/economie-course
+      - biomecanique/types-de-foulee
+      - biomecanique/variabilite-individualisation
+      - blessures/running
+      applies_when: technique | performance | beginner onboarding
+      notes: La cadence est un levier puissant et à faible risque — premier point d'intervention technique
+    - id: biomecanique/cinetique-forces
+      name: Cinétique et forces (GRF, raideur, moments articulaires)
+      lines:
+        layer1: 117-123
+        layer2: 124-155
+        layer3: 156-181
+      keywords:
+      - force de réaction au sol
+      - GRF
+      - raideur
+      - stiffness
+      - pic d'impact
+      - moment articulaire
+      - puissance
+      - propulsion
+      - freinage
+      - force verticale
+      triggers:
+      - Comment mesurer les forces pendant la course ?
+      - Quelle raideur de jambe optimale ?
+      - Comment réduire l'impact au sol ?
+      connects_to:
+      - biomecanique/economie-course
+      - biomecanique/cinematique-foulee
+      - biomecanique/posture-alignement
+      - blessures/running
+      - entrainement-croise/renforcement-endurance
+      applies_when: performance | technique | injury prevention
+    - id: biomecanique/posture-alignement
+      name: Posture et alignement (tronc, bassin, haut du corps)
+      lines:
+        layer1: 185-191
+        layer2: 192-213
+        layer3: 214-225
+      keywords:
+      - posture
+      - alignement
+      - tronc
+      - bassin
+      - drop pelvien
+      - bras
+      - balancement
+      - gainage
+      - core
+      - dos
+      triggers:
+      - Comment avoir une bonne posture en courant ?
+      - J'ai mal au dos en courant
+      - Comment placer mes bras ?
+      - Mon bassin bouge trop
+      connects_to:
+      - biomecanique/economie-course
+      - biomecanique/cinematique-foulee
+      - blessures/running
+      - echauffement/gainage-activation
+      applies_when: technique | beginner | pain
+    - id: biomecanique/types-de-foulee
+      name: Types de foulée (talon, médio-pied, avant-pied)
+      lines:
+        layer1: 228-239
+        layer2: 240-260
+        layer3: 261-275
+      keywords:
+      - attaque talon
+      - avant-pied
+      - médio-pied
+      - rearfoot
+      - forefoot
+      - midfoot
+      - minimaliste
+      - barefoot
+      - pieds nus
+      - foulée naturelle
+      triggers:
+      - Faut-il attaquer par l'avant-pied ?
+      - Comment changer ma façon de poser le pied ?
+      - Est-ce que je cours mal si j'attaque du talon ?
+      - Chaussures minimalistes ou classiques ?
+      connects_to:
+      - biomecanique/economie-course
+      - biomecanique/cinetique-forces
+      - biomecanique/variabilite-individualisation
+      - blessures/running
+      - materiel/chaussures
+      applies_when: technique | injury prevention | equipment choice
+      notes: Débat polarisé — insister sur l'individualisation et le risque des transitions brutales
+    - id: biomecanique/variabilite-individualisation
+      name: Variabilité motrice et individualisation de la foulée
+      lines:
+        layer1: 278-285
+        layer2: 286-308
+        layer3: 309-317
+      keywords:
+      - variabilité
+      - individualisation
+      - adaptation
+      - morphologie
+      - système dynamique
+      - attracteur
+      - coordination
+      - foulée unique
+      triggers:
+      - Quelle est la meilleure foulée pour moi ?
+      - Faut-il copier la foulée des élites ?
+      - Comment trouver ma foulée naturelle ?
+      connects_to:
+      - biomecanique/cinematique-foulee
+      - biomecanique/types-de-foulee
+      - biomecanique/posture-alignement
+      - blessures/running
+      applies_when: technique | personalization | beginner reassurance
+      notes: Contre la tyrannie de la "foulée parfaite" — rassurer et individualiser
 selector_config:
   max_concepts_per_query: 4
   min_concepts_per_query: 1
