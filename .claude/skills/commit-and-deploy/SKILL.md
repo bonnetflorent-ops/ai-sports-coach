@@ -54,6 +54,16 @@ Types : `fix:` (bugfix), `feat:` (nouveauté), `refactor:`, `docs:`, `chore:`
 
 Ne commiter QUE les fichiers liés au correctif. Si d'autres fichiers sont modifiés, les mentionner à l'utilisateur.
 
+### Étape 2b : Pusher vers GitHub ⚠️ OBLIGATOIRE
+
+Hermes Agent (le gestionnaire du VPS Hostinger) se connecte à GitHub pour pull les mises à jour backend. **Toujours pusher après chaque commit**, sinon le backend ne pourra pas être mis à jour.
+
+```bash
+git push origin feature/pwa-implementation
+```
+
+Vérifier que le push a réussi avant de continuer.
+
 ### Étape 3 : Déployer le frontend sur Vercel
 
 Le frontend est hébergé sur Vercel. Pour déployer :
