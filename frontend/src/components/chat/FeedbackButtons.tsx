@@ -50,6 +50,7 @@ export function FeedbackButtons({ messageId }: FeedbackButtonsProps) {
         onClick={() => sendFeedback('like')}
         className="text-xs text-slate-500 hover:text-emerald-400 transition-colors p-1"
         title="Utile"
+        data-testid="feedback-like"
       >
         👍
       </button>

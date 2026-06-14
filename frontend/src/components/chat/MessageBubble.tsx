@@ -9,7 +9,10 @@ export function MessageBubble({ message }: MessageBubbleProps) {
   const isUser = message.role === 'user';
 
   return (
-    <div className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
+    <div
+      className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}
+      data-testid={`message-${message.role}`}
+    >
       {!isUser && (
         <div className="flex-shrink-0 w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center text-sm">
           🧠

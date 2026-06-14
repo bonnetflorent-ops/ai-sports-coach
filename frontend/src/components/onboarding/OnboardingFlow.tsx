@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { apiFetch } from '@/lib/api';
+import { User } from '@/types';
 import { Phase1Form } from './Phase1Form';
 import { Phase2Form } from './Phase2Form';
 import { ParQForm } from './ParQForm';
@@ -22,7 +24,18 @@ export function OnboardingFlow() {
   const config = STEP_CONFIG[currentStep];
   const progressPercent = ((currentStep + 1) / TOTAL_STEPS) * 100;
 
+  // Rafraîchit les données utilisateur dans localStorage depuis l'API
+  async function refreshLocalUser() {
+    try {
+      const fresh = await apiFetch<User>('/api/profile');
+      localStorage.setItem('user', JSON.stringify(fresh));
+    } catch {
+      // Silencieux — le ProfileView fera son propre fetch
+    }
+  }
+
   function handleStepComplete() {
+    refreshLocalUser(); // fire-and-forget
     if (currentStep < TOTAL_STEPS - 1) {
       setCurrentStep(currentStep + 1);
     }
@@ -34,18 +47,9 @@ export function OnboardingFlow() {
     }
   }
 
-  function handleOnboardingComplete() {
-    // Update localStorage to mark onboarding as completed
-    const stored = localStorage.getItem('user');
-    if (stored) {
-      try {
-        const user = JSON.parse(stored);
-        user.onboarding_completed = true;
-        localStorage.setItem('user', JSON.stringify(user));
-      } catch {
-        // ignore parse errors
-      }
-    }
+  async function handleOnboardingComplete() {
+    // Récupérer le profil complet depuis l'API (inclut onboarding_completed: true)
+    await refreshLocalUser();
     router.push('/');
   }
 
