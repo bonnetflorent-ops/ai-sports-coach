@@ -173,6 +173,20 @@ def get_session_messages(session_id: str, limit: int = 10) -> list[dict]:
     return list(reversed(result.data))
 
 
+def count_session_messages(session_id: str) -> int:
+    """Retourne le nombre total de messages dans une session."""
+    admin = get_supabase_admin()
+
+    result = (
+        admin.table("chat_messages")
+        .select("id", count="exact")
+        .eq("session_id", session_id)
+        .execute()
+    )
+
+    return result.count if result.count is not None else 0
+
+
 def summarize_session(session_id: str) -> str:
     """
     Generate a 300-500 char session summary using deepseek-chat.

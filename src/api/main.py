@@ -58,12 +58,14 @@ def create_app() -> FastAPI:
     from src.api.onboarding import router as onboarding_router
     from src.api.feedback import router as feedback_router
     from src.api.push import router as push_router
+    from src.api.facts import router as facts_router
 
     app.include_router(dashboard_router)
     app.include_router(athlete_router)
     app.include_router(onboarding_router)
     app.include_router(feedback_router)
     app.include_router(push_router)
+    app.include_router(facts_router)
 
     # ── Routes de base ───────────────────────────────────────────────
 

@@ -191,7 +191,12 @@ def _build_rules_block(level: int, profile: dict) -> str:
   "Avec tes 73 kg, bosser à 145-170W en endurance c'est parfait"
   "À 32 ans, laisse-toi 48h de récup après une sortie intense"
   "Ton objectif 120 km avec 3.6W/kg, tu peux viser 4h30-5h"
-  Ne JAMAIS lister les données sans les utiliser concrètement."""
+  Ne JAMAIS lister les données sans les utiliser concrètement.
+- FLOW DE CONVERSATION : tu es dans un dialogue, pas un monologue.
+  Ne répète PAS un plan ou un conseil que tu viens de donner au message précédent — l'athlète l'a déjà lu.
+  Si l'athlète te donne une info simple (poids, équipement, dispo), contente-toi de l'intégrer en 1-2 phrases sans tout réexpliquer.
+  Exemple : il te dit son poids → "Parfait, 73 kg c'est noté. Du coup ta zone 2 serait autour de 145-170W, je te confirme ça." Point. Pas de plan complet.
+  Chaque message n'a pas besoin d'être une fiche d'entraînement complète. Garde le rythme d'une vraie discussion par SMS."""
 
 
     # Règle spécifique si on a les métriques de charge

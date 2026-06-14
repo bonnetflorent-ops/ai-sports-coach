@@ -1,5 +1,6 @@
 import { ChatMessage } from '@/types';
 import { FeedbackButtons } from './FeedbackButtons';
+import { MarkdownText } from './MarkdownText';
 
 interface MessageBubbleProps {
   message: ChatMessage;
@@ -26,7 +27,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
               : 'bg-slate-800 text-slate-100 rounded-bl-sm'
           }`}
         >
-          <p className="text-sm whitespace-pre-wrap">{message.content}</p>
+          <MarkdownText content={message.content} />
         </div>
         {!isUser && <FeedbackButtons messageId={message.id} />}
       </div>

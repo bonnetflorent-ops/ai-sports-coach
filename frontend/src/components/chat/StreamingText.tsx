@@ -1,21 +1,14 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import { MarkdownText } from './MarkdownText';
 
 interface StreamingTextProps {
   text: string;
 }
 
 export function StreamingText({ text }: StreamingTextProps) {
-  const [visible, setVisible] = useState(true);
   const endRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setVisible((v) => !v);
-    }, 530);
-    return () => clearInterval(interval);
-  }, []);
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -30,14 +23,8 @@ export function StreamingText({ text }: StreamingTextProps) {
       </div>
       <div className="max-w-[80%]">
         <div className="rounded-2xl rounded-bl-sm px-4 py-2.5 bg-slate-800 text-slate-100">
-          <p className="text-sm whitespace-pre-wrap">
-            {text}
-            <span
-              className={`inline-block w-[2px] h-[1em] ml-0.5 align-middle bg-slate-100 transition-opacity ${
-                visible ? 'opacity-100' : 'opacity-0'
-              }`}
-            />
-          </p>
+          <MarkdownText content={text} />
+          <span className="cursor-blink" />
         </div>
       </div>
       <div ref={endRef} />
