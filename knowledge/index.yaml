@@ -293,23 +293,40 @@ intent_rules:
       - seances/endurance-fondamentale
       - seances/travail-seuil
       - planification/gestion-charge
+  programme_marathon:
+    description: L'utilisateur demande un programme d'entrainement pour le marathon
+    concepts:
+      - programme-marathon
+      - seances/endurance-fondamentale
+      - seances/travail-seuil
+      - planification/gestion-charge
+      - planification/tapering-pic-forme
+      - nutrition/glucides-timing
+    priority: high
+  programme_remise_en_forme:
+    description: L'utilisateur demande un programme pour debutant ou remise en forme
+    concepts:
+      - programme-remise-en-forme
+      - seances/endurance-fondamentale
+      - physiologie/adaptations-entrainement
+      - blessures/running
     priority: high
   velo_coureur:
     description: L'utilisateur s'interroge sur les benefices du velo pour la course
     concepts:
-      - entrainement-croise/velo-coureur
-      - entrainement-croise/planification-croise
+      - entrainement-croise/natation-cyclistes-coureurs
+      - seances/endurance-fondamentale
     priority: medium
   ski_coureur:
     description: L'utilisateur s'interroge sur le ski de fond pour coureurs
     concepts:
-      - entrainement-croise/ski-fond
-      - entrainement-croise/planification-croise
+      - entrainement-croise/natation-cyclistes-coureurs
+      - seances/endurance-fondamentale
     priority: medium
   planification_croise:
     description: L'utilisateur veut organiser son entrainement croise dans sa semaine
     concepts:
-      - entrainement-croise/planification-croise
+      - entrainement-croise/renforcement-endurance
       - entrainement-croise/renforcement-endurance
       - planification/structure-temporelle
     priority: medium
@@ -1497,7 +1514,7 @@ domains:
           - echauffement/principes-generaux
           - nutrition/glucides-timing
           - nutrition/hydratation-electrolytes
-          - gestion-course/general
+          - gestion-course/strategies-pacing
         applies_when: competition | race-day
       - id: echauffement/retour-au-calme-running
         name: Retour au calme spécifique course à pied
@@ -2346,7 +2363,7 @@ domains:
           - biomecanique/economie-course
           - biomecanique/cinematique-foulee
           - blessures/running
-          - echauffement/gainage-activation
+          - force-pour-coureur/gainage-stabilite
         applies_when: technique | beginner | pain
       - id: biomecanique/types-de-foulee
         name: Types de foulée (talon, médio-pied, avant-pied)
@@ -2375,7 +2392,7 @@ domains:
           - biomecanique/cinetique-forces
           - biomecanique/variabilite-individualisation
           - blessures/running
-          - materiel/chaussures
+          - equipement-running/chaussures
         applies_when: technique | injury prevention | equipment choice
         notes: Débat polarisé — insister sur l'individualisation et le risque des transitions brutales
       - id: biomecanique/variabilite-individualisation
@@ -3528,6 +3545,61 @@ programmes:
       - planification/tapering-pic-forme
       - nutrition/glucides-timing
     applies_when: program | half-marathon | competition
+  programme-marathon:
+    name: Programme marathon (3 niveaux)
+    file: programme-marathon.md
+    total_lines: 182
+    description: Programme 16-20 semaines pour marathon — debutant (<4h), intermediaire (<3h15), avance (<2h50)
+    keywords:
+      - programme marathon
+      - plan entrainement marathon
+      - preparation marathon
+      - sortie longue marathon
+      - allure marathon
+      - marathon training
+    triggers:
+      - Donne-moi un programme pour le marathon
+      - Comment preparer un marathon ?
+      - Plan d'entrainement marathon debutant/intermediaire/avance
+      - Quelles seances pour le marathon ?
+      - Comment passer sous les 4h/3h15/2h50 au marathon ?
+      - Programme 42 km
+    connects_to:
+      - seances/endurance-fondamentale
+      - seances/travail-seuil
+      - planification/gestion-charge
+      - planification/tapering-pic-forme
+      - nutrition/glucides-timing
+      - nutrition/hydratation-electrolytes
+    applies_when: program | marathon | competition
+  programme-remise-en-forme:
+    name: Programme remise en forme (debutant)
+    file: programme-remise-en-forme.md
+    total_lines: 200
+    description: Programme 8 semaines pour reprendre la course — sedentaires, reprise apres pause, post-blessure
+    keywords:
+      - programme remise en forme
+      - reprise course a pied
+      - debutant course
+      - couch to 5k
+      - progression marche course
+      - reprendre la course
+      - course pour debutant
+      - commencer a courir
+    triggers:
+      - Je veux commencer a courir
+      - Programme pour debutant course a pied
+      - Reprendre la course apres une pause
+      - Comment commencer a courir de zero ?
+      - Couch to 5k en francais
+      - Je n'ai jamais couru, par ou commencer ?
+      - Remise en forme course a pied
+    connects_to:
+      - seances/endurance-fondamentale
+      - physiologie/adaptations-entrainement
+      - blessures/running
+      - equipement-running/chaussures
+    applies_when: program | beginner | fitness | reprise
 cross_domain_overlaps:
   - group: race_performance
     concepts:
@@ -3580,6 +3652,21 @@ cross_domain_overlaps:
       - seances/travail-seuil
       - seances/endurance-fondamentale
       - planification/gestion-charge
+  - group: entrainement_marathon
+    description: Quand l'utilisateur veut un programme marathon
+    concepts:
+      - programme-marathon
+      - seances/endurance-fondamentale
+      - seances/travail-seuil
+      - planification/tapering-pic-forme
+      - nutrition/glucides-timing
+  - group: remise_en_forme
+    description: Quand l'utilisateur veut un programme remise en forme ou debutant
+    concepts:
+      - programme-remise-en-forme
+      - seances/endurance-fondamentale
+      - blessures/running
+      - physiologie/adaptations-entrainement
   - group: entrainement_semi
     description: Quand l'utilisateur veut un programme semi-marathon
     concepts:
@@ -3590,6 +3677,5 @@ cross_domain_overlaps:
   - group: cross_training_velo
     description: Quand l'utilisateur veut intégrer le vélo dans son entrainement course
     concepts:
-      - entrainement-croise/velo-coureur
-      - entrainement-croise/planification-croise
+      - entrainement-croise/natation-cyclistes-coureurs
       - seances/endurance-fondamentale
