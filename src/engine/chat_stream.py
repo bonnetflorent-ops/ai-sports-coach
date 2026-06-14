@@ -68,7 +68,7 @@ async def stream_llm_response(
 
         yield format_sse_event(
             "message_complete",
-            {"content": full_content},
+            {"content": full_content, "done": True},
         )
 
     except Exception as e:

@@ -54,7 +54,7 @@ export function sseStream(
           try {
             const data = JSON.parse(line.slice(6));
             if (data.token) onToken(data.token);
-            else if (data.message_id) onComplete(data);
+            else if (data.done === true || data.message_id) onComplete(data);
             else if (data.code) onError(data);
           } catch { /* ignore parse errors */ }
         }

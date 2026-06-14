@@ -7,7 +7,7 @@ import { StreamingText } from './StreamingText';
 import { MessageInput } from './MessageInput';
 
 export function ChatView() {
-  const { messages, streaming, streamingText, error, sendMessage, stopStreaming } = useChat();
+  const { messages, streaming, streamingText, error, loadingHistory, sendMessage, stopStreaming } = useChat();
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -17,7 +17,12 @@ export function ChatView() {
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 max-w-2xl mx-auto w-full">
-        {messages.length === 0 && !streaming && (
+        {loadingHistory && messages.length === 0 && (
+          <div className="flex items-center justify-center h-full min-h-[60vh]">
+            <p className="text-slate-500 text-sm animate-pulse">Chargement de la conversation...</p>
+          </div>
+        )}
+        {!loadingHistory && messages.length === 0 && !streaming && (
           <div className="flex items-center justify-center h-full min-h-[60vh]">
             <div className="text-center">
               <p className="text-4xl mb-4">👋</p>

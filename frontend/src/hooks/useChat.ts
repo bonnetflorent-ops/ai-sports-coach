@@ -1,16 +1,61 @@
 'use client';
 
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { ChatMessage } from '@/types';
-import { sseStream } from '@/lib/api';
+import { sseStream, apiFetch } from '@/lib/api';
 
 export function useChat() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [streaming, setStreaming] = useState(false);
   const [streamingText, setStreamingText] = useState('');
   const [error, setError] = useState('');
+  const [loadingHistory, setLoadingHistory] = useState(true);
   const controllerRef = useRef<AbortController | null>(null);
   const streamingTextRef = useRef('');
+  const historyLoadedRef = useRef(false);
+
+  // Charger l'historique des derniers messages au montage
+  useEffect(() => {
+    if (historyLoadedRef.current) return;
+    historyLoadedRef.current = true;
+
+    async function loadHistory() {
+      try {
+        const data = await apiFetch<{
+          messages: Array<{
+            id: string;
+            role: 'user' | 'assistant';
+            content: string;
+            created_at: string;
+            session_id: string;
+          }>;
+        }>('/api/chat/history?page=1&per_page=20');
+
+        if (data.messages && data.messages.length > 0) {
+          // L'API retourne déjà les messages en ordre chronologique (get_user_messages_paginated
+          // fait un reversed() sur les résultats DESC)
+          const historyMessages: ChatMessage[] = data.messages
+            .map((msg) => ({
+              id: msg.id,
+              session_id: msg.session_id || '',
+              user_id: '',
+              role: msg.role,
+              content: msg.content,
+              tokens_used: 0,
+              created_at: msg.created_at,
+            }));
+          setMessages(historyMessages);
+        }
+      } catch (err) {
+        // Silencieux : l'historique est un bonus, pas un bloquant
+        console.warn('Impossible de charger l\'historique:', err);
+      } finally {
+        setLoadingHistory(false);
+      }
+    }
+
+    loadHistory();
+  }, []);
 
   const sendMessage = useCallback((content: string) => {
     setError('');
@@ -75,5 +120,5 @@ export function useChat() {
     streamingTextRef.current = '';
   }, []);
 
-  return { messages, streaming, streamingText, error, sendMessage, stopStreaming };
+  return { messages, streaming, streamingText, error, loadingHistory, sendMessage, stopStreaming };
 }
