@@ -1,0 +1,745 @@
+# Natation - Patch d index a fusionner avec knowledge/index.yaml
+# Date: 2026-06-14
+# Fichiers crees: natation-technique.md, natation-physiologie-entrainement.md,
+# natation-equipement-piscine.md, programme-natation-debutant.md,
+# programme-natation-perfectionnement.md, programme-natation-eau-libre.md
+
+# === NOUVEAUX DOMAINES ===
+
+nouveaux_domaines:
+  natation:
+    name: Natation
+    file: natation-technique.md
+    total_lines: 125
+    description: Technique des 4 nages, biomecanique aquatique, respiration, virages
+    concepts:
+      - id: natation/position-hydrodynamique
+        name: Position hydrodynamique et alignement
+        lines:
+          layer1: 7-10
+          layer2: 11-14
+          layer3: 15-18
+        keywords:
+          - position hydrodynamique
+          - streamline
+          - trainee
+          - alignement
+          - glisse
+          - resistance de forme
+          - resistance de vague
+          - surface frontale
+          - corps horizontal
+          - gainage natation
+          - flottaison
+        triggers:
+          - Comment mieux glisser dans l eau ?
+          - Position du corps en natation
+          - Pourquoi je coule dans l eau ?
+          - Comment reduire la resistance dans l eau ?
+          - Qu est ce que le streamline ?
+        connects_to:
+          - natation/technique-crawl
+          - natation/respiration-aquatique
+          - natation/virages-coulees
+          - physiologie/frequence-cardiaque-hrv
+        applies_when: technique | beginner | swimming
+      - id: natation/technique-crawl
+        name: Technique de crawl (nage libre)
+        lines:
+          layer1: 21-24
+          layer2: 25-28
+          layer3: 29-32
+        keywords:
+          - crawl
+          - nage libre
+          - catch
+          - pull
+          - push
+          - battement
+          - coordination
+          - 2 temps
+          - 4 temps
+          - 6 temps
+          - respiration crawl
+          - rotation tronc
+          - index de nage
+          - longueur de cycle
+        triggers:
+          - Comment bien nager le crawl ?
+          - Technique de bras en crawl
+          - Battement 2 ou 6 temps ?
+          - Comment respirer en crawl ?
+          - Mouvement du crawl
+          - Ameliorer mon crawl
+          - Catch en natation
+        connects_to:
+          - natation/position-hydrodynamique
+          - natation/respiration-aquatique
+          - natation/virages-coulees
+          - physiologie/vo2max-seuils
+          - seances/endurance-fondamentale
+        applies_when: technique | swimming | triathlon | beginner
+        notes: Nage principale pour le triathlon et l endurance — prioritaire sur les autres nages
+      - id: natation/technique-dos
+        name: Technique de dos crawle
+        lines:
+          layer1: 35-38
+          layer2: 39-42
+          layer3: 43-46
+        keywords:
+          - dos crawle
+          - dos
+          - backstroke
+          - rotation tronc
+          - entree main
+          - battement dorsal
+          - conflit sous-acromial
+        triggers:
+          - Comment nager le dos ?
+          - Technique de dos crawle
+          - Dos en natation
+          - Mouvement du dos
+        connects_to:
+          - natation/position-hydrodynamique
+          - natation/virages-coulees
+          - entrainement-croise/yoga-pilates
+        applies_when: technique | swimming | recovery
+      - id: natation/technique-papillon
+        name: Technique de papillon
+        lines:
+          layer1: 49-52
+          layer2: 53-56
+          layer3: 57-60
+        keywords:
+          - papillon
+          - butterfly
+          - ondulation
+          - dolphin kick
+          - dauphin
+          - retour aerien
+          - cout energetique
+        triggers:
+          - Comment nager le papillon ?
+          - Technique de papillon
+          - Apprendre le papillon
+          - Dauphin kicks
+        connects_to:
+          - natation/position-hydrodynamique
+          - seances/intervalles-haute-intensite
+          - physiologie/systemes-energetiques
+        applies_when: technique | swimming | advanced
+      - id: natation/respiration-aquatique
+        name: Respiration aquatique
+        lines:
+          layer1: 63-66
+          layer2: 67-70
+          layer3: 71-74
+        keywords:
+          - respiration
+          - expiration active
+          - bulles
+          - apnee
+          - bradypnee
+          - respiration bilaterale
+          - anxiete respiratoire
+          - dyspnee
+          - CO2
+          - reflexe d immersion
+          - souffler sous l eau
+        triggers:
+          - Comment respirer dans l eau ?
+          - Je panique quand je nage
+          - Respiration en natation
+          - Apprendre a souffler sous l eau
+          - Anxiete dans l eau
+          - Pourquoi je m essouffle vite dans l eau ?
+          - Respiration bilaterale
+        connects_to:
+          - psychologie/gestion-effort-rpe
+          - natation/technique-crawl
+          - natation/position-hydrodynamique
+          - physiologie/systemes-energetiques
+        applies_when: breathing | beginner | anxiety | swimming
+      - id: natation/virages-coulees
+        name: Virages et coulees
+        lines:
+          layer1: 77-80
+          layer2: 81-84
+          layer3: 85-88
+        keywords:
+          - virage
+          - culbute
+          - flip turn
+          - coulee
+          - streamline
+          - poussee mur
+          - dauphin kick sous-marin
+          - temps sous-marin
+          - glisse
+        triggers:
+          - Comment faire un virage culbute ?
+          - Virage en natation
+          - Comment pousser au mur ?
+          - Coulée en natation
+          - Flip turn technique
+        connects_to:
+          - natation/position-hydrodynamique
+          - natation/technique-crawl
+          - seances/travail-neuromusculaire
+        applies_when: technique | swimming | competition
+
+  natation-entrainement:
+    name: Physiologie et entrainement natation
+    file: natation-physiologie-entrainement.md
+    total_lines: 146
+    description: Specificites physiologiques, CSS, zones d intensite, periodisation, volume, prevention blessures
+    concepts:
+      - id: natation-entrainement/physiologie-specifique
+        name: Specificites physiologiques de la natation
+        lines:
+          layer1: 7-10
+          layer2: 11-14
+          layer3: 15-18
+        keywords:
+          - physiologie natation
+          - bradycardie natation
+          - position horizontale
+          - thermoregulation eau
+          - Hb mass
+          - volume plasmatique
+          - reflexe immersion
+          - VO2max natation
+          - cout energetique eau froide
+        triggers:
+          - Pourquoi mon coeur bat moins vite dans l eau ?
+          - Differences physiologiques natation et course
+          - Thermoregulation dans l eau
+          - Frequence cardiaque dans l eau
+          - VO2max en natation
+        connects_to:
+          - physiologie/frequence-cardiaque-hrv
+          - physiologie/vo2max-seuils
+          - physiologie/adaptations-entrainement
+          - environnement/chaleur
+        applies_when: education | swimming | physiology
+      - id: natation-entrainement/css-zones
+        name: CSS et zones d intensite
+        lines:
+          layer1: 21-24
+          layer2: 25-38
+          layer3: 39-42
+        keywords:
+          - CSS
+          - Critical Swim Speed
+          - seuil natation
+          - EN1
+          - EN2
+          - EN3
+          - VMA natation
+          - T30
+          - test 200 400
+          - zones intensite natation
+          - MLSS
+          - puissance critique
+        triggers:
+          - C est quoi la CSS en natation ?
+          - Comment calculer ma CSS ?
+          - Zones d entrainement en natation
+          - Test CSS natation
+          - T30 natation
+          - Seuil lactique natation
+        connects_to:
+          - physiologie/vo2max-seuils
+          - seances/travail-seuil
+          - norvegienne/double-seuil-lactate
+          - norvegienne/modele-polarise-80-20
+        applies_when: testing | performance | swimming | threshold-training
+      - id: natation-entrainement/seances-types
+        name: Seances types par objectif
+        lines:
+          layer1: 45-48
+          layer2: 49-58
+          layer3: 59-62
+        keywords:
+          - seance technique
+          - seance endurance
+          - seance seuil
+          - seance VMA
+          - seance recuperation
+          - pull buoy
+          - palmes
+          - protocole entrainement natation
+        triggers:
+          - Comment organiser une seance de natation ?
+          - Seance type natation endurance
+          - Entrainement natation pour progresser
+          - Exemple de seance natation
+          - Programme seance piscine
+        connects_to:
+          - seances/endurance-fondamentale
+          - seances/travail-seuil
+          - seances/intervalles-haute-intensite
+          - seances/recuperation-active
+        applies_when: session-planning | swimming | training
+      - id: natation-entrainement/periodisation
+        name: Periodisation specifique natation
+        lines:
+          layer1: 65-68
+          layer2: 69-72
+          layer3: 73-76
+        keywords:
+          - periodisation natation
+          - macrocycle
+          - mesocycle
+          - microcycle
+          - tapering natation
+          - preparation generale
+          - preparation specifique
+          - affutage natation
+          - decharge natation
+        triggers:
+          - Comment organiser ma saison de natation ?
+          - Periodisation entrainement natation
+          - Tapering en natation
+          - Plan d entrainement natation annuel
+          - Affutage natation competition
+        connects_to:
+          - planification/modeles-periodisation
+          - planification/structure-temporelle
+          - planification/tapering-pic-forme
+          - planification/gestion-charge
+          - norvegienne/periodisation-norvegienne
+        applies_when: planning | swimming | season-start
+      - id: natation-entrainement/volume-intensite
+        name: Volume vs intensite en natation
+        lines:
+          layer1: 79-82
+          layer2: 83-86
+          layer3: 87-90
+        keywords:
+          - volume natation
+          - intensite natation
+          - km par semaine
+          - charge entrainement
+          - surentrainement natation
+          - frequence entrainement
+          - heures vs km
+          - dose minimale
+        triggers:
+          - Combien de km nager par semaine ?
+          - Volume optimal natation
+          - Faut-il nager beaucoup ou vite ?
+          - Frequence entrainement natation
+          - Surentrainement en natation
+        connects_to:
+          - planification/gestion-charge
+          - recuperation/surcompensation-surentrainement
+          - planification/adaptations-amateurs
+          - norvegienne/controlled-intensity
+        applies_when: planning | swimming | training
+      - id: natation-entrainement/ppg-prevention
+        name: PPG specifique et prevention blessures
+        lines:
+          layer1: 93-96
+          layer2: 97-100
+          layer3: 101-104
+        keywords:
+          - PPG natation
+          - epaule nageur
+          - swimmer s shoulder
+          - coiffe rotateurs
+          - renforcement natation
+          - dryland
+          - prevention blessure
+          - conflit sous-acromial
+          - gainage natation
+          - rotation externe
+          - stabilisation scapulaire
+        triggers:
+          - Comment eviter les douleurs d epaule en natation ?
+          - Renforcement musculaire pour nageur
+          - Epaule du nageur
+          - Prehabilitation natation
+          - Exercices hors de l eau pour nager
+        connects_to:
+          - entrainement-croise/renforcement-endurance
+          - blessures/fitness-musculation
+          - blessures/cyclisme
+          - force-pour-coureur/gainage-stabilite
+          - force-pour-coureur/mobilite-souplesse
+        applies_when: strength | injury-prevention | swimming
+
+  natation-equipement:
+    name: Equipement natation et piscine
+    file: natation-equipement-piscine.md
+    total_lines: 120
+    description: Materiel d entrainement, maillots, combinaisons, lunettes, montres connectees
+    concepts:
+      - id: natation-equipement/materiel-entrainement
+        name: Materiel d entrainement
+        lines:
+          layer1: 7-10
+          layer2: 11-20
+          layer3: 21-24
+        keywords:
+          - pull buoy
+          - plaquettes
+          - palmes
+          - snorkel
+          - elastique resistance
+          - materiel natation
+          - accessoires natation
+          - hand paddles
+          - fins
+        triggers:
+          - Quel materiel pour nager ?
+          - Pull buoy utilisation
+          - Plaquettes natation utiles ?
+          - Palmes pour natation
+          - Snorkel natation
+        connects_to:
+          - natation-entrainement/seances-types
+          - natation/technique-crawl
+        applies_when: equipment | swimming | training
+      - id: natation-equipement/maillots-combinaisons
+        name: Maillots et combinaisons
+        lines:
+          layer1: 27-30
+          layer2: 31-34
+          layer3: 35-38
+        keywords:
+          - maillot natation
+          - combinaison neoprene
+          - combinaison triathlon
+          - textile competition
+          - combinaison eau libre
+          - flottabilite
+          - friction
+          - trainee combinaison
+        triggers:
+          - Quelle combinaison choisir pour l eau libre ?
+          - Combinaison neoprene triathlon
+          - Maillot de bain competition
+          - Gain combinaison natation
+          - Combien coute une combinaison de natation ?
+        connects_to:
+          - natation-equipement/materiel-entrainement
+          - environnement/froid
+        applies_when: equipment | swimming | triathlon | open-water
+      - id: natation-equipement/lunettes
+        name: Lunettes de natation
+        lines:
+          layer1: 41-44
+          layer2: 45-48
+          layer3: 49-52
+        keywords:
+          - lunettes natation
+          - buée
+          - anti-buee
+          - verres correcteurs
+          - verres polarises
+          - vision peripherique
+          - monoverre
+          - chlore
+          - protection UV
+        triggers:
+          - Quelles lunettes de natation choisir ?
+          - Comment eviter la buee ?
+          - Lunettes qui fuient
+          - Lunettes correctrices natation
+          - Lunettes pour eau libre
+        connects_to:
+          - equipement-running/accessoires
+        applies_when: equipment | swimming | vision
+      - id: natation-equipement/connectes
+        name: Accessoires connectes et analyse de nage
+        lines:
+          layer1: 55-58
+          layer2: 59-62
+          layer3: 63-66
+        keywords:
+          - montre natation
+          - Garmin
+          - Polar
+          - SWOLF
+          - Form goggles
+          - pod natation
+          - accelerometre
+          - analyse technique
+          - capteur mouvement
+          - IMU
+          - HUD
+        triggers:
+          - Quelle montre pour la natation ?
+          - SWOLF c est quoi ?
+          - Analyse technique natation capteurs
+          - Lunettes connectees Form
+          - Montre GPS piscine
+          - Mesurer sa progression en natation
+        connects_to:
+          - materiel/cardio-gps-montres
+          - materiel/analyse-donnees-training
+          - recuperation/outils-monitoring
+        applies_when: equipment | monitoring | swimming | analysis
+      - id: natation-equipement/bonnets-accessoires
+        name: Bonnets et accessoires complementaires
+        lines:
+          layer1: 69-72
+          layer2: 73-76
+          layer3: 77-80
+        keywords:
+          - bonnet natation
+          - silicone
+          - latex
+          - bouchons oreille
+          - pince-nez
+          - otite nageur
+          - cheveux longs
+          - double bonnet
+        triggers:
+          - Quel bonnet de bain choisir ?
+          - Bouchons d oreille natation
+          - Pince-nez pour nager
+          - Comment proteger ses oreilles dans l eau ?
+          - Otite du nageur prevention
+        connects_to:
+          - natation-equipement/materiel-entrainement
+        applies_when: equipment | swimming | health
+
+# === NOUVEAUX PROGRAMMES ===
+
+nouveaux_programmes:
+  programme-natation-debutant:
+    name: Programme natation debutant (3 niveaux)
+    file: programme-natation-debutant.md
+    total_lines: 109
+    description: Programme 10-12 semaines pour apprendre a nager — grand debutant (0 a 25m), debutant (25 a 400m), intermediaire (400 a 1500m)
+    keywords:
+      - programme natation debutant
+      - apprendre a nager
+      - savoir nager
+      - debutant natation
+      - peur de l eau
+      - 0 a 1500m
+      - nager pour adulte
+      - progression natation
+      - aisance aquatique
+    triggers:
+      - Donne-moi un programme pour apprendre a nager
+      - Comment apprendre a nager adulte ?
+      - Debuter la natation
+      - Passer de 0 a 1500m en natation
+      - Programme natation pour debutant
+      - Savoir nager sans stress
+      - Nager pour la premiere fois
+    connects_to:
+      - natation/position-hydrodynamique
+      - natation/technique-crawl
+      - natation/respiration-aquatique
+      - natation-entrainement/physiologie-specifique
+      - seances/endurance-fondamentale
+    applies_when: program | beginner | swimming | reprise
+  programme-natation-perfectionnement:
+    name: Programme natation perfectionnement (3 niveaux)
+    file: programme-natation-perfectionnement.md
+    total_lines: 121
+    description: Programme 8-16 semaines pour ameliorer sa CSS — intermediaire (2:00 a 1:40/100m), avance (1:40 a 1:25), expert (<1:20)
+    keywords:
+      - programme natation perfectionnement
+      - ameliorer CSS
+      - progresser en natation
+      - nager plus vite
+      - seuil natation
+      - entrainement natation avance
+      - plan natation performance
+    triggers:
+      - Comment nager plus vite ?
+      - Programme pour ameliorer ma CSS
+      - Passer sous les 1:40 au 100m
+      - Entrainement natation intermediaire
+      - Plan d entrainement natation perf
+      - Travailler le seuil en natation
+      - Devenir un meilleur nageur
+    connects_to:
+      - natation-entrainement/css-zones
+      - natation-entrainement/seances-types
+      - natation-entrainement/periodisation
+      - natation-entrainement/ppg-prevention
+      - natation/technique-crawl
+      - planification/tapering-pic-forme
+    applies_when: program | swimming | performance | competition
+  programme-natation-eau-libre:
+    name: Programme natation eau libre (2 niveaux)
+    file: programme-natation-eau-libre.md
+    total_lines: 108
+    description: Programme 8-12 semaines pour se preparer aux epreuves d eau libre — decouverte (5km), confirme (10km)
+    keywords:
+      - programme natation eau libre
+      - preparation eau libre
+      - nager en mer
+      - nager en lac
+      - 5km natation
+      - 10km natation
+      - open water swimming
+      - nage en milieu naturel
+    triggers:
+      - Comment se preparer pour une course d eau libre ?
+      - Programme natation eau libre 5km
+      - Programme natation eau libre 10km
+      - Nager en mer pour la premiere fois
+      - Preparation open water
+      - Comment passer de la piscine a l eau libre ?
+    connects_to:
+      - natation-entrainement/css-zones
+      - natation-entrainement/volume-intensite
+      - natation/technique-crawl
+      - natation-equipement/maillots-combinaisons
+      - environnement/chaleur
+      - environnement/froid
+      - nutrition/hydratation-electrolytes
+    applies_when: program | open-water | swimming | competition
+
+# === NOUVELLES INTENT RULES ===
+
+nouvelles_intent_rules:
+  - id: technique_natation
+    description: L'utilisateur pose une question sur la technique de nage
+    concepts:
+      - natation/position-hydrodynamique
+      - natation/technique-crawl
+      - natation/technique-dos
+      - natation/technique-papillon
+      - natation/respiration-aquatique
+    priority: high
+  - id: respiration_eau
+    description: L'utilisateur a des difficultes respiratoires dans l'eau ou demande comment respirer
+    concepts:
+      - natation/respiration-aquatique
+      - psychologie/gestion-effort-rpe
+    priority: high
+  - id: css_seuil_natation
+    description: L'utilisateur s'interroge sur la CSS, le seuil, les zones d'intensite en natation
+    concepts:
+      - natation-entrainement/css-zones
+      - seances/travail-seuil
+      - norvegienne/double-seuil-lactate
+    priority: high
+  - id: progresser_natation
+    description: L'utilisateur veut progresser en natation, ameliorer sa vitesse
+    concepts:
+      - natation-entrainement/css-zones
+      - natation-entrainement/seances-types
+      - natation-entrainement/volume-intensite
+      - natation-entrainement/periodisation
+      - natation/technique-crawl
+    priority: medium
+  - id: programme_natation
+    description: L'utilisateur demande un programme d'entrainement en natation
+    concepts:
+      - programme-natation-debutant
+      - programme-natation-perfectionnement
+      - programme-natation-eau-libre
+      - natation-entrainement/seances-types
+    priority: high
+  - id: equipement_natation
+    description: L'utilisateur demande des conseils sur le materiel de natation
+    concepts:
+      - natation-equipement/materiel-entrainement
+      - natation-equipement/maillots-combinaisons
+      - natation-equipement/lunettes
+      - natation-equipement/connectes
+    priority: low
+  - id: eau_libre_preparation
+    description: L'utilisateur veut se preparer a une epreuve d'eau libre
+    concepts:
+      - programme-natation-eau-libre
+      - natation-equipement/maillots-combinaisons
+      - natation-entrainement/volume-intensite
+      - environnement/chaleur
+      - environnement/froid
+    priority: high
+  - id: epaule_nageur
+    description: L'utilisateur a des douleurs d'epaule liees a la natation
+    concepts:
+      - natation-entrainement/ppg-prevention
+      - blessures/fitness-musculation
+      - force-pour-coureur/gainage-stabilite
+    priority: critical
+  - id: virage_coulee
+    description: L'utilisateur demande comment faire les virages ou les coulees
+    concepts:
+      - natation/virages-coulees
+      - natation/position-hydrodynamique
+    priority: medium
+  - id: debutant_natation
+    description: L'utilisateur debute la natation ou a peur de l'eau
+    concepts:
+      - programme-natation-debutant
+      - natation/respiration-aquatique
+      - natation/position-hydrodynamique
+      - natation/technique-crawl
+    priority: high
+  - id: natation_et_triathlon
+    description: L'utilisateur s'interroge sur la natation dans le cadre du triathlon
+    concepts:
+      - natation/technique-crawl
+      - natation-entrainement/css-zones
+      - natation-equipement/maillots-combinaisons
+      - programme-natation-eau-libre
+      - entrainement-croise/brick-triathlon
+    priority: high
+
+# === CROSS-DOMAIN OVERLAPS ===
+
+nouveaux_groupes_cross_domain:
+  - group: natation_technique
+    concepts:
+      - natation/position-hydrodynamique
+      - natation/technique-crawl
+      - natation/respiration-aquatique
+      - natation/virages-coulees
+    description: Quand l'utilisateur pose des questions sur la technique de nage
+  - group: natation_performance
+    concepts:
+      - natation-entrainement/css-zones
+      - natation-entrainement/seances-types
+      - natation-entrainement/volume-intensite
+      - natation-entrainement/periodisation
+      - physiologie/vo2max-seuils
+    description: Quand l'utilisateur veut ameliorer sa performance en natation
+  - group: natation_equipement
+    concepts:
+      - natation-equipement/materiel-entrainement
+      - natation-equipement/maillots-combinaisons
+      - natation-equipement/connectes
+      - materiel/cardio-gps-montres
+    description: Quand l'utilisateur cherche du materiel de natation
+  - group: natation_prevention
+    concepts:
+      - natation-entrainement/ppg-prevention
+      - force-pour-coureur/gainage-stabilite
+      - force-pour-coureur/mobilite-souplesse
+      - blessures/fitness-musculation
+    description: Quand l'utilisateur veut prevenir les blessures liees a la natation
+  - group: natation_programmes
+    concepts:
+      - programme-natation-debutant
+      - programme-natation-perfectionnement
+      - programme-natation-eau-libre
+      - natation-entrainement/seances-types
+    description: Quand l'utilisateur demande un programme d'entrainement en natation
+  - group: natation_triathlon
+    concepts:
+      - natation/technique-crawl
+      - natation-entrainement/css-zones
+      - natation-equipement/maillots-combinaisons
+      - entrainement-croise/natation-cyclistes-coureurs
+      - entrainement-croise/brick-triathlon
+    description: Quand l'utilisateur integre la natation dans un plan triathlon
+  - group: natation_debutant_global
+    concepts:
+      - programme-natation-debutant
+      - natation/respiration-aquatique
+      - natation/technique-crawl
+      - psychologie/gestion-effort-rpe
+    description: Quand l'utilisateur debute la natation ou a peur de l'eau

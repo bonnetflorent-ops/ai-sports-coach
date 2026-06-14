@@ -1,0 +1,899 @@
+# PATCH INDEX TRIATHLON - A fusionner dans knowledge/index.yaml
+# Date: 2026-06-14
+# Fichiers crees lors de l'ajout du domaine Triathlon
+
+nouveaux_domaines:
+  triathlon-transitions:
+    name: Triathlon - Transitions
+    file: triathlon-transitions.md
+    total_lines: 280
+    description: Transitions T1 et T2, equipement de transition, optimisation par distance, specificites half/full Ironman
+    concepts:
+      - id: triathlon/transitions-t1
+        name: Transition T1 (natation vers velo)
+        lines:
+          layer1: 8-14
+          layer2: 15-20
+          layer3: 21-30
+        keywords:
+          - T1
+          - transition natation velo
+          - retrait combinaison
+          - poste transition
+          - flying mount
+          - enchainement natation velo
+          - wetsuit removal
+          - transition rapide
+        triggers:
+          - Comment bien gerer ma transition T1 ?
+          - Comment retirer ma combinaison rapidement ?
+          - Temps de transition T1 ideal
+          - Organisation du poste de transition
+          - T1 triathlon erreurs
+        connects_to:
+          - entrainement-croise/brick-triathlon
+          - echauffement/routine-pre-competition
+          - physiologie/frequence-cardiaque-hrv
+        applies_when: triathlon | transition | competition
+      - id: triathlon/transitions-t2
+        name: Transition T2 (velo vers course)
+        lines:
+          layer1: 34-40
+          layer2: 41-46
+          layer3: 47-56
+        keywords:
+          - T2
+          - transition velo course
+          - jambes de plomb
+          - dead legs
+          - adaptation neuromusculaire
+          - flying dismount
+          - enchainement velo course
+          - transition running
+        triggers:
+          - Comment gerer ma T2 ?
+          - Jambes lourdes apres le velo
+          - Transition velo course difficile
+          - Temps T2 ideal
+          - Enchainement velo course a pied
+        connects_to:
+          - entrainement-croise/brick-triathlon
+          - physiologie/adaptations-entrainement
+          - norvegienne/application-pratique
+        applies_when: triathlon | transition | running-post-cycling
+      - id: triathlon/transitions-equipement
+        name: Equipement de transition
+        lines:
+          layer1: 61-66
+          layer2: 67-72
+          layer3: 73-80
+        keywords:
+          - equipement transition
+          - speed laces
+          - elastiques lacets
+          - lubrifiant combinaison
+          - BodyGlide
+          - TriSlide
+          - ceinture dossard
+          - race belt
+          - chaussures velo
+          - casque triathlon
+        triggers:
+          - Quel materiel pour les transitions ?
+          - Speed laces pour triathlon
+          - Comment organiser son poste de transition ?
+          - Equipement transition triathlon
+        connects_to:
+          - equipement-running/chaussures
+          - materiel/choisir-son-equipement
+          - blessures/running
+        applies_when: triathlon | equipment | transition
+      - id: triathlon/transitions-optimisation
+        name: Optimisation des transitions par distance
+        lines:
+          layer1: 85-90
+          layer2: 91-97
+          layer3: 98-104
+        keywords:
+          - optimisation transition
+          - temps cible transition
+          - Sprint transition
+          - Olympique transition
+          - Half transition
+          - Full transition
+          - gain temps transition
+          - chrono transition
+        triggers:
+          - Combien de temps en transition Sprint ?
+          - Optimiser mes transitions
+          - Temps de transition Ironman
+          - Transition rapide triathlon
+        connects_to:
+          - entrainement-croise/brick-triathlon
+          - planification/adaptations-amateurs
+          - planification/tapering-pic-forme
+        applies_when: triathlon | race-day | transition-optimization
+      - id: triathlon/transitions-ironman
+        name: Specificites half/full Ironman (sacs, tentes, strategie)
+        lines:
+          layer1: 109-116
+          layer2: 117-122
+          layer3: 123-130
+        keywords:
+          - Ironman transition
+          - sacs transition
+          - special needs bag
+          - T-bag
+          - changing tent
+          - tente de change
+          - bike bag
+          - run bag
+          - full distance triathlon
+        triggers:
+          - Comment organiser ses sacs Ironman ?
+          - Transition Ironman avec tente de change
+          - Special needs bag triathlon
+          - Stratégie transition Full Ironman
+        connects_to:
+          - planification/adaptations-amateurs
+          - recuperation/nutrition-recuperation
+          - nutrition/glucides-timing
+        applies_when: triathlon | ironman | long-distance
+
+  triathlon-enchainements:
+    name: Triathlon - Enchainements
+    file: triathlon-enchainements.md
+    total_lines: 290
+    description: Physiologie de l'enchainement velo-course, brick training, gestion jambes lourdes, enchainement natation-velo,
+      periodicisation des enchainements, specificites par format
+    concepts:
+      - id: triathlon/enchainements-physiologie
+        name: Physiologie de l'enchainement velo-course
+        lines:
+          layer1: 7-12
+          layer2: 13-17
+          layer3: 18-24
+        keywords:
+          - physiologie enchainement
+          - transition neuromusculaire
+          - alteration economie course
+          - cout energetique post-velo
+          - activation musculaire velo vs course
+          - cycle etirement-raccourcissement
+          - recrutement moteur
+        triggers:
+          - Pourquoi les jambes sont lourdes apres le velo ?
+          - Physiologie de l'enchainement velo course
+          - Economie de course post-velo
+          - Adaptation neuromusculaire triathlon
+        connects_to:
+          - entrainement-croise/brick-triathlon
+          - physiologie/systemes-energetiques
+          - seances/endurance-fondamentale
+        applies_when: triathlon | physiology | brick-training
+      - id: triathlon/enchainements-brick
+        name: Seances d'enchainement (brick training)
+        lines:
+          layer1: 28-33
+          layer2: 34-42
+          layer3: 43-50
+        keywords:
+          - brick training
+          - seance brick
+          - enchainement velo course
+          - protocole brick
+          - double brick
+          - brick longue distance
+          - brick intensite
+          - periodicisation brick
+        triggers:
+          - Comment faire un brick training ?
+          - Protocole seance brick triathlon
+          - Brick pour Ironman
+          - A quelle frequence faire les bricks ?
+          - Double brick entrainement
+        connects_to:
+          - entrainement-croise/brick-triathlon
+          - seances/travail-seuil
+          - seances/endurance-fondamentale
+        applies_when: triathlon | brick-training | session-planning
+      - id: triathlon/enchainements-jambes-lourdes
+        name: Gestion des jambes lourdes en course
+        lines:
+          layer1: 54-59
+          layer2: 60-66
+          layer3: 67-75
+        keywords:
+          - jambes lourdes
+          - dead legs
+          - cadence foulée
+          - posture course
+          - segmentation mentale
+          - self-talk
+          - fatigue neuromusculaire
+          - raideur musculo-tendineuse
+        triggers:
+          - J'ai les jambes lourdes en course
+          - Comment courir apres le velo ?
+          - Dead legs triathlon
+          - Technique course post-velo
+        connects_to:
+          - psychologie/gestion-effort-rpe
+          - biomecanique/cinematique-foulee
+          - force-pour-coureur/plyometrie-coureur
+        applies_when: triathlon | running | heavy-legs
+      - id: triathlon/enchainements-natation-velo
+        name: Enchainement natation-velo
+        lines:
+          layer1: 79-84
+          layer2: 85-90
+          layer3: 91-98
+        keywords:
+          - enchainement natation velo
+          - etourdissement post-nage
+          - hypotension orthostatique
+          - froid post-natation
+          - after-drop
+          - combinaison neoprene
+          - T1 physiologie
+          - refroidissement eau libre
+        triggers:
+          - Sensation d'etourdissement apres la nage
+          - Froid apres la natation
+          - Enchainement natation velo difficile
+          - FC elevee debut velo
+        connects_to:
+          - triathlon/natation-eau-libre-condition
+          - physiologie/frequence-cardiaque-hrv
+          - echauffement/principes-generaux
+        applies_when: triathlon | swimming | transition
+      - id: triathlon/enchainements-periodisation
+        name: Periodicisation des enchainements dans la saison
+        lines:
+          layer1: 102-107
+          layer2: 108-113
+          layer3: 114-121
+        keywords:
+          - periodicisation brick
+          - planification saison triathlon
+          - phase preparatoire brick
+          - phase specifique brick
+          - affutage brick
+          - surcompensation brick
+          - charge neuromusculaire
+        triggers:
+          - Quand introduire les bricks dans la saison ?
+          - Periodicisation des enchainements
+          - Planifier ses bricks sur l annee
+          - Combien de bricks par semaine ?
+        connects_to:
+          - planification/structure-temporelle
+          - planification/modeles-periodisation
+          - planification/gestion-charge
+        applies_when: triathlon | planning | periodization
+      - id: triathlon/enchainements-formats
+        name: Specificites par format (Sprint vs Olympique vs Half vs Full)
+        lines:
+          layer1: 125-130
+          layer2: 131-138
+          layer3: 139-146
+        keywords:
+          - format Sprint enchainement
+          - format Olympique enchainement
+          - Half Ironman enchainement
+          - Full Ironman enchainement
+          - specificite distance triathlon
+          - brick Sprint
+          - brick longue distance
+        triggers:
+          - Adaptation des bricks pour le Sprint
+          - Brick pour Half Ironman
+          - Specificite des enchainements par distance
+          - Brick Full Ironman protocole
+        connects_to:
+          - planification/adaptations-amateurs
+          - seances/endurance-fondamentale
+          - nutrition/glucides-timing
+        applies_when: triathlon | race-specific | brick
+
+  triathlon-gestion-multi-discipline:
+    name: Triathlon - Gestion Multi-Discipline
+    file: triathlon-gestion-multi-discipline.md
+    total_lines: 290
+    description: Planification triathlon, gestion fatigue multi-discipline, strategie de course, nutrition specifique, gestion mentale,
+      volume par format
+    concepts:
+      - id: triathlon/gestion-planification
+        name: Planification triathlon (equilibrer 3 sports)
+        lines:
+          layer1: 7-12
+          layer2: 13-19
+          layer3: 20-27
+        keywords:
+          - planification triathlon
+          - equilibrer 3 sports
+          - repartition entrainement
+          - priorite sport faible
+          - semaine type triathlon
+          - volume triathlon
+          - concurrent training
+          - effet interference
+        triggers:
+          - Comment planifier ma semaine triathlon ?
+          - Equilibrer natation velo course
+          - Repartition entrainement triathlon
+          - Quel volume pour chaque sport ?
+          - Planification 3 sports
+        connects_to:
+          - planification/modeles-periodisation
+          - planification/structure-temporelle
+          - planification/gestion-charge
+        applies_when: triathlon | planning | periodization
+      - id: triathlon/gestion-fatigue
+        name: Gestion de la fatigue multi-discipline
+        lines:
+          layer1: 31-36
+          layer2: 37-43
+          layer3: 44-51
+        keywords:
+          - fatigue multi-discipline
+          - charge cumulative
+          - fatigue centrale
+          - TRIMP combine
+          - surentrainement triathlon
+          - semaine allegée
+          - progression 10 pourcent
+          - ecoute du corps
+        triggers:
+          - Comment gerer la fatigue avec 3 sports ?
+          - Fatigue cumulative triathlon
+          - Charge entrainement triathlon
+          - Surentrainement triathlon
+          - Semaine de recuperation triathlon
+        connects_to:
+          - recuperation/surcompensation-surentrainement
+          - recuperation/outils-monitoring
+          - planification/gestion-charge
+        applies_when: triathlon | recovery | fatigue-management
+      - id: triathlon/gestion-strategie-course
+        name: Strategie de course triathlon
+        lines:
+          layer1: 55-60
+          layer2: 61-68
+          layer3: 69-76
+        keywords:
+          - strategie course triathlon
+          - pacing triathlon
+          - gestion allure
+          - puissance normalisée
+          - negative split
+          - teleoanticipation
+          - variability index
+          - depart controle
+        triggers:
+          - Strategie de course triathlon
+          - Comment gerer mon allure en triathlon ?
+          - Pacing Ironman
+          - Pacing Sprint triathlon
+          - Comment finir fort en triathlon ?
+        connects_to:
+          - gestion-course/strategies-pacing
+          - psychologie/gestion-effort-rpe
+          - physiologie/vo2max-seuils
+        applies_when: triathlon | race-strategy | pacing
+      - id: triathlon/gestion-nutrition
+        name: Nutrition specifique triathlon
+        lines:
+          layer1: 80-85
+          layer2: 86-94
+          layer3: 95-102
+        keywords:
+          - nutrition triathlon
+          - glucides par heure
+          - ravitaillement velo
+          - digestion en course
+          - gut training
+          - maltodextrine fructose
+          - cafeine triathlon
+          - hydratation triathlon
+          - gels triathlon
+        triggers:
+          - Que manger pendant un triathlon ?
+          - Nutrition velo triathlon
+          - Combien de glucides par heure en triathlon ?
+          - Problemes digestifs en course
+          - Gut training triathlon
+        connects_to:
+          - nutrition/glucides-timing
+          - nutrition/hydratation-electrolytes
+          - gestion-course/ravitaillement-course
+        applies_when: triathlon | nutrition | race-day
+      - id: triathlon/gestion-mentale
+        name: Gestion mentale multi-discipline
+        lines:
+          layer1: 106-111
+          layer2: 112-119
+          layer3: 120-127
+        keywords:
+          - mental triathlon
+          - gestion mentale multi-discipline
+          - flexibilite cognitive
+          - association dissociation
+          - flow triathlon
+          - emotion-focused coping
+          - mantra triathlon
+          - imagerie mentale triathlon
+        triggers:
+          - Gestion mentale triathlon
+          - Comment gerer le mental sur 3 sports ?
+          - Stress depart natation
+          - Mental Ironman
+          - Flow en triathlon
+        connects_to:
+          - psychologie/preparation-mentale
+          - preparation-mentale/resilience-gestion-echec
+          - preparation-mentale/flow-state-course
+        applies_when: triathlon | mental | race-day
+      - id: triathlon/gestion-volume
+        name: Volume d'entrainement par format
+        lines:
+          layer1: 131-136
+          layer2: 137-144
+          layer3: 145-151
+        keywords:
+          - volume entrainement triathlon
+          - heures par semaine triathlon
+          - dose minimale efficace
+          - volume Sprint
+          - volume Olympique
+          - volume Half Ironman
+          - volume Full Ironman
+          - rendement decroissant
+        triggers:
+          - Combien d heures pour un triathlon ?
+          - Volume entrainement Ironman
+          - Heures par semaine triathlon Sprint
+          - Volume minimal pour finir un triathlon
+          - Dose minimale efficace triathlon
+        connects_to:
+          - planification/adaptations-amateurs
+          - planification/gestion-charge
+          - seances/endurance-fondamentale
+        applies_when: triathlon | planning | volume
+
+  triathlon-natation-eau-libre:
+    name: Triathlon - Natation en Eau Libre
+    file: triathlon-natation-eau-libre.md
+    total_lines: 280
+    description: Specificites nage sans mur ni ligne, depart peloton drafting, navigation sighting, combinaison neoprene,
+      conditions eau libre, acclimatation
+    concepts:
+      - id: triathlon/natation-eau-libre-specificites
+        name: Specificites nage en eau libre
+        lines:
+          layer1: 7-12
+          layer2: 13-18
+          layer3: 19-24
+        keywords:
+          - eau libre
+          - open water swimming
+          - nage sans mur
+          - nage sans ligne
+          - cout energetique eau libre
+          - derive laterale
+          - clapot
+          - vagues natation
+        triggers:
+          - Difference entre piscine et eau libre
+          - Nager en eau libre
+          - Cout energetique eau libre
+          - Difficultes nage en eau libre
+        connects_to:
+          - entrainement-croise/natation-cyclistes-coureurs
+          - physiologie/systemes-energetiques
+          - echauffement/principes-generaux
+        applies_when: triathlon | swimming | open-water
+      - id: triathlon/natation-eau-libre-depart
+        name: Depart et gestion du peloton (drafting, contact, stress)
+        lines:
+          layer1: 28-33
+          layer2: 34-40
+          layer3: 41-48
+        keywords:
+          - depart triathlon
+          - depart natation
+          - drafting natation
+          - aspiration natation
+          - contact eau libre
+          - stress depart
+          - placement peloton
+          - feet tapping
+        triggers:
+          - Comment gerer le depart natation ?
+          - Stress depart triathlon
+          - Drafting en natation
+          - Contact avec les autres nageurs
+          - Comment bien se placer au depart ?
+        connects_to:
+          - psychologie/gestion-effort-rpe
+          - psychologie/preparation-mentale
+          - gestion-course/aspects-tactiques
+        applies_when: triathlon | swimming | race-start
+      - id: triathlon/natation-eau-libre-navigation
+        name: Navigation sans ligne d eau (sighting, derive, courants)
+        lines:
+          layer1: 52-58
+          layer2: 59-66
+          layer3: 67-73
+        keywords:
+          - sighting
+          - navigation eau libre
+          - reperage visuel
+          - derive natation
+          - courants natation
+          - triangulation
+          - cout sighting
+          - respiration bilaterale
+        triggers:
+          - Comment bien naviguer en eau libre ?
+          - Technique de sighting
+          - Eviter de nager en zigzag
+          - Reperes visuels natation
+          - Courant en eau libre
+        connects_to:
+          - entrainement-croise/natation-cyclistes-coureurs
+          - echauffement/routines-par-sport
+          - techniques-drills/respiration-coordination
+        applies_when: triathlon | swimming | navigation
+      - id: triathlon/natation-eau-libre-combinaison
+        name: Combinaison neoprene (wetsuit)
+        lines:
+          layer1: 77-82
+          layer2: 83-89
+          layer3: 90-97
+        keywords:
+          - combinaison neoprene
+          - wetsuit triathlon
+          - flottabilite
+          - souplesse epaules
+          - Yamamoto neoprene
+          - regularisation combinaison
+          - temperature eau
+          - lubrification combinaison
+        triggers:
+          - Quelle combinaison neoprene choisir ?
+          - Wetsuit pour triathlon
+          - Flottabilite combinaison
+          - Temperature eau combinaison
+          - Reglementation combinaison triathlon
+        connects_to:
+          - equipement-running/vetements
+          - environnement/froid
+          - materiel/choisir-son-equipement
+        applies_when: triathlon | equipment | wetsuit
+      - id: triathlon/natation-eau-libre-condition
+        name: Gestion des conditions (vagues, froid, meduses, anxiete)
+        lines:
+          layer1: 101-107
+          layer2: 108-115
+          layer3: 116-124
+        keywords:
+          - vagues natation
+          - eau froide
+          - cold shock
+          - meduse
+          - anxiete eau libre
+          - panique natation
+          - hyperventilation
+          - acclimatation froid
+          - reflexe mammifere
+        triggers:
+          - Peur en eau libre
+          - Nager dans les vagues
+          - Eau froide triathlon
+          - Piqure meduse natation
+          - Anxiete depart natation
+          - Cold shock immersion
+        connects_to:
+          - psychologie/resilience-ennui-plateaux
+          - psychologie/preparation-mentale
+          - environnement/froid
+        applies_when: triathlon | swimming | anxiety | cold-water
+      - id: triathlon/natation-eau-libre-acclimatation
+        name: Protocoles d acclimatation eau libre
+        lines:
+          layer1: 128-133
+          layer2: 134-140
+          layer3: 141-148
+        keywords:
+          - acclimatation eau libre
+          - progression eau libre
+          - sortie eau libre
+          - securite eau libre
+          - buddy system
+          - adaptation physiologique
+          - proprioception aquatique
+          - double tache navigation
+        triggers:
+          - Comment s acclimater a l eau libre ?
+          - Progression eau libre debutant
+          - Combien de seances eau libre avant une course ?
+          - Entrainement eau libre securite
+          - Acclimatation progressive natation
+        connects_to:
+          - physiologie/adaptations-entrainement
+          - planification/structure-temporelle
+          - recuperation/surcompensation-surentrainement
+        applies_when: triathlon | swimming | acclimatization
+
+nouveaux_programmes:
+  programme-triathlon-sprint:
+    name: Programme triathlon Sprint (3 niveaux)
+    file: programme-triathlon-sprint.md
+    total_lines: 130
+    description: Programme 8-10 semaines pour triathlon Sprint (750 m nage + 20 km velo + 5 km course) — debutant (<1h30),
+      intermediaire (<1h15), avance (<1h05)
+    keywords:
+      - programme triathlon sprint
+      - plan entrainement sprint triathlon
+      - preparation sprint triathlon
+      - 750m natation 20km velo 5km course
+      - sprint triathlon training
+      - programme sprint triathlon debutant
+    triggers:
+      - Donne-moi un programme pour le triathlon Sprint
+      - Comment preparer un sprint triathlon ?
+      - Plan entrainement triathlon sprint debutant/intermediaire/avance
+      - Programme 750m natation 20km velo 5km course
+      - Comment passer sous 1h15 au triathlon sprint ?
+    connects_to:
+      - entrainement-croise/brick-triathlon
+      - norvegienne/modele-polarise-80-20
+      - seances/intervalles-haute-intensite
+      - seances/travail-seuil
+      - seances/endurance-fondamentale
+    applies_when: program | triathlon-sprint | competition
+
+  programme-triathlon-olympique:
+    name: Programme triathlon Olympique (3 niveaux)
+    file: programme-triathlon-olympique.md
+    total_lines: 155
+    description: Programme 12-14 semaines pour triathlon Olympique (1,5 km nage + 40 km velo + 10 km course) — debutant (<3h),
+      intermediaire (<2h35), avance (<2h15)
+    keywords:
+      - programme triathlon olympique
+      - plan entrainement olympique triathlon
+      - preparation olympique triathlon
+      - 1.5km natation 40km velo 10km course
+      - standard distance triathlon training
+      - programme olympique triathlon debutant
+    triggers:
+      - Donne-moi un programme pour le triathlon Olympique
+      - Comment preparer un triathlon distance Olympique ?
+      - Plan entrainement triathlon olympique debutant/intermediaire/avance
+      - Programme 1.5km natation 40km velo 10km course
+      - Comment passer sous 2h30 au triathlon olympique ?
+    connects_to:
+      - entrainement-croise/brick-triathlon
+      - norvegienne/modele-polarise-80-20
+      - seances/travail-seuil
+      - seances/endurance-fondamentale
+      - planification/gestion-charge
+      - planification/tapering-pic-forme
+    applies_when: program | triathlon-olympique | competition
+
+  programme-triathlon-half-full:
+    name: Programme triathlon Half et Full Ironman (3 niveaux)
+    file: programme-triathlon-half-full.md
+    total_lines: 210
+    description: Programme 16-24 semaines pour Half Ironman (1,9/90/21,1) ou Full Ironman (3,8/180/42,2) — debutant (finir),
+      intermediaire, avance
+    keywords:
+      - programme half ironman
+      - programme full ironman
+      - plan entrainement ironman
+      - preparation half ironman
+      - preparation full ironman
+      - 70.3 training
+      - 140.6 training
+      - ironman training plan
+      - programme longue distance triathlon
+    triggers:
+      - Donne-moi un programme pour le Half Ironman
+      - Comment preparer un Full Ironman ?
+      - Plan entrainement Ironman debutant/intermediaire/avance
+      - Programme 70.3 ou 140.6
+      - Comment finir un Ironman ?
+      - Preparation Ironman 24 semaines
+    connects_to:
+      - entrainement-croise/brick-triathlon
+      - seances/endurance-fondamentale
+      - seances/travail-seuil
+      - planification/gestion-charge
+      - planification/tapering-pic-forme
+      - nutrition/glucides-timing
+      - nutrition/hydratation-electrolytes
+    applies_when: program | half-ironman | full-ironman | ultra-endurance
+
+nouvelles_intent_rules:
+  triathlon_transition_question:
+    description: L'utilisateur pose une question sur les transitions triathlon
+    concepts:
+      - triathlon/transitions-t1
+      - triathlon/transitions-t2
+      - triathlon/transitions-equipement
+      - triathlon/transitions-optimisation
+    priority: high
+  triathlon_enchainement_brick:
+    description: L'utilisateur s'interroge sur les enchainements ou bricks triathlon
+    concepts:
+      - triathlon/enchainements-brick
+      - triathlon/enchainements-physiologie
+      - triathlon/enchainements-jambes-lourdes
+      - entrainement-croise/brick-triathlon
+    priority: high
+  triathlon_navigation_sighting:
+    description: L'utilisateur demande comment naviguer en eau libre
+    concepts:
+      - triathlon/natation-eau-libre-navigation
+      - triathlon/natation-eau-libre-depart
+      - triathlon/natation-eau-libre-specificites
+    priority: high
+  triathlon_equipement_wetsuit:
+    description: L'utilisateur pose une question sur la combinaison neoprene
+    concepts:
+      - triathlon/natation-eau-libre-combinaison
+      - triathlon/transitions-equipement
+      - environnement/froid
+    priority: medium
+  triathlon_nutrition_specifique:
+    description: L'utilisateur demande des conseils nutrition pour triathlon
+    concepts:
+      - triathlon/gestion-nutrition
+      - nutrition/glucides-timing
+      - nutrition/hydratation-electrolytes
+      - gestion-course/ravitaillement-course
+    priority: high
+  triathlon_strategie_course:
+    description: L'utilisateur veut une strategie de course triathlon
+    concepts:
+      - triathlon/gestion-strategie-course
+      - triathlon/gestion-mentale
+      - gestion-course/strategies-pacing
+    priority: high
+  triathlon_planification_volume:
+    description: L'utilisateur demande comment planifier son triathlon
+    concepts:
+      - triathlon/gestion-planification
+      - triathlon/gestion-volume
+      - triathlon/gestion-fatigue
+      - planification/modeles-periodisation
+    priority: high
+  triathlon_eau_libre_acclimatation:
+    description: L'utilisateur veut des conseils pour s habituer a l eau libre
+    concepts:
+      - triathlon/natation-eau-libre-acclimatation
+      - triathlon/natation-eau-libre-condition
+      - psychologie/preparation-mentale
+    priority: medium
+  triathlon_programme_sprint:
+    description: L'utilisateur demande un programme d entraînement pour le triathlon Sprint
+    concepts:
+      - programme-triathlon-sprint
+      - entrainement-croise/brick-triathlon
+      - seances/intervalles-haute-intensite
+    priority: high
+  triathlon_programme_olympique:
+    description: L'utilisateur demande un programme d entraînement pour le triathlon Olympique
+    concepts:
+      - programme-triathlon-olympique
+      - entrainement-croise/brick-triathlon
+      - seances/travail-seuil
+      - seances/endurance-fondamentale
+    priority: high
+  triathlon_programme_half_full:
+    description: L'utilisateur demande un programme d entraînement pour le Half ou Full Ironman
+    concepts:
+      - programme-triathlon-half-full
+      - entrainement-croise/brick-triathlon
+      - seances/endurance-fondamentale
+      - planification/gestion-charge
+    priority: high
+
+nouvelles_intent_blocks:
+  - group: entrainement_triathlon_sprint
+    description: Quand l'utilisateur veut un programme triathlon Sprint
+    concepts:
+      - programme-triathlon-sprint
+      - entrainement-croise/brick-triathlon
+      - seances/intervalles-haute-intensite
+      - seances/travail-seuil
+  - group: entrainement_triathlon_olympique
+    description: Quand l'utilisateur veut un programme triathlon Olympique
+    concepts:
+      - programme-triathlon-olympique
+      - entrainement-croise/brick-triathlon
+      - seances/travail-seuil
+      - seances/endurance-fondamentale
+      - planification/gestion-charge
+  - group: entrainement_triathlon_long
+    description: Quand l'utilisateur veut un programme Half ou Full Ironman
+    concepts:
+      - programme-triathlon-half-full
+      - entrainement-croise/brick-triathlon
+      - seances/endurance-fondamentale
+      - planification/tapering-pic-forme
+      - nutrition/glucides-timing
+  - group: triathlon_transitions
+    description: Quand l'utilisateur parle de transitions triathlon
+    concepts:
+      - triathlon/transitions-t1
+      - triathlon/transitions-t2
+      - triathlon/transitions-optimisation
+      - entrainement-croise/brick-triathlon
+  - group: triathlon_natation_libre
+    description: Quand l'utilisateur pose des questions sur la natation en eau libre
+    concepts:
+      - triathlon/natation-eau-libre-specificites
+      - triathlon/natation-eau-libre-navigation
+      - triathlon/natation-eau-libre-depart
+      - triathlon/natation-eau-libre-combinaison
+  - group: triathlon_gestion_course
+    description: Quand l'utilisateur veut des strategies pour la gestion de course triathlon
+    concepts:
+      - triathlon/gestion-strategie-course
+      - triathlon/gestion-nutrition
+      - triathlon/gestion-mentale
+      - gestion-course/strategies-pacing
+  - group: triathlon_planification
+    description: Quand l'utilisateur veut organiser son entrainement triathlon dans la saison
+    concepts:
+      - triathlon/gestion-planification
+      - triathlon/gestion-volume
+      - triathlon/gestion-fatigue
+      - planification/modeles-periodisation
+      - planification/structure-temporelle
+
+cross_domain_overlaps:
+  - group: triathlon_brick
+    description: Quand l'utilisateur s interesse aux enchainements velo-course
+    concepts:
+      - triathlon/enchainements-brick
+      - triathlon/enchainements-physiologie
+      - entrainement-croise/brick-triathlon
+      - triathlon/transitions-t2
+  - group: triathlon_mental_course
+    description: Quand l'utilisateur veut travailler le mental pour son triathlon
+    concepts:
+      - triathlon/gestion-mentale
+      - psychologie/preparation-mentale
+      - preparation-mentale/imagerie-visualisation
+      - preparation-mentale/routines-pre-competition
+  - group: triathlon_nutrition_long
+    description: Quand l'utilisateur cherche des conseils nutrition pour longue distance
+    concepts:
+      - triathlon/gestion-nutrition
+      - nutrition/glucides-timing
+      - nutrition/hydratation-electrolytes
+      - gestion-course/ravitaillement-course
+  - group: triathlon_volume_recuperation
+    description: Quand l'utilisateur s interroge sur le volume et la recuperation en triathlon
+    concepts:
+      - triathlon/gestion-volume
+      - triathlon/gestion-fatigue
+      - planification/adaptations-amateurs
+      - recuperation/surcompensation-surentrainement
+  - group: triathlon_eau_libre_technique
+    description: Quand l'utilisateur veut progresser en natation eau libre
+    concepts:
+      - triathlon/natation-eau-libre-specificites
+      - triathlon/natation-eau-libre-navigation
+      - triathlon/natation-eau-libre-depart
+      - entrainement-croise/natation-cyclistes-coureurs
+  - group: triathlon_transitions_materiel
+    description: Quand l'utilisateur cherche du materiel pour ses transitions
+    concepts:
+      - triathlon/transitions-equipement
+      - triathlon/transitions-optimisation
+      - materiel/choisir-son-equipement
+      - equipement-running/chaussures

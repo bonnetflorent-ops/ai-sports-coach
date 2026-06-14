@@ -1,0 +1,933 @@
+# TRAIL - Patch d index a fusionner
+# Date: 2026-06-14
+# Fichiers crees: 4 domaines, 3 programmes
+# Format: entites a ajouter dans knowledge/index.yaml
+
+version: '2.4'
+nouveaux_domaines_trail:
+  specificites-trail:
+    name: Specificites du Trail
+    file: specificites-trail.md
+    total_lines: 206
+    description: Techniques de descente, gestion du denivele, terrains techniques, navigation, biomecanique et physiologie specifiques au trail
+    concepts:
+      - id: trail/techniques-descente
+        name: Techniques de descente (freinage, appuis, regard, position)
+        lines:
+          layer1: 7-9
+          layer2: 11-22
+          layer3: 24-32
+        keywords:
+          - descente
+          - freinage excentrique
+          - quadriceps
+          - appui
+          - regard anticipe
+          - overstriding
+          - repeated bout effect
+          - virage serre
+          - cadence descente
+          - terrain technique
+        triggers:
+          - Comment descendre en trail ?
+          - Technique pour les descentes raides
+          - Pourquoi j ai mal aux quadriceps en descendant ?
+          - Comment ne pas glisser en descente ?
+          - Descente en epingle
+        connects_to:
+          - biomecanique/cinetique-forces
+          - force-pour-coureur/fondamentaux-force
+          - techniques-drills/technique-cote
+        applies_when: technique | trail | downhill
+      - id: trail/gestion-denivele
+        name: Gestion du denivele (montee, batons, cadence vs puissance)
+        lines:
+          layer1: 36-38
+          layer2: 40-51
+          layer3: 53-59
+        keywords:
+          - denivele
+          - montee
+          - pente
+          - batons trail
+          - marche rapide
+          - alternance marche course
+          - cout energetique montee
+          - cadence montee
+          - marche en Z
+        triggers:
+          - Comment gerer le denivele en trail ?
+          - Faut-il marcher dans les montees ?
+          - Technique de montee avec batons
+          - A quel pourcentage de pente marcher ?
+          - Cadence en montee
+        connects_to:
+          - techniques-drills/technique-cote
+          - biomecanique/economie-course
+          - trail/techniques-descente
+        applies_when: technique | trail | uphill | denivele
+      - id: trail/terrains-techniques
+        name: Terrains techniques (single track, pierriers, boue, neige)
+        lines:
+          layer1: 63-65
+          layer2: 67-74
+          layer3: 76-82
+        keywords:
+          - single track
+          - pierrier
+          - eboulis
+          - boue
+          - neige
+          - verglas
+          - raideur verticale
+          - proprioception
+          - reflexe postural
+          - terrain technique
+          - racines
+        triggers:
+          - Comment courir sur single track ?
+          - Technique pour les pierriers
+          - Courir dans la boue
+          - Comment courir sur terrain technique ?
+          - Courir sur la neige ou le verglas
+        connects_to:
+          - trail/techniques-descente
+          - force-pour-coureur/mobilite-souplesse
+          - biomecanique/variabilite-individualisation
+        applies_when: technique | trail | terrain
+      - id: trail/navigation-autonomie
+        name: Navigation et autonomie en trail
+        lines:
+          layer1: 86-88
+          layer2: 90-97
+          layer3: 99-105
+        keywords:
+          - navigation
+          - GPS trail
+          - trace GPX
+          - balisage
+          - autonomie
+          - carte IGN
+          - altimetre barometrique
+          - cartographie embarque
+          - charge cognitive
+          - ravito
+        triggers:
+          - Comment naviguer en trail ?
+          - Balisage en course de trail
+          - Quelle montre pour le trail ?
+          - Comment gerer les ravitaillements ?
+          - GPS ou carte pour le trail
+        connects_to:
+          - equipement-running/capteurs-montres
+          - materiel/cardio-gps-montres
+          - gestion-course/ravitaillement-course
+        applies_when: navigation | trail | ultra
+      - id: trail/biomecanique-trail
+        name: Biomecanique du trail (impact reduit, variabilite foulee, stabilisateurs)
+        lines:
+          layer1: 109-111
+          layer2: 113-120
+          layer3: 122-128
+        keywords:
+          - biomecanique trail
+          - impact reduit
+          - variabilite foulee
+          - stabilisateurs
+          - raideur verticale
+          - controle predictif
+          - reflexe correction
+          - anticipation EMG
+          - coordination intermusculaire
+          - peronier
+        triggers:
+          - Biomcanique du trail vs route
+          - Pourquoi le trail est different biomecaniquement ?
+          - Quels muscles stabilisateurs en trail ?
+          - Comment la foulee change en trail ?
+        connects_to:
+          - biomecanique/economie-course
+          - biomecanique/cinematique-foulee
+          - biomecanique/cinetique-forces
+          - trail/terrains-techniques
+        applies_when: biomechanics | trail | technique
+      - id: trail/physiologie-specifique
+        name: Specificite physiologique (cout energetique, excentrique descente)
+        lines:
+          layer1: 132-134
+          layer2: 136-146
+          layer3: 148-154
+        keywords:
+          - cout energetique trail
+          - travail excentrique
+          - dommage musculaire
+          - DOMS
+          - CPK
+          - derive cardiaque
+          - alternance montee descente
+          - puissance aerobie relative
+          - economie montee
+        triggers:
+          - Cout energetique du trail vs route
+          - Pourquoi le trail fatigue plus que la route ?
+          - Physiologie de la descente
+          - Derive cardiaque en trail
+          - Combien de kcal depense-t-on en trail ?
+        connects_to:
+          - physiologie/systemes-energetiques
+          - physiologie/vo2max-seuils
+          - biomecanique/economie-course
+          - force-pour-coureur/fondamentaux-force
+        applies_when: physiology | trail | energy-cost
+
+  nutrition-ultra-endurance:
+    name: Nutrition Ultra-Endurance
+    file: nutrition-ultra-endurance.md
+    total_lines: 219
+    description: Strategies nutritionnelles specifiques aux efforts d ultra-endurance en trail (100 km+)
+    concepts:
+      - id: ultra-nutrition/besoins-energetiques
+        name: Besoins energetiques ultra (kcal/h, densite nutritionnelle)
+        lines:
+          layer1: 7-9
+          layer2: 10-21
+          layer3: 22-28
+        keywords:
+          - besoin energetique ultra
+          - kcal/h trail
+          - deficit energetique
+          - depletion glycogenique
+          - reserves lipidiques
+          - oxydation exogene
+          - glucose-sparing
+          - densite nutritionnelle
+        triggers:
+          - Combien de calories depense-t-on en ultra ?
+          - Deficit energetique ultra
+          - Combien manger pendant un ultra ?
+          - Kcal/h en trail
+        connects_to:
+          - nutrition/glucides-timing
+          - nutrition/periodisation-nutritionnelle
+          - trail/physiologie-specifique
+        applies_when: nutrition | ultra | long-distance
+      - id: ultra-nutrition/strategie-glucidique
+        name: Strategie glucidique longue distance (multi-sucres, tolerance digestive)
+        lines:
+          layer1: 31-33
+          layer2: 34-46
+          layer3: 47-57
+        keywords:
+          - strategie glucidique
+          - multi-sucres
+          - glucose fructose
+          - SGLT1
+          - GLUT5
+          - ratio 2:1
+          - oxydation exogene
+          - gut training
+          - ischemie intestinale
+          - tolerance digestive
+          - 90g glucides/h
+        triggers:
+          - Combien de glucides par heure en ultra ?
+          - Glucose et fructose ensemble
+          - Gut training pour l ultra
+          - Tolerance digestive en course
+          - Pourquoi alterner les sucres ?
+        connects_to:
+          - nutrition/glucides-timing
+          - nutrition/periodisation-nutritionnelle
+          - ultra-nutrition/gestion-digestive
+        applies_when: nutrition | ultra | carbohydrates
+      - id: ultra-nutrition/hydratation-ultra
+        name: Hydratation ultra (eau vs electrolytes, hyponatremie)
+        lines:
+          layer1: 60-62
+          layer2: 63-76
+          layer3: 77-83
+        keywords:
+          - hydratation ultra
+          - sodium
+          - electrolytes
+          - hyponatremie
+          - taux de sudation
+          - boire a la soif
+          - osmolarite
+          - ADH
+          - perte hydrique
+          - sodium sueur
+        triggers:
+          - Combien boire en ultra ?
+          - Electrolytes en trail
+          - Risque hyponatremie ultra
+          - Taux de sudation
+          - Boisson isotonique ultra
+        connects_to:
+          - nutrition/hydratation-electrolytes
+          - environnement/chaleur
+          - ultra-nutrition/besoins-energetiques
+        applies_when: hydration | ultra | long-distance
+      - id: ultra-nutrition/gestion-digestive
+        name: Gestion digestive en course (ischemie-reperfusion, aliments solides vs gels)
+        lines:
+          layer1: 86-88
+          layer2: 89-100
+          layer3: 101-111
+        keywords:
+          - gestion digestive
+          - ischemie splanchnique
+          - permeabilite intestinale
+          - leaky gut
+          - aliments solides ultra
+          - gels vs solides
+          - nausees ultra
+          - AINS digestif
+          - bouillon
+          - coca course
+        triggers:
+          - Nausees en ultra
+          - Gels ou solides en ultra ?
+          - Probleme digestion en course
+          - Estomac qui refuse en ultra
+          - Aliments reconfortants ultra
+        connects_to:
+          - ultra-nutrition/strategie-glucidique
+          - ultra-nutrition/hydratation-ultra
+          - gestion-course/ravitaillement-course
+        applies_when: digestion | ultra | nutrition
+      - id: ultra-nutrition/protocoles-distance
+        name: Protocoles nutrition par distance (trail court vs 100 miles)
+        lines:
+          layer1: 114-116
+          layer2: 117-124
+          layer3: 125-132
+        keywords:
+          - protocole nutrition
+          - charge glucidique ultra
+          - carbo-loading ultra
+          - glycogene hepatique
+          - 100 miles nutrition
+          - trail court nutrition
+          - aliments reconfortants
+          - coca ultra
+          - ravito planning
+        triggers:
+          - Strategie nutrition trail court
+          - Strategie nutrition 100 miles
+          - Charge glucidique pour ultra
+          - Que manger la veille d un ultra ?
+          - Ravitaillement aux CP
+        connects_to:
+          - nutrition/glucides-timing
+          - nutrition/periodisation-nutritionnelle
+          - gestion-course/ravitaillement-course
+        applies_when: race-planning | nutrition | ultra
+      - id: ultra-nutrition/recuperation-post-ultra
+        name: Recuperation nutritionnelle post-ultra
+        lines:
+          layer1: 135-137
+          layer2: 138-150
+          layer3: 151-162
+        keywords:
+          - recuperation nutritionnelle
+          - repletion glycogene
+          - synthese proteique
+          - fenetre immunitaire
+          - glutamine
+          - RED-S
+          - leucine
+          - post-ultra
+          - reparation musculaire
+        triggers:
+          - Que manger apres un ultra ?
+          - Recuperation nutritionnelle ultra
+          - Combien de temps pour recuperer d un ultra ?
+          - Reprise apres ultra
+          - Perte de poids post-ultra
+        connects_to:
+          - recuperation/nutrition-recuperation
+          - nutrition/proteines-besoins
+          - recuperation/surcompensation-surentrainement
+        applies_when: recovery | post-race | nutrition
+
+  equipement-trail:
+    name: Equipement Trail
+    file: equipement-trail.md
+    total_lines: 219
+    description: Chaussures, sacs, batons, vetements, eclairage et montres GPS pour le trail
+    concepts:
+      - id: equipement-trail/chaussures
+        name: Chaussures trail (crampons, drop, membrane, stabilite)
+        lines:
+          layer1: 7-11
+          layer2: 12-21
+          layer3: 22-28
+        keywords:
+          - chaussures trail
+          - cramponnage
+          - drop trail
+          - membrane impermeable
+          - Gore-Tex trail
+          - plaque carbone trail
+          - gomme semelle
+          - Vibram Megagrip
+          - chaussant trail
+          - talon lock
+        triggers:
+          - Quelles chaussures trail choisir ?
+          - Drop ideal pour le trail
+          - Gore-Tex ou pas en trail ?
+          - Chaussures trail plaque carbone
+          - Chaussant trail large
+        connects_to:
+          - equipement-running/chaussures
+          - biomecanique/types-de-foulee
+          - blessures/running
+        applies_when: equipment | trail | shoes
+      - id: equipement-trail/portage
+        name: Sacs et portage (gilets, ceintures, capacite, accessibilite)
+        lines:
+          layer1: 31-33
+          layer2: 34-43
+          layer3: 44-52
+        keywords:
+          - gilet trail
+          - portage
+          - flasques
+          - reservoir a eau
+          - soft flask
+          - sac ultra
+          - materiel obligatoire
+          - poids portage
+          - self-supported
+          - osmose
+        triggers:
+          - Quel gilet trail choisir ?
+          - Comment organiser son sac d ultra ?
+          - Flasques ou poche a eau ?
+          - Poids du sac en trail
+          - Materiel obligatoire ultra
+        connects_to:
+          - equipement-running/accessoires
+          - trail/navigation-autonomie
+        applies_when: equipment | trail | hydration
+      - id: equipement-trail/batons
+        name: Batons (fixes, telescopiques, pliables, utilisation)
+        lines:
+          layer1: 55-57
+          layer2: 58-72
+          layer3: 73-79
+        keywords:
+          - batons trail
+          - batons telescopiques
+          - batons pliables
+          - batons fixes
+          - impact metabolique batons
+          - technique montee batons
+          - carbone vs alu
+          - reglage hauteur batons
+        triggers:
+          - Quels batons pour le trail ?
+          - Batons fixes ou telescopiques ?
+          - Comment utiliser les batons en trail ?
+          - Utilit des batons en ultra
+          - Batons carbone ou alu ?
+        connects_to:
+          - trail/gestion-denivele
+          - force-pour-coureur/fondamentaux-force
+        applies_when: equipment | trail | poles
+      - id: equipement-trail/vetements
+        name: Vetements techniques outdoor (couches, impermeabilite, respirabilite)
+        lines:
+          layer1: 82-84
+          layer2: 85-93
+          layer3: 94-101
+        keywords:
+          - trois couches
+          - base layer
+          - laine merinos
+          - membrane respirante
+          - RET impermeabilite
+          - shell impermeable
+          - gestion thermique
+          - polaire trail
+          - materiel obligatoire
+        triggers:
+          - Comment s habiller pour le trail en montagne ?
+          - Quelle veste impermeable trail ?
+          - Systeme 3 couches trail
+          - Laine merinos ou synthetique pour le trail ?
+          - Gestion thermique en trail
+        connects_to:
+          - equipement-running/vetements
+          - environnement/froid
+          - environnement/pluie-vent-securite
+        applies_when: equipment | clothing | weather
+      - id: equipement-trail/eclairage
+        name: Eclairage et securite (frontales, piles, visibilite)
+        lines:
+          layer1: 104-106
+          layer2: 107-118
+          layer3: 119-126
+        keywords:
+          - frontale trail
+          - eclairage nocturne
+          - lumens trail
+          - faisceau frontale
+          - piles lithium froid
+          - lampe secondaire
+          - elements reflechissants
+          - Petzl
+          - Black Diamond
+        triggers:
+          - Quelle frontale pour le trail ?
+          - Combien de lumens pour courir de nuit ?
+          - Eclairage ultra nocturne
+          - Frontale de rechange ultra
+          - Courir de nuit securite
+        connects_to:
+          - environnement/pluie-vent-securite
+          - trail/navigation-autonomie
+        applies_when: equipment | night-running | safety
+      - id: equipement-trail/montres-outdoor
+        name: GPS/montres outdoor (autonomie, cartographie, altimetre barometrique)
+        lines:
+          layer1: 129-131
+          layer2: 132-141
+          layer3: 142-149
+        keywords:
+          - montre GPS trail
+          - altimetre barometrique
+          - cartographie embarque
+          - autonomie montre
+          - multi-GNSS
+          - charge solaire
+          - Garmin Fenix
+          - Coros Vertix
+          - navigation trace
+          - precision GPS montagne
+        triggers:
+          - Quelle montre GPS pour le trail ?
+          - Altimetre barometrique ou GPS ?
+          - Autonomie montre ultra
+          - Montre avec cartographie trail
+          - GPS montagne precision
+        connects_to:
+          - materiel/cardio-gps-montres
+          - equipement-running/capteurs-montres
+          - trail/navigation-autonomie
+        applies_when: equipment | gps | navigation
+
+  gestion-ultra-distance:
+    name: Gestion Ultra-Distance
+    file: gestion-ultra-distance.md
+    total_lines: 249
+    description: Gestion du sommeil, des pieds, de la douleur, logistique et mental pour les ultras
+    concepts:
+      - id: gestion-ultra/sommeil
+        name: Gestion du sommeil en ultra (privation, micro-siestes, hallucinations)
+        lines:
+          layer1: 7-9
+          layer2: 10-20
+          layer3: 21-30
+        keywords:
+          - sommeil ultra
+          - privation sommeil
+          - micro-siestes
+          - power nap
+          - hallucinations
+          - inertie sommeil
+          - cafeine ultra
+          - creux circadien
+          - fatigue cognitive
+          - syndrome ultra fatigue
+        triggers:
+          - Gestion du sommeil en ultra
+          - Micro-siestes pendant la course
+          - Hallucinations en courant
+          - Privaton de sommeil et performance
+          - Cafeine pour rester eveille
+        connects_to:
+          - recuperation/sommeil
+          - preparation-mentale/gestion-douleur-inconfort
+        applies_when: ultra | sleep | night
+      - id: gestion-ultra/pieds
+        name: Gestion des pieds (ampoules, maceration, ongles, podologie ultra)
+        lines:
+          layer1: 33-35
+          layer2: 36-52
+          layer3: 53-62
+        keywords:
+          - pieds ultra
+          - ampoules
+          - maceration
+          - ongles noirs
+          - chaussettes trail
+          - lubrifiant
+          - Injinji
+          - Compeed
+          - cisaillement peau
+          - double chaussette
+          - volume pied course
+        triggers:
+          - Comment eviter les ampoules en trail ?
+          - Soin des pieds ultra
+          - Changer de chaussettes en course
+          - Ongles noirs trail
+          - Pieds qui gonflent en ultra
+        connects_to:
+          - blessures/running
+          - equipement-running/chaussures
+          - equipement-running/vetements
+        applies_when: foot-care | ultra | blister-prevention
+      - id: gestion-ultra/douleur
+        name: Gestion de la douleur longue distance
+        lines:
+          layer1: 65-67
+          layer2: 68-78
+          layer3: 79-86
+        keywords:
+          - douleur ultra
+          - douleur normale vs dangereuse
+          - AINS ultra
+          - paracetamol ultra
+          - dissociation
+          - association
+          - habituation inconfort
+          - tolerance douleur
+          - revaluation cognitive
+        triggers:
+          - Gestion de la douleur en ultra
+          - Faut-il prendre des anti-douleur en course ?
+          - AINS en ultra dangereux
+          - Difference douleur normale et dangereuse
+          - Techniques mentales douleur
+        connects_to:
+          - preparation-mentale/gestion-douleur-inconfort
+          - psychologie/gestion-effort-rpe
+          - blessures/running
+        applies_when: pain-management | ultra | safety
+      - id: gestion-ultra/logistique
+        name: Logistique de course (assistance, drop bags, points ravito)
+        lines:
+          layer1: 89-91
+          layer2: 92-105
+          layer3: 106-115
+        keywords:
+          - logistique ultra
+          - drop bags
+          - assistance course
+          - ravito planning
+          - temps arret CP
+          - materiel obligatoire
+          - portage ultra
+          - preparation ultra
+          - pacer
+        triggers:
+          - Comment organiser ses drop bags ?
+          - Logistique ultra trail
+          - Que mettre dans ses drop bags ?
+          - Gestion des ravitaillements
+          - Assistant en ultra
+        connects_to:
+          - gestion-course/ravitaillement-course
+          - trail/navigation-autonomie
+          - gestion-ultra/pieds
+        applies_when: logistics | ultra | race-planning
+      - id: gestion-ultra/conditions-extremes
+        name: Conditions extremes (chaleur/froid/altitude en montagne)
+        lines:
+          layer1: 118-120
+          layer2: 121-134
+          layer3: 135-145
+        keywords:
+          - conditions extremes
+          - orage montagne
+          - foudre
+          - hypothermie
+          - coup de chaleur
+          - EHS
+          - altitude ultra
+          - mal aigu montagnes
+          - WBGT ultra
+          - acclimatation
+        triggers:
+          - Conditions meteo extremes en ultra
+          - Orage en montagne que faire ?
+          - Risque hypothermie en trail
+          - Courir en altitude ultra
+          - Coup de chaleur prevention
+        connects_to:
+          - environnement/chaleur
+          - environnement/froid
+          - environnement/altitude
+          - equipement-trail/vetements
+        applies_when: weather | safety | extreme-conditions
+      - id: gestion-ultra/mental
+        name: Aspects mentaux ultra (dissociation, segmentation, abandon vs perseverer)
+        lines:
+          layer1: 148-150
+          layer2: 151-165
+          layer3: 166-182
+        keywords:
+          - mental ultra
+          - dissociation
+          - segmentation course
+          - DNF
+          - abandon
+          - second souffle
+          - mantra ultra
+          - rituels ravito
+          - dissonance cognitive DNF
+          - pacer mental
+        triggers:
+          - Mental en ultra
+          - Comment ne pas abandonner ?
+          - Strategies mentales ultra
+          - Gestion des moments de doute
+          - Abandon ou continuer ?
+        connects_to:
+          - psychologie/gestion-effort-rpe
+          - preparation-mentale/resilience-gestion-echec
+          - preparation-mentale/gestion-douleur-inconfort
+          - psychologie/motivation-autodetermination
+        applies_when: mental | ultra | resilience
+
+nouveaux_programmes_trail:
+  programme-trail-court:
+    name: Programme Trail Court 20-30 km (3 niveaux)
+    file: programme-trail-court.md
+    total_lines: 92
+    description: Programme 8-12 semaines pour trail 20-30 km avec 500-1000 m D+ — debutant (<2h30), intermediaire (<2h), avance (<1h40)
+    keywords:
+      - programme trail court
+      - plan entrainement trail 20km
+      - preparation trail court
+      - denivele moyen
+      - sentier technique
+      - sortie longue trail
+      - PPG trail
+    triggers:
+      - Donne-moi un programme pour un trail de 20-30 km
+      - Comment preparer un trail court ?
+      - Plan d entrainement trail debutant
+      - Preparation trail 25 km
+      - Quelles seances pour le trail court ?
+    connects_to:
+      - trail/techniques-descente
+      - trail/gestion-denivele
+      - trail/terrains-techniques
+      - seances/endurance-fondamentale
+      - force-pour-coureur/periodisation-force
+    applies_when: program | trail-court | competition
+
+  programme-trail-long:
+    name: Programme Trail Long 40-80 km (3 niveaux)
+    file: programme-trail-long.md
+    total_lines: 105
+    description: Programme 12-16 semaines pour trail 40-80 km avec 1500-3500 m D+ — debutant (<10h), intermediaire (<8h), avance (<6h)
+    keywords:
+      - programme trail long
+      - plan entrainement trail 50km
+      - preparation trail long
+      - denivele important
+      - sortie longue montagne
+      - cols trail
+      - alternance marche course
+    triggers:
+      - Donne-moi un programme pour un trail de 40-80 km
+      - Comment preparer un trail long ?
+      - Plan entrainement trail 50-60 km
+      - Preparation trail montagne
+      - Seances pour trail longue distance
+    connects_to:
+      - trail/techniques-descente
+      - trail/gestion-denivele
+      - trail/biomecanique-trail
+      - trail/physiologie-specifique
+      - seances/endurance-fondamentale
+      - seances/travail-seuil
+      - nutrition/glucides-timing
+      - planification/gestion-charge
+    applies_when: program | trail-long | competition
+
+  programme-ultra-trail:
+    name: Programme Ultra-Trail 100 km+ (3 niveaux)
+    file: programme-ultra-trail.md
+    total_lines: 124
+    description: Programme 16-24 semaines pour ultra-trail 100 km+ avec 4000-10000 m D+ — debutant (<24h), intermediaire (<20h), avance (<15h)
+    keywords:
+      - programme ultra trail
+      - plan entrainement ultra
+      - preparation ultra trail 100km
+      - 100 miles training
+      - denivele extreme
+      - gestion nuit ultra
+      - back to back
+      - sortie longue ultra
+    triggers:
+      - Donne-moi un programme pour un ultra trail
+      - Comment preparer un 100 km trail ?
+      - Plan entrainement ultra 100 miles
+      - Preparation ultra trail 24h
+      - Programme ultra debutant
+    connects_to:
+      - trail/techniques-descente
+      - trail/gestion-denivele
+      - ultra-nutrition/besoins-energetiques
+      - ultra-nutrition/strategie-glucidique
+      - ultra-nutrition/hydratation-ultra
+      - ultra-nutrition/gestion-digestive
+      - gestion-ultra/sommeil
+      - gestion-ultra/pieds
+      - gestion-ultra/logistique
+      - gestion-ultra/mental
+      - seances/endurance-fondamentale
+      - planification/gestion-charge
+      - planification/tapering-pic-forme
+    applies_when: program | ultra | competition
+
+nouvelles_intent_rules:
+  - id: trail_technique_question
+    description: L'utilisateur pose une question sur la technique de trail (descente, montee, terrain)
+    concepts:
+      - trail/techniques-descente
+      - trail/gestion-denivele
+      - trail/terrains-techniques
+    priority: high
+  - id: equipement_trail_question
+    description: L'utilisateur demande des conseils sur le materiel trail (chaussures, batons, sac, frontale)
+    concepts:
+      - equipement-trail/chaussures
+      - equipement-trail/portage
+      - equipement-trail/batons
+      - equipement-trail/vetements
+      - equipement-trail/eclairage
+      - equipement-trail/montres-outdoor
+    priority: medium
+  - id: nutrition_ultra_question
+    description: L'utilisateur s'interroge sur la nutrition pour ultra-trail
+    concepts:
+      - ultra-nutrition/besoins-energetiques
+      - ultra-nutrition/strategie-glucidique
+      - ultra-nutrition/hydratation-ultra
+      - ultra-nutrition/gestion-digestive
+    priority: high
+  - id: gestion_ultra_question
+    description: L'utilisateur demande comment gerer un ultra (sommeil, pieds, douleur, logistique)
+    concepts:
+      - gestion-ultra/sommeil
+      - gestion-ultra/pieds
+      - gestion-ultra/douleur
+      - gestion-ultra/logistique
+      - gestion-ultra/mental
+    priority: high
+  - id: parcours_trail_question
+    description: L'utilisateur parle de navigation, denivele, profil de course trail
+    concepts:
+      - trail/navigation-autonomie
+      - trail/gestion-denivele
+      - gestion-course/strategies-pacing
+    priority: medium
+  - id: programme_trail_court
+    description: L'utilisateur demande un programme pour trail de 20-30 km
+    concepts:
+      - programme-trail-court
+      - trail/techniques-descente
+      - trail/gestion-denivele
+      - seances/endurance-fondamentale
+    priority: high
+  - id: programme_trail_long
+    description: L'utilisateur demande un programme pour trail 40-80 km
+    concepts:
+      - programme-trail-long
+      - trail/gestion-denivele
+      - trail/physiologie-specifique
+      - seances/endurance-fondamentale
+      - nutrition/glucides-timing
+    priority: high
+  - id: programme_ultra_trail
+    description: L'utilisateur demande un programme pour ultra-trail 100 km+
+    concepts:
+      - programme-ultra-trail
+      - ultra-nutrition/besoins-energetiques
+      - gestion-ultra/sommeil
+      - gestion-ultra/logistique
+      - planification/gestion-charge
+    priority: high
+  - id: trail_blessure_specifique
+    description: L'utilisateur signale une douleur specifique au trail (cheville, quadriceps apres descente, entorse)
+    concepts:
+      - trail/techniques-descente
+      - trail/biomecanique-trail
+      - blessures/running
+      - physiopathologie-coureur/periostite-tibiale
+    priority: critical
+
+nouvelles_intent_blocks:
+  - id: trail_complet
+    description: Bloc specifique trail regroupant les concepts essentiels pour une question centree sur le trail
+    concepts:
+      - trail/techniques-descente
+      - trail/gestion-denivele
+      - trail/terrains-techniques
+      - trail/biomecanique-trail
+      - trail/physiologie-specifique
+    priority: medium
+
+cross_domain_overlaps:
+  - group: trail_global
+    concepts:
+      - trail/techniques-descente
+      - trail/gestion-denivele
+      - trail/terrains-techniques
+      - trail/biomecanique-trail
+      - trail/physiologie-specifique
+    description: Quand l'utilisateur parle de trail en general ou demande des conseils pour debuter en trail
+  - group: trail_nutrition_ultra
+    concepts:
+      - ultra-nutrition/besoins-energetiques
+      - ultra-nutrition/strategie-glucidique
+      - ultra-nutrition/hydratation-ultra
+      - ultra-nutrition/gestion-digestive
+      - ultra-nutrition/protocoles-distance
+      - nutrition/glucides-timing
+      - nutrition/hydratation-electrolytes
+    description: Quand l'utilisateur veut optimiser sa nutrition pour un ultra trail
+  - group: trail_ultra_gestion
+    concepts:
+      - gestion-ultra/sommeil
+      - gestion-ultra/pieds
+      - gestion-ultra/douleur
+      - gestion-ultra/logistique
+      - gestion-ultra/conditions-extremes
+      - gestion-ultra/mental
+      - trail/navigation-autonomie
+    description: Quand l'utilisateur prepare un ultra et cherche des conseils de gestion de course
+  - group: trail_equipement_complet
+    concepts:
+      - equipement-trail/chaussures
+      - equipement-trail/portage
+      - equipement-trail/batons
+      - equipement-trail/vetements
+      - equipement-trail/eclairage
+      - equipement-trail/montres-outdoor
+    description: Quand l'utilisateur cherche des conseils d'equipement pour le trail
+  - group: trail_blessure_prevention
+    concepts:
+      - trail/biomecanique-trail
+      - trail/physiologie-specifique
+      - trail/terrains-techniques
+      - blessures/running
+      - force-pour-coureur/renforcement-charge-lourde
+      - force-pour-coureur/gainage-stabilite
+    description: Quand l'utilisateur veut prevenir les blessures liees au trail
+  - group: trail_denivele_gestion
+    concepts:
+      - trail/gestion-denivele
+      - trail/techniques-descente
+      - trail/physiologie-specifique
+      - techniques-drills/technique-cote
+      - seances/travail-seuil
+    description: Quand l'utilisateur veut ameliorer sa gestion du denivele en trail

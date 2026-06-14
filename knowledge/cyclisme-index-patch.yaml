@@ -1,0 +1,1428 @@
+# CYCLISME - Patch d'index a fusionner
+# Date: 2026-06-14
+# Fichiers: 6 domaines cyclisme + 3 programmes
+# A fusionner avec knowledge/index.yaml
+
+nouveaux_domaines:
+
+  cyclisme-technique-pedalage:
+    name: Cyclisme - Technique de pedalage et pilotage
+    file: cyclisme-technique-pedalage.md
+    total_lines: 164
+    description: Biomecanique du pedalage, position bike fit, cadence, virage, danseuse, specificites route/gravel/VTT
+    concepts:
+      - id: cyclisme-technique/biomecanique-pedalage
+        name: Biomecanique du pedalage (phases, forces efficaces, dead spots)
+        lines:
+          layer1: 7-9
+          layer2: 10-16
+          layer3: 17-23
+        keywords:
+          - biomecanique pedalage
+          - coup de pedale
+          - dead spots
+          - points morts
+          - force tangentielle
+          - force radiale
+          - couple
+          - efficacite mecanique
+          - pedalage unijambiste
+          - lissage pedalage
+          - phases pedalage
+          - propulsion
+          - traction
+          - moment de force
+          - ERG mode technique
+          - smoothness index
+        triggers:
+          - Comment ameliorer mon coup de pedale ?
+          - C'est quoi les dead spots ?
+          - Comment pedaler plus rond ?
+          - Biomecanique du pedalage
+          - Force efficace pedalage
+          - Pourquoi je perds en puissance en haut du pedalage ?
+        connects_to:
+          - cyclisme-technique/position-bike-fit
+          - cyclisme-technique/cadence-developpement
+          - cyclisme-puissance/ftp-zones-coggan
+          - cyclisme-puissance/economie-pedalage
+          - blessures/cyclisme
+          - materiel/capteurs-de-puissance
+        applies_when: technique | cycling | beginner
+
+      - id: cyclisme-technique/position-bike-fit
+        name: Position sur le velo (bike fit, posture, aerodynamisme)
+        lines:
+          layer1: 26-28
+          layer2: 29-37
+          layer3: 38-46
+        keywords:
+          - bike fit
+          - position velo
+          - hauteur selle
+          - recul selle
+          - aerodynamisme
+          - trainee
+          - CdA
+          - reglage velo
+          - angle genou
+          - potence
+          - cintre
+          - longueur manivelle
+          - stack reach ratio
+          - confort velo
+          - douleur position
+        triggers:
+          - Comment regler ma position sur le velo ?
+          - Bike fit pour debutant
+          - Douleur genou velo
+          - Position aerodynamique
+          - Hauteur de selle ideale
+          - Reglage cintre velo
+        connects_to:
+          - cyclisme-technique/biomecanique-pedalage
+          - cyclisme-equipement/cadres-geometries
+          - blessures/cyclisme
+          - environnement/pluie-vent-securite
+        applies_when: technique | comfort | injury prevention
+
+      - id: cyclisme-technique/cadence-developpement
+        name: Cadence et developpement (RPM, braquets, cadence optimale)
+        lines:
+          layer1: 49-51
+          layer2: 52-61
+          layer3: 62-68
+        keywords:
+          - cadence
+          - RPM
+          - developpement
+          - braquet
+          - plateau
+          - pignon
+          - mouliner
+          - force par coup de pedale
+          - cadence optimale
+          - cadence CLM
+          - cadence cote
+          - vitesse de rotation
+          - spinning
+          - pedaler vite
+        triggers:
+          - Quelle cadence ideal ?
+          - Comment trouver mon braquet ?
+          - Cadence velo route gravel VTT
+          - Mouliner ou forcer ?
+          - RPM optimale
+        connects_to:
+          - cyclisme-technique/biomecanique-pedalage
+          - cyclisme-puissance/ftp-zones-coggan
+          - cyclisme-equipement/transmissions-braquets
+        applies_when: technique | performance | efficiency
+
+      - id: cyclisme-technique/virage-pilotage
+        name: Technique de virage et pilotage (trajectoires, freinage, regard)
+        lines:
+          layer1: 71-73
+          layer2: 74-84
+          layer3: 85-89
+        keywords:
+          - virage
+          - pilotage
+          - freinage
+          - trajectoire
+          - contre-pencher
+          - angle d inclinaison
+          - position attack
+          - descente VTT
+          - regard virage
+          - adherence
+          - frein avant
+          - frein arriere
+        triggers:
+          - Comment prendre un virage a velo ?
+          - Technique de descente VTT
+          - Freinage velo
+          - Comment aborder un virage route
+          - Pilotage gravel
+        connects_to:
+          - cyclisme-technique/danseuse-assis
+          - cyclisme-tactique/specificites-vtt
+          - cyclisme-securite/securite-routiere
+          - cyclisme-equipement/roues-pneumatiques
+        applies_when: technique | safety | off-road
+
+      - id: cyclisme-technique/danseuse-assis
+        name: Pedalage en danseuse vs assis
+        lines:
+          layer1: 92-94
+          layer2: 95-103
+          layer3: 104-106
+        keywords:
+          - danseuse
+          - assis
+          - position debout
+          - cote raide
+          - relance
+          - poids du corps
+          - moment articulaire
+          - cout metabolique
+          - puissance maximale
+          - deblocage musculaire
+        triggers:
+          - Quand passer en danseuse ?
+          - Danseuse ou assis en cote ?
+          - Technique danseuse velo
+          - Monter en danseuse
+        connects_to:
+          - cyclisme-technique/biomecanique-pedalage
+          - cyclisme-technique/position-bike-fit
+          - cyclisme-tactique/gestion-effort-cyclosportive
+        applies_when: technique | climbing | sprint
+
+      - id: cyclisme-technique/specificites-disciplines
+        name: Specificites Route vs Gravel vs VTT
+        lines:
+          layer1: 109-111
+          layer2: 112-116
+          layer3: 117-122
+        keywords:
+          - route
+          - gravel
+          - VTT
+          - XC
+          - position route
+          - position gravel
+          - position VTT
+          - puissance intermittente
+          - profil puissance
+          - contraintes articulaires
+          - pilotage
+        triggers:
+          - Differences entre route et VTT
+          - Specificite velo gravel
+          - Quelle discipline choisir
+          - VTT vs Route entrainement
+        connects_to:
+          - cyclisme-puissance/specificites-gravel-vtt
+          - cyclisme-entrainement/specificites-disciplines
+          - cyclisme-equipement/cadres-geometries
+          - blessures/cyclisme
+        applies_when: education | equipment-choice | discipline-comparison
+
+  cyclisme-puissance-metabolisme:
+    name: Cyclisme - Puissance et metabolisme
+    file: cyclisme-puissance-metabolisme.md
+    total_lines: 210
+    description: FTP, zones Coggan, courbe de puissance, W/kg, decouplage aerobie, economie de pedalage, NP et VI
+    concepts:
+      - id: cyclisme-puissance/ftp-zones-coggan
+        name: FTP et zones de puissance (modele Coggan, test 20 min)
+        lines:
+          layer1: 7-9
+          layer2: 10-23
+          layer3: 24-35
+        keywords:
+          - FTP
+          - Functional Threshold Power
+          - zones Coggan
+          - zone 2
+          - sweet spot
+          - seuil
+          - test 20 min
+          - puissance critique
+          - CP
+          - W'
+          - puissance seuil
+          - watts
+          - zones puissance
+          - entrainement puissance
+        triggers:
+          - Comment calculer mon FTP ?
+          - Protocole test FTP 20 min
+          - Zones de puissance velo
+          - C'est quoi le sweet spot ?
+          - FTP velo calcul
+          - Coggan zones
+        connects_to:
+          - cyclisme-puissance/courbe-puissance-profil
+          - cyclisme-puissance/wkg-performance
+          - cyclisme-entrainement/seances-cles
+          - physiologie/vo2max-seuils
+          - materiel/capteurs-de-puissance
+        applies_when: testing | performance | training-zones
+
+      - id: cyclisme-puissance/courbe-puissance-profil
+        name: Courbe de puissance et profil d'effort
+        lines:
+          layer1: 38-40
+          layer2: 41-53
+          layer3: 54-60
+        keywords:
+          - courbe de puissance
+          - CPP
+          - profil cycliste
+          - sprinteur
+          - grimpeur
+          - rouleur
+          - Normalized Power
+          - NP
+          - Intensity Factor
+          - IF
+          - Variability Index
+          - VI
+          - modele CP
+          - modele 3 parametres
+          - record personnel
+        triggers:
+          - Comment interpreter ma courbe de puissance ?
+          - Normalized Power c'est quoi ?
+          - Profil sprinteur grimpeur rouleur
+          - VI Variability Index
+          - Analyse courbe de puissance
+        connects_to:
+          - cyclisme-puissance/ftp-zones-coggan
+          - cyclisme-puissance/specificites-gravel-vtt
+          - planification/gestion-charge
+          - materiel/analyse-donnees-training
+        applies_when: analysis | performance | data-interpretation
+
+      - id: cyclisme-puissance/wkg-performance
+        name: W/kg et performance (rapport puissance/poids)
+        lines:
+          layer1: 63-65
+          layer2: 66-78
+          layer3: 79-88
+        keywords:
+          - W/kg
+          - watts par kilo
+          - rapport poids puissance
+          - performance cote
+          - grimpeur
+          - puissance absolue
+          - RED-S
+          - poids et performance
+          - perte de poids
+          - profil W/kg
+          - valeurs reference
+        triggers:
+          - Quel W/kg pour quel niveau ?
+          - Rapport poids puissance
+          - W/kg grimpeur
+          - Perdre du poids pour mieux grimper
+          - Puissance absolue vs relative
+        connects_to:
+          - cyclisme-puissance/ftp-zones-coggan
+          - cyclisme-puissance/courbe-puissance-profil
+          - populations/surpoids-obesite
+          - populations/femmes-athletes
+        applies_when: performance | climbing | weight-management
+
+      - id: cyclisme-puissance/decouplage-aerobie
+        name: Decouplage aerobie (cardiac drift, Pa:HR)
+        lines:
+          layer1: 91-93
+          layer2: 94-103
+          layer3: 104-113
+        keywords:
+          - decouplage aerobie
+          - cardiac drift
+          - Pa:HR
+          - derive cardiaque
+          - ratio puissance FC
+          - fatigue aerobie
+          - endurance fondamentale
+          - etat de forme
+          - surentrainement
+          - hydratation
+          - thermoregulation
+        triggers:
+          - C'est quoi le decouplage aerobie ?
+          - Pa:HR velo
+          - Derive cardiaque cyclisme
+          - Comment mesurer le decouplage ?
+          - Pourquoi ma FC augmente pendant la sortie ?
+        connects_to:
+          - cyclisme-puissance/ftp-zones-coggan
+          - cyclisme-entrainement/recuperation-cyclisme
+          - physiologie/frequence-cardiaque-hrv
+          - recuperation/outils-monitoring
+        applies_when: monitoring | fatigue | endurance
+
+      - id: cyclisme-puissance/economie-pedalage
+        name: Economie de pedalage (efficiency vs economy)
+        lines:
+          layer1: 116-118
+          layer2: 119-126
+          layer3: 127-133
+        keywords:
+          - economie de pedalage
+          - gross efficiency
+          - net efficiency
+          - delta efficiency
+          - rendement
+          - cout energetique
+          - fibres lentes
+          - mitochondries
+          - citrate synthase
+          - co-contraction
+          - fluidite
+        triggers:
+          - Comment ameliorer mon economie de pedalage ?
+          - Gross efficiency velo
+          - Rendement cycliste
+          - Depense energetique velo
+        connects_to:
+          - cyclisme-puissance/ftp-zones-coggan
+          - cyclisme-technique/biomecanique-pedalage
+          - cyclisme-entrainement/seances-cles
+          - physiologie/systemes-energetiques
+        applies_when: performance | efficiency | advanced
+
+      - id: cyclisme-puissance/specificites-gravel-vtt
+        name: Specificites Gravel/VTT (NP, VI, variabilite, TSS)
+        lines:
+          layer1: 136-138
+          layer2: 139-150
+          layer3: 151-155
+        keywords:
+          - Normalized Power
+          - NP
+          - Variability Index
+          - VI
+          - Training Stress Score
+          - TSS
+          - puissance normalisee
+          - kilojoules
+          - stochastic training
+          - irregularite
+          - VTT puissance
+          - gravel puissance
+          - charge neuromusculaire
+        triggers:
+          - NP velo c'est quoi ?
+          - VI velo interpretation
+          - TSS gravel VTT
+          - Entrainement stochastic VTT
+          - Puissance normalisee gravel
+        connects_to:
+          - cyclisme-puissance/courbe-puissance-profil
+          - cyclisme-puissance/ftp-zones-coggan
+          - cyclisme-entrainement/specificites-disciplines
+          - cyclisme-entrainement/home-trainer-indoor
+          - planification/gestion-charge
+        applies_when: analysis | off-road | data-interpretation
+
+  cyclisme-equipement-materiel:
+    name: Cyclisme - Equipement et materiel
+    file: cyclisme-equipement-materiel.md
+    total_lines: 189
+    description: Cadres, geometries, transmissions, roues, pneumatiques, capteurs, compteurs, vetements, specificites gravel
+    concepts:
+      - id: cyclisme-equipement/cadres-geometries
+        name: Cadres et geometries (endurance, aero, gravel, VTT)
+        lines:
+          layer1: 7-9
+          layer2: 10-26
+          layer3: 27-31
+        keywords:
+          - cadre velo
+          - geometrie cadre
+          - angle direction
+          - chasse
+          - trail
+          - empattement
+          - base arriere
+          - carbone
+          - aluminium
+          - acier
+          - titane
+          - stack reach
+          - endurance
+          - aerodynamique
+          - gravel geometry
+          - VTT geometry
+        triggers:
+          - Quel cadre velo choisir ?
+          - Geometrie cadre route gravel VTT
+          - Carbone ou alu ?
+          - Stack and reach
+          - Cadre aerodynamique ou confort ?
+        connects_to:
+          - cyclisme-technique/position-bike-fit
+          - cyclisme-equipement/roues-pneumatiques
+          - cyclisme-equipement/transmissions-braquets
+          - materiel/choisir-son-equipement
+        applies_when: equipment | purchase | geometry
+
+      - id: cyclisme-equipement/transmissions-braquets
+        name: Transmission et braquets (compact, mono-plateau, cassette)
+        lines:
+          layer1: 34-36
+          layer2: 37-48
+          layer3: 49-55
+        keywords:
+          - transmission
+          - braquet
+          - plateau
+          - pignon
+          - cassette
+          - compact
+          - semi-compact
+          - sub-compact
+          - mono-plateau
+          - derailleur
+          - developpement
+          - ratio
+          - Shimano
+          - SRAM
+          - Campagnolo
+          - capteur puissance
+        triggers:
+          - Quel braquet pour le velo ?
+          - Compact ou standard ?
+          - Mono-plateau gravel VTT
+          - Choisir sa cassette
+          - Transmission velo
+        connects_to:
+          - cyclisme-technique/cadence-developpement
+          - cyclisme-equipement/cadres-geometries
+          - cyclisme-equipement/capteurs-compteurs
+        applies_when: equipment | purchase | drivetrain
+
+      - id: cyclisme-equipement/roues-pneumatiques
+        name: Roues et pneumatiques (aero, tubeless, pression)
+        lines:
+          layer1: 58-60
+          layer2: 61-73
+          layer3: 74-80
+        keywords:
+          - roues velo
+          - jantes
+          - pneumatiques
+          - pneus
+          - tubeless
+          - pression pneus
+          - resistance roulement
+          - CRR
+          - aerodynamisme roues
+          - jantes hautes
+          - jantes basses
+          - largeur pneu
+          - inserts
+          - CushCore
+          - moment inertie
+        triggers:
+          - Quelles roues velo choisir ?
+          - Pneu tubeless velo
+          - Pression pneu velo
+          - Resistance roulement
+          - Roues aerodynamiques ou legeres ?
+          - Largeur pneu route gravel VTT
+        connects_to:
+          - cyclisme-equipement/cadres-geometries
+          - cyclisme-equipement/transmissions-braquets
+          - cyclisme-technique/virage-pilotage
+        applies_when: equipment | purchase | wheels
+
+      - id: cyclisme-equipement/capteurs-compteurs
+        name: Capteurs et compteurs (GPS, puissance, cardio, radar)
+        lines:
+          layer1: 83-85
+          layer2: 86-98
+          layer3: 99-107
+        keywords:
+          - compteur GPS
+          - Garmin Edge
+          - Wahoo ELEMNT
+          - Hammerhead Karoo
+          - capteur puissance
+          - ceinture cardiaque
+          - cardio
+          - radar Varia
+          - capteur cadence
+          - capteur vitesse
+          - pedales puissance
+          - Favero Assioma
+          - SRM
+          - precision
+          - capteur optique
+        triggers:
+          - Quel compteur velo choisir ?
+          - Capteur puissance velo
+          - Garmin ou Wahoo ?
+          - Radar Varia velo
+          - Comment utiliser un capteur de puissance
+          - Ceinture cardiaque ou montre ?
+        connects_to:
+          - cyclisme-puissance/ftp-zones-coggan
+          - planification/gestion-charge
+          - materiel/analyse-donnees-training
+          - recuperation/outils-monitoring
+        applies_when: equipment | monitoring | purchase
+
+      - id: cyclisme-equipement/vetements-cyclisme
+        name: Vetements cyclisme (cuissard, maillot, aero, protection)
+        lines:
+          layer1: 110-112
+          layer2: 113-123
+          layer3: 124-128
+        keywords:
+          - cuissard
+          - peau de chamois
+          - maillot cyclisme
+          - aerodynamisme textile
+          - layering
+          - coupe-vent
+          - thermoregulation
+          - gants cyclisme
+          - surchaussures
+          - manchons
+          - vetement technique
+          - CLM combinaison
+          - impermeable
+        triggers:
+          - Comment s habiller pour le velo ?
+          - Quel cuissard choisir ?
+          - Vetement cyclisme hiver
+          - Tenue cyclisme aerodynamique
+          - S habiller pour sortie velo
+        connects_to:
+          - environnement/froid
+          - environnement/pluie-vent-securite
+          - cyclisme-equipement/cadres-geometries
+        applies_when: equipment | clothing | weather
+
+      - id: cyclisme-equipement/specificites-gravel-equipement
+        name: Specificites Gravel (bikepacking, cintres evases, autonomie)
+        lines:
+          layer1: 131-133
+          layer2: 134-141
+          layer3: 142-146
+        keywords:
+          - gravel equipement
+          - bikepacking
+          - sacoches
+          - cintres evases
+          - flared drops
+          - pneus gravel
+          - semi-slick
+          - tubeless gravel
+          - porte-bidons
+          - kit reparation
+          - autonomie
+          - multi-outils
+          - navigation gravel
+        triggers:
+          - Quel equipement gravel ?
+          - Bikepacking materiel
+          - Cintres evases gravel
+          - Pneus gravel polyvalents
+          - Kit reparation gravel
+        connects_to:
+          - cyclisme-equipement/roues-pneumatiques
+          - cyclisme-equipement/transmissions-braquets
+          - cyclisme-tactique/specificites-gravel
+        applies_when: equipment | gravel | bikepacking
+
+  cyclisme-securite-circulation:
+    name: Cyclisme - Securite et circulation
+    file: cyclisme-securite-circulation.md
+    total_lines: 179
+    description: Securite routiere, code de la route cycliste, equipement securite, cohabitation, prevention accidents
+    concepts:
+      - id: cyclisme-securite/securite-routiere
+        name: Securite routiere (position, angles morts, intersections)
+        lines:
+          layer1: 7-9
+          layer2: 10-24
+          layer3: 25-29
+        keywords:
+          - securite routiere
+          - position chaussee
+          - angle mort
+          - intersection
+          - rond-point
+          - portiere
+          - depassement
+          - visibilite
+          - anticipation
+          - conduite defensive
+          - risk homeostasis
+          - accident velo
+        triggers:
+          - Comment rouler en securite a velo ?
+          - Position sur la route velo
+          - Angle mort velo
+          - Rond-point velo
+          - Portiere velo securite
+          - Depassement securite velo
+        connects_to:
+          - cyclisme-securite/code-route-cycliste
+          - cyclisme-securite/equipement-securite
+          - environnement/pluie-vent-securite
+        applies_when: safety | road | urban
+
+      - id: cyclisme-securite/code-route-cycliste
+        name: Code de la route cycliste (obligations, priorites, sanctions)
+        lines:
+          layer1: 32-34
+          layer2: 35-51
+          layer3: 52-54
+        keywords:
+          - code route
+          - obligation cycliste
+          - casque
+          - eclairage
+          - catadioptres
+          - gilet retroreflechissant
+          - sas velo
+          - double sens cyclable
+          - zone rencontre
+          - voie verte
+          - alcool velo
+          - telephone velo
+          - amende velo
+        triggers:
+          - Regles du code route pour velo
+          - Obligations legales velo
+          - Sas velo fonctionnement
+          - Double sens cyclable
+          - Amende velo
+          - Gilet retroreflechissant obligatoire
+        connects_to:
+          - cyclisme-securite/securite-routiere
+          - cyclisme-securite/equipement-securite
+          - cyclisme-securite/accidents-prevention
+        applies_when: safety | legal | urban
+
+      - id: cyclisme-securite/equipement-securite
+        name: Equipement de securite (casque, eclairage, visibilite)
+        lines:
+          layer1: 57-59
+          layer2: 60-72
+          layer3: 73-77
+        keywords:
+          - casque velo
+          - MIPS
+          - eclairage velo
+          - lumens
+          - visibilite
+          - gilet jaune
+          - retroreflechissant
+          - eclairage jour
+          - radar Varia
+          - camera velo
+          - norme casque
+          - eclair cycliste
+        triggers:
+          - Quel casque velo choisir ?
+          - Eclairage velo nuit jour
+          - MIPS casque velo
+          - Visibilite cycliste
+          - Gilet jaune velo
+          - Equipement securite velo
+        connects_to:
+          - cyclisme-securite/securite-routiere
+          - cyclisme-securite/accidents-prevention
+          - environnement/pluie-vent-securite
+        applies_when: safety | equipment | visibility
+
+      - id: cyclisme-securite/cohabitation
+        name: Cohabitation (groupes, pietons, VAE, autres usagers)
+        lines:
+          layer1: 80-82
+          layer2: 83-97
+          layer3: 98-102
+        keywords:
+          - groupe cycliste
+          - peloton
+          - VAE
+          - velo electrique
+          - pieton
+          - voie verte
+          - sonnette
+          - cohabitation
+          - signalisation groupe
+          - relais
+          - cycliste urbain
+        triggers:
+          - Rouler en groupe velo
+          - Signaux groupe cycliste
+          - VAE et cyclistes
+          - Cohabitation velo pieton
+          - Voie verte velo
+        connects_to:
+          - cyclisme-securite/securite-routiere
+          - cyclisme-securite/code-route-cycliste
+          - cyclisme-tactique/gestion-effort-cyclosportive
+        applies_when: safety | group | urban
+
+      - id: cyclisme-securite/accidents-prevention
+        name: Accidents et prevention (statistiques, causes, comportements)
+        lines:
+          layer1: 105-107
+          layer2: 108-128
+          layer3: 129-133
+        keywords:
+          - accident velo
+          - statistiques
+          - ONISR
+          - cause accident
+          - prevention
+          - Vision Zero
+          - quasi-accident
+          - portiere
+          - angle mort poids lourd
+          - infrastructure cyclable
+          - piste cyclable securite
+          - vitesse
+        triggers:
+          - Statistiques accidents velo
+          - Causes accidents cyclistes
+          - Prevention accident velo
+          - Les endroits les plus dangereux a velo
+          - Quasi-accident velo
+        connects_to:
+          - cyclisme-securite/securite-routiere
+          - cyclisme-securite/equipement-securite
+          - blessures/cyclisme
+        applies_when: safety | statistics | prevention
+
+  cyclisme-tactique-strategie:
+    name: Cyclisme - Tactique et strategie
+    file: cyclisme-tactique-strategie.md
+    total_lines: 176
+    description: Gestion effort cyclosportive, tactique course, vent-abri, solo vs groupe, specificites gravel/VTT
+    concepts:
+      - id: cyclisme-tactique/gestion-effort-cyclosportive
+        name: Gestion d effort en cyclosportive (pacing, ravitaillement, peloton)
+        lines:
+          layer1: 7-9
+          layer2: 10-21
+          layer3: 22-26
+        keywords:
+          - cyclosportive
+          - pacing
+          - gestion effort
+          - ravitaillement
+          - ravito
+          - peloton
+          - IF
+          - W'bal
+          - cout acceleration
+          - nutrition course
+          - TSS course
+          - depart peloton
+        triggers:
+          - Comment gerer son effort en cyclosportive ?
+          - Strategie cyclosportive
+          - Pacing velo
+          - Ravitaillement cyclosportive
+          - Comment finir une cyclosportive
+          - Depart cyclosportive trop vite
+        connects_to:
+          - cyclisme-puissance/ftp-zones-coggan
+          - cyclisme-tactique/tactique-course
+          - cyclisme-tactique/vent-abri-drafting
+          - gestion-course/ravitaillement-course
+          - planification/tapering-pic-forme
+          - nutrition/glucides-timing
+        applies_when: competition | race-strategy | cyclosportive
+
+      - id: cyclisme-tactique/tactique-course
+        name: Tactique de course (echappee, poursuite, placement, lecture)
+        lines:
+          layer1: 29-31
+          layer2: 32-47
+          layer3: 48-52
+        keywords:
+          - tactique course
+          - echappee
+          - poursuite
+          - placement
+          - peloton course
+          - relais
+          - W'bal course
+          - attaque
+          - point chaud
+          - moto course
+          - strategie collective
+          - moment attaque
+        triggers:
+          - Tactique cyclisme course
+          - Comment faire une echappee ?
+          - Placement peloton course
+          - Quand attaquer a velo ?
+          - Strategie course route
+        connects_to:
+          - cyclisme-tactique/gestion-effort-cyclosportive
+          - cyclisme-tactique/vent-abri-drafting
+          - cyclisme-tactique/solo-vs-groupe
+          - cyclisme-puissance/ftp-zones-coggan
+        applies_when: competition | race-tactics | advanced
+
+      - id: cyclisme-tactique/vent-abri-drafting
+        name: Gestion du vent et de l abri (echelons, bordures, drafting)
+        lines:
+          layer1: 55-57
+          layer2: 58-70
+          layer3: 71-75
+        keywords:
+          - drafting
+          - aspiration
+          - vent
+          - echelon
+          - bordure
+          - crosswind
+          - abri aerodynamique
+          - economie vent
+          - rotation
+          - economie energie
+          - vent de cote
+          - soufflerie
+        triggers:
+          - Rouler dans le vent velo
+          - Drafting velo economie energie
+          - Echelon velo
+          - Bordure velo
+          - Vent de cote velo
+          - Comment economiser de l energie dans le peloton
+        connects_to:
+          - cyclisme-tactique/gestion-effort-cyclosportive
+          - cyclisme-tactique/tactique-course
+          - cyclisme-tactique/solo-vs-groupe
+          - cyclisme-technique/position-bike-fit
+        applies_when: race-strategy | group-riding | aerodynamics
+
+      - id: cyclisme-tactique/solo-vs-groupe
+        name: Faire le trou - seul vs en groupe (aero, psychologie, effort)
+        lines:
+          layer1: 78-80
+          layer2: 81-88
+          layer3: 89-93
+        keywords:
+          - solo velo
+          - groupe velo
+          - cout solitaire
+          - economie groupe
+          - facteur psychologique
+          - echappee solo
+          - groupe restreint
+          - modele puissance critique
+          - CP groupe
+          - CP solo
+        triggers:
+          - Partir seul a velo ou en groupe ?
+          - Cout energetique solo vs groupe
+          - Echappee seul vs groupe
+          - Mieux seul ou en groupe cyclosportive
+        connects_to:
+          - cyclisme-tactique/vent-abri-drafting
+          - cyclisme-tactique/tactique-course
+          - cyclisme-tactique/gestion-effort-cyclosportive
+          - cyclisme-puissance/ftp-zones-coggan
+        applies_when: race-strategy | group-riding | mental
+
+      - id: cyclisme-tactique/specificites-gravel
+        name: Specificites Gravel (autonomie, navigation, imprevus mecaniques)
+        lines:
+          layer1: 96-98
+          layer2: 99-105
+          layer3: 106-108
+        keywords:
+          - gravel tactique
+          - autonomie gravel
+          - navigation gravel
+          - imprevu mecanique
+          - crevaison
+          - ravitaillement gravel
+          - ultra-endurance
+          - gestion incertitude
+          - filtre a eau
+          - kit reparation
+          - planification gravel
+        triggers:
+          - Strategie course gravel
+          - Autonomie gravel
+          - Navigation velo gravel
+          - Imprevus mecaniques gravel
+          - Ravitaillement gravel
+        connects_to:
+          - cyclisme-tactique/specificites-vtt
+          - cyclisme-equipement/specificites-gravel-equipement
+          - cyclisme-tactique/gestion-effort-cyclosportive
+          - cyclisme-entrainement/specificites-disciplines
+        applies_when: gravel | navigation | self-sufficiency
+
+      - id: cyclisme-tactique/specificites-vtt
+        name: Specificites VTT (lecture terrain, trajectoires, depassement)
+        lines:
+          layer1: 111-113
+          layer2: 114-124
+          layer3: 125-129
+        keywords:
+          - VTT tactique
+          - lecture terrain
+          - trajectoire VTT
+          - descente VTT
+          - montee technique
+          - bunny hop
+          - manual
+          - depassement VTT
+          - position attack
+          - centre gravite
+          - contraction excentrique
+          - singletrack
+        triggers:
+          - Technique VTT descente
+          - Lecture terrain VTT
+          - Comment depasser en VTT
+          - Trajectoires VTT
+          - Pilotage VTT debutant
+          - Position attack VTT
+        connects_to:
+          - cyclisme-technique/virage-pilotage
+          - cyclisme-technique/specificites-disciplines
+          - cyclisme-entrainement/specificites-disciplines
+        applies_when: off-road | technique | mountain-bike
+
+  cyclisme-entrainement-specifique:
+    name: Cyclisme - Entrainement specifique
+    file: cyclisme-entrainement-specifique.md
+    total_lines: 189
+    description: Planification, seances cles, home-trainer, entrainement croise, recuperation, specificites par discipline
+    concepts:
+      - id: cyclisme-entrainement/planification-cyclisme
+        name: Planification cyclisme (periodisation, surcompensation specifique)
+        lines:
+          layer1: 7-9
+          layer2: 10-20
+          layer3: 21-25
+        keywords:
+          - planification cyclisme
+          - periodisation
+          - preparation generale
+          - preparation specifique
+          - saison cyclisme
+          - microcycle
+          - mesocycle
+          - surcompensation
+          - ACWR
+          - CTL ATL TSB
+          - bloc entrainement
+          - volume intensite
+          - polarise 80 20
+        triggers:
+          - Comment planifier sa saison velo ?
+          - Periodisation cyclisme
+          - Preparation cyclosportive
+          - Plan entrainement annuel velo
+          - ACWR cyclisme
+        connects_to:
+          - cyclisme-entrainement/seances-cles
+          - cyclisme-puissance/ftp-zones-coggan
+          - planification/modeles-periodisation
+          - planification/gestion-charge
+        applies_when: planning | season-start | periodization
+
+      - id: cyclisme-entrainement/seances-cles
+        name: Seances cles (SST, threshold, VO2max, sprints, endurance)
+        lines:
+          layer1: 28-30
+          layer2: 31-45
+          layer3: 46-50
+        keywords:
+          - seance velo
+          - sweet spot
+          - SST
+          - seuil
+          - threshold
+          - VO2max
+          - sprint
+          - endurance fondamentale
+          - cotes
+          - intervalle velo
+          - protocole entrainement
+          - distribution intensite
+          - entrainement polarise
+        triggers:
+          - Seance velo sweet spot
+          - Entrainement seuil velo
+          - Intervalles VO2max velo
+          - Seance cote velo
+          - Seance sprint velo
+          - Types de seances cyclisme
+        connects_to:
+          - cyclisme-entrainement/planification-cyclisme
+          - cyclisme-entrainement/home-trainer-indoor
+          - cyclisme-puissance/ftp-zones-coggan
+          - seances/travail-seuil
+          - seances/intervalles-haute-intensite
+          - norvegienne/modele-polarise-80-20
+        applies_when: session-planning | performance | training
+
+      - id: cyclisme-entrainement/home-trainer-indoor
+        name: Home-trainer et entrainement indoor (Zwift, ERG mode)
+        lines:
+          layer1: 53-55
+          layer2: 56-73
+          layer3: 74-78
+        keywords:
+          - home-trainer
+          - rouleaux
+          - direct drive
+          - Zwift
+          - TrainerRoad
+          - Rouvy
+          - ERG mode
+          - entrainement indoor
+          - smart trainer
+          - Wahoo KICKR
+          - Tacx Neo
+          - ventilation indoor
+          - thermoregulation indoor
+        triggers:
+          - Quel home-trainer choisir ?
+          - Zwift entrainement
+          - ERG mode c est quoi ?
+          - Entrainement indoor velo
+          - Home-trainer rouleaux ou direct drive
+          - Seance home-trainer
+        connects_to:
+          - cyclisme-entrainement/seances-cles
+          - cyclisme-entrainement/entrainement-croise-cycliste
+          - materiel/home-trainers
+          - environnement/pluie-vent-securite
+        applies_when: indoor | equipment | training
+
+      - id: cyclisme-entrainement/entrainement-croise-cycliste
+        name: Entrainement croise pour cycliste (course, PPG, ski de fond)
+        lines:
+          layer1: 81-83
+          layer2: 84-97
+          layer3: 98-102
+        keywords:
+          - entrainement croise
+          - course a pied cycliste
+          - PPG cycliste
+          - prepa physique generale
+          - renforcement cycliste
+          - ski de fond
+          - natation
+          - HIST
+          - concurrent training
+          - AMPK mTOR
+          - force cycliste
+          - gainage cycliste
+        triggers:
+          - Faut-il faire de la course a pied quand on est cycliste ?
+          - Musculation pour cycliste
+          - Entrainement croise velo
+          - PPG cycliste
+          - Ski de fond pour cycliste
+          - Renforcement musculaire cycliste
+        connects_to:
+          - cyclisme-entrainement/planification-cyclisme
+          - cyclisme-entrainement/recuperation-cyclisme
+          - entrainement-croise/renforcement-endurance
+          - force-pour-coureur/periodisation-force
+        applies_when: cross-training | strength | off-season
+
+      - id: cyclisme-entrainement/recuperation-cyclisme
+        name: Recuperation specifique cyclisme (jours off, Z1 active)
+        lines:
+          layer1: 105-107
+          layer2: 108-117
+          layer3: 118-122
+        keywords:
+          - recuperation cyclisme
+          - sortie Z1
+          - prologue
+          - rouleau recuperation
+          - sommeil cycliste
+          - nutrition recuperation
+          - etirements cycliste
+          - surentrainement
+          - jour off
+          - fenetre metabolique
+          - lait chocolat
+          - sieste
+        triggers:
+          - Recuperation velo
+          - Sortie recuperation Z1
+          - Jour off velo
+          - Nutrition recuperation cycliste
+          - Etirements pour cycliste
+          - Comment recuperer apres une sortie velo
+        connects_to:
+          - cyclisme-entrainement/planification-cyclisme
+          - recuperation/surcompensation-surentrainement
+          - recuperation/nutrition-recuperation
+          - recuperation/sommeil
+          - seances/recuperation-active
+        applies_when: recovery | post-ride | fatigue
+
+      - id: cyclisme-entrainement/specificites-disciplines
+        name: Specificites par discipline (volume route, intensite gravel, technique VTT)
+        lines:
+          layer1: 125-127
+          layer2: 128-132
+          layer3: 133-140
+        keywords:
+          - entrainement route
+          - entrainement gravel
+          - entrainement VTT
+          - volume cyclisme
+          - intensite cyclisme
+          - technique VTT
+          - puissance intermittente
+          - force excentrique
+          - CP route
+          - W' VTT
+          - proprioception
+          - charge neuromusculaire
+        triggers:
+          - Entrainement route vs VTT
+          - Comment s entrainer pour le gravel
+          - Entrainement specifique VTT
+          - Volume entrainement route
+          - Preparation VTT XC
+        connects_to:
+          - cyclisme-entrainement/planification-cyclisme
+          - cyclisme-entrainement/seances-cles
+          - cyclisme-technique/specificites-disciplines
+          - cyclisme-puissance/specificites-gravel-vtt
+        applies_when: discipline-specific | training | planning
+
+nouveaux_programmes:
+  programme-cyclosportive:
+    name: Programme cyclosportive (3 niveaux)
+    file: programme-cyclosportive.md
+    total_lines: 101
+    description: Programme 12-16 semaines pour cyclosportive 100-180 km — debutant (<6h), intermediaire (<5h), avance (<4h30)
+    keywords:
+      - programme cyclosportive
+      - plan entrainement cyclosportive
+      - preparation cyclosportive
+      - sortie longue velo
+      - sweet spot cyclisme
+      - entrainement route
+      - 100 km velo
+      - 180 km velo
+      - cyclosportive entrainement
+    triggers:
+      - Donne-moi un programme pour une cyclosportive
+      - Comment preparer une cyclosportive de 150 km
+      - Plan entrainement cyclosportive debutant/intermediaire/avance
+      - Quelles seances pour une cyclosportive
+      - Comment finir une cyclosportive de 100 km
+    connects_to:
+      - cyclisme-entrainement/planification-cyclisme
+      - cyclisme-entrainement/seances-cles
+      - cyclisme-tactique/gestion-effort-cyclosportive
+      - cyclisme-puissance/ftp-zones-coggan
+      - planification/tapering-pic-forme
+      - nutrition/glucides-timing
+    applies_when: program | cyclosportive | competition
+
+  programme-gravel:
+    name: Programme Gravel (3 niveaux)
+    file: programme-gravel.md
+    total_lines: 90
+    description: Programme 10-16 semaines pour Gravel 80-200 km mixte route/chemins — debutant (finir), intermediaire, avance
+    keywords:
+      - programme gravel
+      - plan entrainement gravel
+      - preparation gravel
+      - sortie longue gravel
+      - technique gravel
+      - gravel entrainement
+      - bikepacking entrainement
+    triggers:
+      - Donne-moi un programme pour le gravel
+      - Comment preparer une epreuve gravel
+      - Plan entrainement gravel debutant/intermediaire/avance
+      - Quelles seances pour le gravel
+      - Se preparer pour un gravel de 200 km
+    connects_to:
+      - cyclisme-entrainement/planification-cyclisme
+      - cyclisme-entrainement/specificites-disciplines
+      - cyclisme-equipement/specificites-gravel-equipement
+      - cyclisme-tactique/specificites-gravel
+      - planification/tapering-pic-forme
+    applies_when: program | gravel | off-road
+
+  programme-vtt-cross-country:
+    name: Programme VTT XC/XCM (3 niveaux)
+    file: programme-vtt-cross-country.md
+    total_lines: 94
+    description: Programme 12-16 semaines pour VTT XC/XCM 40-100 km — debutant (finir), intermediaire (podium local), avance (competition)
+    keywords:
+      - programme VTT
+      - plan entrainement VTT
+      - preparation cross-country
+      - XC VTT
+      - XCM VTT
+      - technique VTT entrainement
+      - puissance intermittente
+      - VTT competition
+    triggers:
+      - Donne-moi un programme pour le VTT
+      - Comment preparer une course VTT XC
+      - Plan entrainement VTT debutant/intermediaire/avance
+      - Quelles seances pour le VTT
+      - Preparation VTT cross-country
+      - Programme VTT 40 km 100 km
+    connects_to:
+      - cyclisme-entrainement/planification-cyclisme
+      - cyclisme-entrainement/specificites-disciplines
+      - cyclisme-entrainement/entrainement-croise-cycliste
+      - cyclisme-tactique/specificites-vtt
+      - cyclisme-technique/virage-pilotage
+      - planification/tapering-pic-forme
+    applies_when: program | mountain-bike | competition
+
+nouvelles_intent_rules:
+  cyclisme_technique_question:
+    description: L'utilisateur pose une question sur la technique de pedalage, la position ou le pilotage
+    concepts:
+      - cyclisme-technique/biomecanique-pedalage
+      - cyclisme-technique/position-bike-fit
+      - cyclisme-technique/cadence-developpement
+      - cyclisme-technique/virage-pilotage
+    priority: high
+  cyclisme_puissance_question:
+    description: L'utilisateur s'interroge sur le FTP, la puissance, les zones
+    concepts:
+      - cyclisme-puissance/ftp-zones-coggan
+      - cyclisme-puissance/courbe-puissance-profil
+      - cyclisme-puissance/wkg-performance
+      - materiel/capteurs-de-puissance
+    priority: high
+  cyclisme_equipement_question:
+    description: L'utilisateur demande des conseils sur le materiel velo
+    concepts:
+      - cyclisme-equipement/cadres-geometries
+      - cyclisme-equipement/transmissions-braquets
+      - cyclisme-equipement/capteurs-compteurs
+      - materiel/choisir-son-equipement
+    priority: medium
+  cyclisme_securite_question:
+    description: L'utilisateur pose une question sur la securite a velo
+    concepts:
+      - cyclisme-securite/securite-routiere
+      - cyclisme-securite/equipement-securite
+      - cyclisme-securite/code-route-cycliste
+      - blessures/cyclisme
+    priority: high
+  cyclisme_tactique_question:
+    description: L'utilisateur demande comment gerer une course ou une cyclosportive
+    concepts:
+      - cyclisme-tactique/gestion-effort-cyclosportive
+      - cyclisme-tactique/tactique-course
+      - cyclisme-tactique/vent-abri-drafting
+    priority: high
+  cyclisme_entrainement_question:
+    description: L'utilisateur veut structurer son entrainement velo
+    concepts:
+      - cyclisme-entrainement/planification-cyclisme
+      - cyclisme-entrainement/seances-cles
+      - cyclisme-entrainement/home-trainer-indoor
+      - planification/modeles-periodisation
+      - norvegienne/modele-polarise-80-20
+    priority: high
+  programme_cyclosportive:
+    description: L'utilisateur demande un programme d'entrainement cyclosportive
+    concepts:
+      - programme-cyclosportive
+      - cyclisme-entrainement/planification-cyclisme
+      - cyclisme-entrainement/seances-cles
+      - cyclisme-puissance/ftp-zones-coggan
+    priority: high
+  programme_gravel:
+    description: L'utilisateur demande un programme d'entrainement gravel
+    concepts:
+      - programme-gravel
+      - cyclisme-entrainement/planification-cyclisme
+      - cyclisme-entrainement/specificites-disciplines
+      - cyclisme-equipement/specificites-gravel-equipement
+    priority: high
+  programme_vtt:
+    description: L'utilisateur demande un programme d'entrainement VTT
+    concepts:
+      - programme-vtt-cross-country
+      - cyclisme-entrainement/planification-cyclisme
+      - cyclisme-entrainement/entrainement-croise-cycliste
+      - cyclisme-tactique/specificites-vtt
+    priority: high
+  douleur_cyclisme:
+    description: L'utilisateur signale une douleur liee au cyclisme
+    concepts:
+      - blessures/cyclisme
+      - cyclisme-technique/position-bike-fit
+      - cyclisme-equipement/cadres-geometries
+    priority: critical
+
+nouvelles_intent_blocks:
+  - group: cyclisme_power_training
+    description: Quand l'utilisateur veut structurer son entrainement puissance
+    concepts:
+      - cyclisme-puissance/ftp-zones-coggan
+      - cyclisme-entrainement/seances-cles
+      - cyclisme-entrainement/planification-cyclisme
+      - cyclisme-puissance/courbe-puissance-profil
+  - group: cyclisme_technique_complet
+    description: Quand l'utilisateur veut ameliorer sa technique cycliste
+    concepts:
+      - cyclisme-technique/biomecanique-pedalage
+      - cyclisme-technique/position-bike-fit
+      - cyclisme-technique/cadence-developpement
+      - cyclisme-technique/virage-pilotage
+  - group: cyclisme_equipement_complet
+    description: Quand l'utilisateur cherche du materiel velo
+    concepts:
+      - cyclisme-equipement/cadres-geometries
+      - cyclisme-equipement/roues-pneumatiques
+      - cyclisme-equipement/transmissions-braquets
+      - cyclisme-equipement/capteurs-compteurs
+  - group: cyclisme_course_strategie
+    description: Quand l'utilisateur prepare une course cycliste
+    concepts:
+      - cyclisme-tactique/gestion-effort-cyclosportive
+      - cyclisme-tactique/tactique-course
+      - cyclisme-tactique/vent-abri-drafting
+      - cyclisme-tactique/solo-vs-groupe
+      - planification/tapering-pic-forme
+
+cross_domain_overlaps:
+  - group: cyclisme_power_metabolisme
+    concepts:
+      - cyclisme-puissance/ftp-zones-coggan
+      - cyclisme-puissance/decouplage-aerobie
+      - cyclisme-entrainement/seances-cles
+      - planification/gestion-charge
+      - materiel/capteurs-de-puissance
+    description: Quand l'utilisateur s'interroge sur la puissance et l'entrainement cycliste
+  - group: cyclisme_technique_confort
+    concepts:
+      - cyclisme-technique/position-bike-fit
+      - cyclisme-equipement/cadres-geometries
+      - cyclisme-technique/biomecanique-pedalage
+      - blessures/cyclisme
+    description: Quand l'utilisateur a des douleurs ou veut optimiser son confort a velo
+  - group: cyclisme_preparation_course
+    concepts:
+      - programme-cyclosportive
+      - cyclisme-tactique/gestion-effort-cyclosportive
+      - cyclisme-puissance/ftp-zones-coggan
+      - nutrition/glucides-timing
+      - planification/tapering-pic-forme
+    description: Quand l'utilisateur prepare une cyclosportive ou une course route
+  - group: cyclisme_aventure_gravel
+    concepts:
+      - programme-gravel
+      - cyclisme-equipement/specificites-gravel-equipement
+      - cyclisme-tactique/specificites-gravel
+      - cyclisme-entrainement/specificites-disciplines
+      - cyclisme-technique/virage-pilotage
+    description: Quand l'utilisateur prepare une epreuve gravel ou bikepacking
