@@ -2,15 +2,22 @@ export interface User {
   id: string;
   email: string;
   first_name: string;
-  sports: string[];
-  level: 'débutant' | 'intermédiaire' | 'avancé';
-  goals: Record<string, unknown>;
-  health_data: Record<string, unknown>;
-  equipment: string[];
-  weekly_slots: WeeklySlot[];
+  sport: string;  // colonne DB : sport (singulier, ex: "course à pied")
+  level: number;  // SMALLINT en DB : 1 = débutant, 2 = intermédiaire, 3 = avancé
+  goal: string;
+  goals?: Record<string, unknown>;
+  health_data?: Record<string, unknown>;
+  equipment?: string;  // string JSON en DB
+  weekly_slots?: WeeklySlot[];
   onboarding_completed: boolean;
-  badge_count: number;
+  badge_count?: number;
   created_at: string;
+}
+
+/** Convertit un level SMALLINT (1-3) en libellé lisible. */
+export function levelLabel(level: number | null | undefined): string {
+  const map: Record<number, string> = { 1: 'Débutant', 2: 'Intermédiaire', 3: 'Avancé' };
+  return level ? map[level] || 'Inconnu' : 'Non renseigné';
 }
 
 export interface WeeklySlot {

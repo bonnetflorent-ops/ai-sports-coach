@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { User } from '@/types';
+import { User, levelLabel } from '@/types';
 import { BugReport } from './BugReport';
 
 export function ProfileView() {
@@ -57,31 +57,22 @@ export function ProfileView() {
         <CardContent className="space-y-3">
           <div className="flex items-center justify-between">
             <span className="text-sm text-slate-400">Sport</span>
-            <div className="flex gap-1">
-              {(user.sports || []).map((sport, idx) => (
-                <Badge key={idx} variant="secondary" className="text-xs">
-                  {sport}
-                </Badge>
-              ))}
-              {(!user.sports || user.sports.length === 0) && (
-                <span className="text-sm text-slate-500">Non renseigné</span>
-              )}
-            </div>
-          </div>
-          <Separator className="bg-slate-800" />
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-400">Niveau</span>
-            <span className="text-sm text-slate-50 font-medium capitalize">
-              {user.level || 'Non renseigné'}
+            <span className="text-sm text-slate-50">
+              {user.sport || 'Non renseigné'}
             </span>
           </div>
           <Separator className="bg-slate-800" />
           <div className="flex items-center justify-between">
-            <span className="text-sm text-slate-400">Objectifs</span>
+            <span className="text-sm text-slate-400">Niveau</span>
+            <span className="text-sm text-slate-50 font-medium">
+              {levelLabel(user.level)}
+            </span>
+          </div>
+          <Separator className="bg-slate-800" />
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-slate-400">Objectif</span>
             <span className="text-sm text-slate-50 max-w-[60%] text-right">
-              {user.goals && typeof user.goals === 'object' && Object.keys(user.goals).length > 0
-                ? JSON.stringify(user.goals)
-                : 'Non renseigné'}
+              {user.goal || 'Non renseigné'}
             </span>
           </div>
         </CardContent>
