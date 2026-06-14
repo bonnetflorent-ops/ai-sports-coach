@@ -66,7 +66,132 @@ La clairance du lactate post-exercice est significativement plus rapide en récu
 
 ***
 
-## Références
+### 1.5 activation-running
+
+#### Couche 1 (Débutant)
+Avant de partir courir, active tes muscles de course avec 3 exercices simples qui prennent 3 minutes chrono :
+- **Balancements de jambe** (10 par jambe, avant-arrière puis latéral) : tiens-toi à un arbre, laisse la jambe se balancer comme un pendule, sans forcer.
+- **Fentes marchées** (5 par jambe) : un grand pas avant, le genou arrière descend vers le sol, puis tu remontes. Ça active les fessiers et les hanches.
+- **Montées sur pointe de pied** (10-15 répétitions) : debout, monte sur la pointe des pieds, descends lentement. Ça réveille les mollets et le tendon d'Achille.
+
+Ajoute 2-3 « strides » (accélérations progressives sur 60 mètres) et tes jambes sauront qu'on va courir — plus de sensations de jambes « en bois » au début de la séance.
+
+#### Couche 2 (Intermédiaire)
+**Séquence d'activation spécifique course (7-10 min) :**
+1. **Mobilité hanche** (2 min) : balancements jambe tendue (10/jambe, avant/arrière + latéral), cercles de hanche (5/sens)
+2. **Activation fessiers** (2 min) : pont fessier unilatéral (8/jambe, 3s maintien haut), clamshell (10/côté avec bande élastique)
+3. **Drills dynamiques** (3 min) : 2 × 20m de chaque — montées genoux, talons-fesses, skipping, pas chassés
+4. **Strides** (3-4 × 60-80m progressifs) : montée progressive jusqu'à 85 % de la vitesse max, retour marché
+
+**Critère de qualité :** après cette activation, la sensation de lourdeur doit avoir disparu. Si les jambes sont encore lourdes, c'est un signal de fatigue résiduelle — adapter la séance (réduire l'intensité ou le volume).
+
+#### Couche 3 (Expert)
+**Post-Activation Potentiation (PAP) pour la course :** la PAP est le mécanisme par lequel une contraction musculaire préalable améliore transitoirement la production de force. Pour le coureur, les strides à 80-90 % d'intensité exploitent cette fenêtre : augmentation de la sensibilité au Ca²⁺ du réticulum sarcoplasmique et phosphorylation des chaînes légères de myosine (MLC). La fenêtre optimale PAP est de 5-15 min après l'activation — d'où l'importance de ne pas terminer l'échauffement trop tôt avant la séance.
+
+**Coordination intermusculaire et drills dynamiques :** les drills (montées genoux, talons-fesses, skipping) activent les circuits de coordination spécifiques à la foulée via les CPG spinaux. L'effet est une amélioration transitoire du timing d'activation musculaire (EMG) qui persiste 20-30 min.
+
+---
+
+### 1.6 routine-pre-competition
+
+#### Couche 1 (Débutant)
+La routine d'avant-course est ton « sas de décompression mentale ». Elle doit être RODÉE à l'entraînement, JAMAIS improvisée le jour J. Les 3 piliers :
+- **Manger** 2-3h avant (banane, pain miel, barre — ce que tu DIGÈRES bien, testé avant)
+- **Boire** régulièrement mais sans excès (500-750 ml répartis sur les 2h avant)
+- **S'échauffer** comme d'habitude — surtout, ne pas en faire PLUS que d'habitude « pour être sûr »
+
+#### Couche 2 (Intermédiaire)
+**Timeline pré-compétition standard (course sur route) :**
+- **J-2 à J-1** : hydratation renforcée, repas riche en glucides la veille au soir
+- **J-0, 3h avant** : dernier repas solide (glucides à IG bas-moyen, faible en fibres et lipides)
+- **J-0, 2h avant** : début hydratation fractionnée (150-200 ml toutes les 30 min)
+- **J-0, 45-60 min avant** : échauffement début (footing 10 min + drills + strides)
+- **J-0, 15-20 min avant** : fin échauffement, rester au chaud (survêtement), dernier passage aux toilettes
+- **J-0, 5 min avant** : strides de rappel (2 × 30m), se placer dans le sas
+
+**Adaptation selon la distance :**
+- **5-10 km** : échauffement long (25-35 min), incluant 2-3 blocs à allure course
+- **Semi-marathon** : échauffement modéré (15-20 min), strides seulement
+- **Marathon** : échauffement minimal (5-10 min footing très lent + 2-3 strides). Les premiers kilomètres servent d'échauffement.
+
+#### Couche 3 (Expert)
+**Thermorégulation pré-compétition :** maintenir la température musculaire entre la fin d'échauffement et le départ est critique. Utiliser des vêtements chauds (survêtement, gants, bonnet par temps froid) et limiter le temps statique. Le refroidissement musculaire suit une cinétique exponentielle avec une demi-vie de ~15-20 min selon les conditions. Par temps chaud (>25°C), l'échauffement doit être raccourci et inclure des stratégies de pré-cooling (serviette glacée sur la nuque, boisson froide).
+
+**Fenêtre nutritionnelle pré-départ :** 30-45 min avant le départ, un gel ou une boisson glucidique (30-60g glucides, sans nouveaux produits non testés) peut être pris. Éviter tout apport solide après H-60 min (risque de gastroparésie).
+
+---
+
+### 1.7 retour-au-calme-running
+
+#### Couche 1 (Débutant)
+Après ta course, fais 2 choses simples :
+1. **Marche 5-10 minutes** — ne t'arrête pas net. Marche, respire profondément, laisse ton cœur redescendre.
+2. **Étirements doux** au sol (quadriceps, ischios, mollets, dos, hanches) — 20-30 secondes par muscle, sans douleur.
+
+C'est tout. Pas besoin de protocole compliqué. La régularité du retour au calme (chaque séance) compte plus que sa sophistication.
+
+#### Couche 2 (Intermédiaire)
+**Retour au calme structuré pour coureur (15-20 min) :**
+1. **Course très lente ou marche rapide (5-10 min)** : RPE 1-2/10, allure « conversation confortable ». Objectif : clairance lactate active et retour veineux.
+2. **Étirements au sol (5-10 min)** : priorité aux quadriceps, ischio-jambiers, mollets, fléchisseurs de hanche, fessiers. 30-45s par groupe, 2×.
+3. **Optionnel — jambes surélevées (5 min)** : allongé, jambes contre un mur, facilite le drainage veineux.
+
+**Post-séance intense (VMA, seuil, compétition) :** ajouter 10-15 min de vélo très léger (petit développement, zone 1) pour la clairance active sans impact. Le pool running (course en eau profonde avec ceinture) est une excellente alternative pour les jambes lourdes.
+
+#### Couche 3 (Expert)
+**Cinétique de la récupération et retour au calme actif :** la clairance du lactate est 2-3× plus rapide en récupération active (30-40 % VO₂max) vs passive. Le mécanisme principal est l'oxydation directe du lactate par les muscles actifs (lactate shuttle via MCT1), pas la néoglucogenèse hépatique. Pour le coureur, la marche rapide ou le footing très lent optimisent ce processus sans générer de fatigue supplémentaire.
+
+**Fenêtre anabolique et timing post-effort :** la bascule parasympathique post-exercice initie les processus de récupération. La récupération active légère accélère la décroissance du cortisol post-exercice, favorisant le ratio testostérone/cortisol pendant la fenêtre de sommeil suivante. Un retour au calme bien conduit améliore la qualité du sommeil de récupération.
+
+---
+
+## 2. Méthodologies et Chercheurs Clés
+
+| Modèle / Approche | Chercheur(s) | Contribution | Référence |
+|---|---|---|---|
+| Warm-up mechanisms | Bishop D | Revue exhaustive en 2 parties des mécanismes et applications de l'échauffement | Sports Med 2003 |
+| Warm-up strategies | McGowan CJ, Pyne DB et al. | Synthèse moderne des stratégies d'échauffement | Sports Med 2015 |
+| Post-Activation Potentiation | Sale DG | Mécanismes de la PAP : Ca²⁺ et phosphorylation MLC | Can J Appl Physiol 2002 |
+| Stretching and performance | Behm DG, Chaouachi A | Effets aigus des étirements statiques/dynamiques | Eur J Appl Physiol 2011 |
+| Dynamic vs static stretching | Opplert J, Babault N | Revue des effets aigus des étirements | Sports Med 2018 |
+| Cool-down review | Van Hooren B, Peake JM | Faut-il un retour au calme ? Revue narrative | Sports Med 2018 |
+
+## 3. Métriques et Outils (Niveau Pro)
+
+| Métrique | Mesure | Usage |
+|---|---|---|
+| Qualité échauffement | RPE en fin d'échauffement (cible: 3-4/10) | Subjectif, chaque séance |
+| FC en fin d'échauffement | % FCmax (cible: 60-70 %) | Montre cardio |
+| Performance strides | Vitesse max strides vs référence | Montre GPS |
+| Qualité retour au calme | FC à 2 min post-effort (% FCmax, cible <60 %) | Montre cardio |
+| HRV post-exercice | RMSSD matinale J+1 vs baseline | App HRV (HRV4Training) |
+
+## 4. Mythes et Erreurs Classiques
+
+### « Plus l'échauffement est long, mieux c'est »
+**FAUX.** Au-delà de 20-25 min, la déplétion glycogénique et l'hyperthermie compensatoire peuvent dégrader la performance. L'échauffement doit être proportionnel à l'intensité de la séance : long pour une VMA courte, court pour une sortie longue.
+
+### « Les étirements statiques avant de courir préviennent les blessures »
+**MYTHE.** Les étirements statiques prolongés (>60s) avant l'effort réduisent la force (5-10 %) et n'ont pas démontré de réduction des blessures. Les étirements dynamiques (balancements, drills) sont à privilégier avant la course.
+
+### « Pas besoin d'échauffement pour une sortie facile »
+**PARTIELLEMENT FAUX.** Même pour une sortie en endurance fondamentale, les 5-10 premières minutes doivent être plus lentes — c'est un échauffement « intégré ». Commencer directement à l'allure cible sans transition impose un stress inutile.
+
+### « Le retour au calme est optionnel si je suis pressé »
+**MYTHE.** Le retour au calme fait partie intégrante de la séance. Un retour au calme sauté retarde la bascule parasympathique et la phase de récupération précoce. Si vraiment pressé, fais au moins 3-5 minutes de marche.
+
+## 5. Bibliographie Scientifique
+
+| # | Auteurs | Année | Titre | Revue | DOI |
+|---|---------|-------|-------|-------|-----|
+| 1 | Bishop D | 2003 | Warm Up I: Potential mechanisms and the effects of passive warm up | Sports Med | 10.2165/00007256-200333050-00004 |
+| 2 | Bishop D | 2003 | Warm Up II: Performance changes following active warm up | Sports Med | 10.2165/00007256-200333070-00003 |
+| 3 | McGowan CJ, Pyne DB, Thompson KG, Rattray B | 2015 | Warm-up strategies for sport and exercise | Sports Med | 10.1007/s40279-015-0376-x |
+| 4 | Behm DG, Chaouachi A | 2011 | Acute effects of static and dynamic stretching on performance | Eur J Appl Physiol | 10.1007/s00421-011-1879-2 |
+| 5 | Opplert J, Babault N | 2018 | Acute effects of dynamic stretching on muscle flexibility and performance | Sports Med | 10.1007/s40279-017-0797-3 |
+| 6 | Van Hooren B, Peake JM | 2018 | Do we need a cool-down after exercise? | Sports Med | 10.1007/s40279-018-0916-2 |
+| 7 | Fradkin AJ, Zazryn TR, Smoliga JM | 2010 | Effects of warming-up on physical performance | J Sci Med Sport | 10.1016/j.jsams.2009.08.005 |
+| 8 | Racinais S et al. | 2015 | Consensus recommendations on training and competing in the heat | Sports Med | 10.1007/s40279-015-0375-0 |
 
 [^1]: Bishop D. (2003). Warm Up I: Potential mechanisms and the effects of passive warm up on exercise performance. *Sports Medicine*, 33(5), 341-371. doi:10.2165/00007256-200333050-00004
 

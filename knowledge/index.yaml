@@ -1,7 +1,7 @@
 version: '2.2'
 generated: '2026-06-14'
-total_concepts: 64
-total_domains: 14
+total_concepts: 79
+total_domains: 16
 intent_rules:
   echauffement_question:
     description: L'utilisateur pose une question sur l'échauffement
@@ -1196,15 +1196,15 @@ domains:
   echauffement:
     name: Échauffement & Retour au calme
     file: echauffement-retour-au-calme.md
-    total_lines: 77
-    description: Pourquoi et comment s'échauffer, routines par sport, étirements et retour au calme
+    total_lines: 202
+    description: Pourquoi et comment s'échauffer, routines par sport, étirements, activation running, pré-compétition, retour au calme
     concepts:
     - id: echauffement/principes-generaux
       name: 'Pourquoi s''échauffer : principes physiologiques'
       lines:
         layer1: 7-10
         layer2: 11-14
-        layer3: 15-18
+        layer3: 15-19
       keywords:
       - échauffement
       - warm-up
@@ -1229,7 +1229,7 @@ domains:
       lines:
         layer1: 23-26
         layer2: 27-30
-        layer3: 31-34
+        layer3: 31-35
       keywords:
       - routine échauffement
       - vélo
@@ -1253,7 +1253,7 @@ domains:
       lines:
         layer1: 39-42
         layer2: 43-46
-        layer3: 47-50
+        layer3: 47-51
       keywords:
       - étirements
       - stretching
@@ -1278,7 +1278,7 @@ domains:
       lines:
         layer1: 55-58
         layer2: 59-62
-        layer3: 63-66
+        layer3: 63-67
       keywords:
       - retour au calme
       - cool down
@@ -1294,6 +1294,75 @@ domains:
       - recuperation/surcompensation-surentrainement
       - echauffement/etirements-et-mobilite
       applies_when: post-workout | daily
+    - id: echauffement/activation-running
+      name: 'Activation neuromusculaire spécifique course à pied'
+      lines:
+        layer1: 71-78
+        layer2: 79-87
+        layer3: 88-93
+      keywords:
+      - activation
+      - strides
+      - fessiers
+      - gainage
+      - mobilité hanche
+      - drills
+      - montées genoux
+      triggers:
+      - Comment activer mes muscles avant de courir ?
+      - J'ai les jambes lourdes au début
+      - Exercices activation course à pied
+      connects_to:
+      - echauffement/principes-generaux
+      - techniques-drills/gammes-echauffement
+      - biomecanique/cinematique-foulee
+      applies_when: pre-workout | running | activation
+    - id: echauffement/routine-pre-competition
+      name: 'Routine pré-compétition (timeline et nutrition)'
+      lines:
+        layer1: 97-102
+        layer2: 103-116
+        layer3: 117-122
+      keywords:
+      - compétition
+      - course
+      - départ
+      - avant-course
+      - nutrition pré-course
+      - hydratation
+      - sas
+      triggers:
+      - Comment se préparer le jour de la course ?
+      - Que faire avant une compétition ?
+      - Routine matin de course
+      connects_to:
+      - echauffement/principes-generaux
+      - nutrition/glucides-timing
+      - nutrition/hydratation-electrolytes
+      - gestion-course/general
+      applies_when: competition | race-day
+    - id: echauffement/retour-au-calme-running
+      name: 'Retour au calme spécifique course à pied'
+      lines:
+        layer1: 126-132
+        layer2: 133-140
+        layer3: 141-148
+      keywords:
+      - retour au calme
+      - récupération
+      - footing lent
+      - étirements
+      - drainage
+      - jambes lourdes
+      triggers:
+      - Que faire après avoir couru ?
+      - Comment récupérer après une séance ?
+      - Retour au calme course à pied
+      connects_to:
+      - echauffement/retour-au-calme
+      - recuperation/surcompensation-surentrainement
+      - recuperation/nutrition-recuperation
+      applies_when: post-workout | running | recovery
   environnement:
     name: Environnement & Conditions
     file: environnement-et-conditions.md
@@ -2066,6 +2135,295 @@ domains:
       - blessures/running
       applies_when: technique | personalization | beginner reassurance
       notes: Contre la tyrannie de la "foulée parfaite" — rassurer et individualiser
+  techniques-drills:
+    name: Techniques, drills et éducatifs de course à pied
+    file: techniques-drills-course.md
+    total_lines: 322
+    description: Éducatifs, gammes, côtes, respiration, analyse vidéo
+    concepts:
+    - id: techniques-drills/gammes-echauffement
+      name: Gammes d'échauffement dynamique (montées genoux, talons-fesses, pas de l'oie)
+      lines:
+        layer1: 7-14
+        layer2: 15-32
+        layer3: 33-51
+      keywords:
+      - gammes
+      - échauffement dynamique
+      - montées genoux
+      - talons-fesses
+      - pas de l'oie
+      - pas chassés
+      - activation
+      - drills
+      triggers:
+      - Comment m'échauffer avant de courir ?
+      - Quels exercices faire avant une séance ?
+      - Comment activer mes muscles ?
+      connects_to:
+      - echauffement/principes-generaux
+      - echauffement/activation-running
+      - biomecanique/cinematique-foulee
+      applies_when: warm-up | technique | beginner
+      notes: Base de toute séance de qualité — 5-7 min suffisent
+    - id: techniques-drills/educatifs-techniques
+      name: Éducatifs techniques (skipping, griffé, bondissements)
+      lines:
+        layer1: 53-60
+        layer2: 61-80
+        layer3: 81-94
+      keywords:
+      - skipping
+      - griffé
+      - bondissements
+      - éducatifs
+      - A-skip
+      - B-skip
+      - foulées bondissantes
+      - technique de course
+      triggers:
+      - Quels éducatifs pour améliorer ma foulée ?
+      - Comment faire du skipping correctement ?
+      - Exercices pour mieux courir
+      connects_to:
+      - techniques-drills/gammes-echauffement
+      - biomecanique/cinematique-foulee
+      - biomecanique/economie-course
+      applies_when: technique | warm-up | skill development
+    - id: techniques-drills/technique-cote
+      name: Technique de course en côte (montée et descente)
+      lines:
+        layer1: 96-106
+        layer2: 107-124
+        layer3: 125-137
+      keywords:
+      - côte
+      - montée
+      - descente
+      - dénivelé
+      - trail
+      - puissance
+      - excentrique
+      triggers:
+      - Comment courir en côte ?
+      - Technique pour les montées
+      - Comment descendre sans se faire mal ?
+      connects_to:
+      - biomecanique/cinematique-foulee
+      - biomecanique/cinetique-forces
+      - blessures/running
+      applies_when: technique | hill training | trail
+    - id: techniques-drills/strides-accelerations
+      name: Strides et accélérations progressives
+      lines:
+        layer1: 139-149
+        layer2: 150-167
+        layer3: 168-180
+      keywords:
+      - strides
+      - lignes droites
+      - accélérations
+      - vitesse
+      - neuromusculaire
+      - vélocité
+      triggers:
+      - Comment faire des strides ?
+      - À quoi servent les lignes droites ?
+      - Comment travailler ma vitesse ?
+      connects_to:
+      - seances/intervalles-haute-intensite
+      - biomecanique/cinematique-foulee
+      - biomecanique/economie-course
+      applies_when: speed | technique | neuromuscular
+      notes: Stimulus neuromusculaire sans fatigue — 4-8 × 60-80m progressifs
+    - id: techniques-drills/respiration-coordination
+      name: Respiration et coordination en course
+      lines:
+        layer1: 182-192
+        layer2: 193-207
+        layer3: 208-218
+      keywords:
+      - respiration
+      - diaphragme
+      - point de côté
+      - rythme respiratoire
+      - coordination
+      triggers:
+      - Comment respirer en courant ?
+      - Pourquoi j'ai un point de côté ?
+      - Quel rythme de respiration adopter ?
+      connects_to:
+      - biomecanique/posture-alignement
+      - physiologie/systemes-energetiques
+      applies_when: breathing | beginner | comfort
+    - id: techniques-drills/analyse-video-feedback
+      name: Analyse vidéo et feedback technique
+      lines:
+        layer1: 220-229
+        layer2: 230-250
+        layer3: 251-263
+      keywords:
+      - vidéo
+      - analyse
+      - feedback
+      - Kinovea
+      - posture
+      - foulée
+      - technique
+      triggers:
+      - Comment analyser ma foulée en vidéo ?
+      - Comment filmer ma course ?
+      - Améliorer ma technique avec la vidéo
+      connects_to:
+      - biomecanique/cinematique-foulee
+      - biomecanique/posture-alignement
+      - biomecanique/variabilite-individualisation
+      applies_when: technique | video | feedback
+  physiopathologie-coureur:
+    name: Physiopathologie du coureur (blessures spécifiques)
+    file: physiopathologie-coureur.md
+    total_lines: 318
+    description: Blessures spécifiques du coureur — ITBS, périostite, aponévrosite, tendinopathie, SFP, fracture de stress
+    concepts:
+    - id: physiopathologie-coureur/bandelette-iliotibiale
+      name: Syndrome de la bandelette ilio-tibiale (ITBS)
+      lines:
+        layer1: 8-17
+        layer2: 18-38
+        layer3: 39-51
+      keywords:
+      - bandelette
+      - iliotibial
+      - ITBS
+      - genou externe
+      - moyen fessier
+      - drop pelvien
+      triggers:
+      - Douleur côté externe du genou en courant
+      - Syndrome de l'essuie-glace
+      - Mal au genou externe
+      connects_to:
+      - blessures/running
+      - biomecanique/cinetique-forces
+      - biomecanique/posture-alignement
+      applies_when: pain | knee | lateral
+      priority: critical
+    - id: physiopathologie-coureur/periostite-tibiale
+      name: Périostite tibiale (shin splints)
+      lines:
+        layer1: 53-63
+        layer2: 64-84
+        layer3: 85-95
+      keywords:
+      - périostite
+      - tibia
+      - shin splints
+      - tibial
+      - mollet
+      - impact
+      triggers:
+      - Douleur au tibia en courant
+      - Shin splints
+      - Mal le long du tibia
+      connects_to:
+      - blessures/running
+      - biomecanique/cinetique-forces
+      - physiologie/adaptations-entrainement
+      applies_when: pain | tibia | overload
+      priority: critical
+    - id: physiopathologie-coureur/aponevrosite-plantaire
+      name: Aponévropathie plantaire (fasciite plantaire)
+      lines:
+        layer1: 97-107
+        layer2: 108-128
+        layer3: 129-139
+      keywords:
+      - aponévrose
+      - fascia
+      - plantaire
+      - talon
+      - voûte plantaire
+      - pied
+      triggers:
+      - Douleur sous le talon le matin
+      - Aponévrosite plantaire
+      - Mal au talon en courant
+      connects_to:
+      - blessures/running
+      - biomecanique/cinematique-foulee
+      applies_when: pain | foot | heel
+      priority: high
+    - id: physiopathologie-coureur/tendinopathie-achille
+      name: Tendinopathie d'Achille
+      lines:
+        layer1: 141-152
+        layer2: 153-174
+        layer3: 175-192
+      keywords:
+      - tendon d'Achille
+      - achille
+      - tendinite
+      - tendinopathie
+      - mollet
+      - excentrique
+      triggers:
+      - Douleur au tendon d'Achille
+      - Tendinite cheville
+      - Mal derrière le talon
+      connects_to:
+      - blessures/running
+      - biomecanique/cinetique-forces
+      - recuperation/surcompensation-surentrainement
+      applies_when: pain | achilles | tendon
+      priority: critical
+    - id: physiopathologie-coureur/syndrome-femoropatellaire
+      name: Syndrome fémoro-patellaire (SFP)
+      lines:
+        layer1: 194-204
+        layer2: 205-224
+        layer3: 225-236
+      keywords:
+      - rotule
+      - fémoro-patellaire
+      - SFP
+      - genou antérieur
+      - vaste médial
+      - syndrome rotulien
+      triggers:
+      - Douleur sous la rotule
+      - Mal au genou en descente
+      - Syndrome rotulien
+      connects_to:
+      - blessures/running
+      - biomecanique/posture-alignement
+      - biomecanique/cinetique-forces
+      applies_when: pain | knee | anterior
+      priority: high
+    - id: physiopathologie-coureur/fracture-stress
+      name: Fracture de stress (tibia, métatarses, col fémoral)
+      lines:
+        layer1: 238-250
+        layer2: 251-273
+        layer3: 274-293
+      keywords:
+      - fracture de stress
+      - os
+      - RED-S
+      - densité osseuse
+      - DMO
+      - carence énergétique
+      triggers:
+      - Douleur osseuse localisée
+      - Fracture de fatigue
+      - Douleur qui persiste la nuit
+      connects_to:
+      - blessures/running
+      - nutrition/glucides-timing
+      - recuperation/surcompensation-surentrainement
+      - populations/femmes-athletes
+      applies_when: pain | bone | emergency
+      priority: critical
+      notes: Drapeau rouge — orientation médicale obligatoire. Ne pas continuer à courir.
 selector_config:
   max_concepts_per_query: 4
   min_concepts_per_query: 1
