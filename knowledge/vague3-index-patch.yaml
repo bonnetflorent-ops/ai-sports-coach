@@ -1,0 +1,392 @@
+# VAGUE 3 - Patch d'index à fusionner
+# Généré le 2026-06-14
+# Ce patch décrit les nouveaux domaines, programmes et modifications
+# pour le fichier knowledge/index.yaml
+
+nouveaux_domaines:
+  equipement-running:
+    name: Équipement running
+    file: equipement-running.md
+    total_lines: 131
+    description: Chaussures, capteurs, vêtements techniques, accessoires et analyse de données pour la course à pied
+    concepts:
+      - id: equipement-running/chaussures
+        name: Chaussures de running (drop, amorti, stabilité, durée de vie, rotation)
+        lines:
+          layer1: 6-10
+          layer2: 11-20
+          layer3: 21-35
+        keywords:
+          - chaussures running
+          - drop
+          - amorti
+          - stabilité
+          - minimaliste
+          - maximaliste
+          - super shoes
+          - plaque carbone
+          - durée de vie
+          - rotation chaussures
+        triggers:
+          - Quelles chaussures de running choisir ?
+          - C'est quoi le drop ?
+          - Chaussures minimalistes ou amorties ?
+          - Les super shoes sont-elles efficaces ?
+          - Combien de temps durent des chaussures ?
+        connects_to:
+          - blessures/running
+          - biomecanique/types-de-foulee
+          - biomecanique/economie-course
+        applies_when: equipment | running | beginner
+      - id: equipement-running/capteurs-montres
+        name: Capteurs et montres (GPS, cardio, puissance, cadence)
+        lines:
+          layer1: 39-43
+          layer2: 44-53
+          layer3: 54-65
+        keywords:
+          - montre GPS
+          - cardiofréquencemètre
+          - ceinture cardiaque
+          - capteur optique
+          - cadence lock
+          - puissance running
+          - podomètre
+          - HRV
+          - Garmin
+          - Polar
+        triggers:
+          - Quelle montre GPS pour courir ?
+          - Cardio poignet ou ceinture ?
+          - C'est quoi la puissance en course ?
+          - Comment mesurer la cadence ?
+          - Utilité de la HRV pour le running ?
+        connects_to:
+          - materiel/cardio-gps-montres
+          - physiologie/frequence-cardiaque-hrv
+          - recuperation/outils-monitoring
+        applies_when: equipment | monitoring | running
+      - id: equipement-running/vetements
+        name: Vêtements techniques (tissus, thermorégulation, couches, anti-frottement)
+        lines:
+          layer1: 69-73
+          layer2: 74-82
+          layer3: 83-92
+        keywords:
+          - vêtements running
+          - textile technique
+          - polyester
+          - évacuation sueur
+          - layering
+          - couches
+          - coupe-vent
+          - chaussettes running
+          - anti-frottement
+          - compression
+        triggers:
+          - Quels vêtements pour courir ?
+          - Comment s'habiller pour courir en hiver ?
+          - Chaussettes pour éviter les ampoules
+          - Les vêtements compressifs sont-ils utiles ?
+          - Tissu technique ou coton ?
+        connects_to:
+          - environnement/froid
+          - environnement/chaleur
+        applies_when: equipment | running | weather
+      - id: equipement-running/accessoires
+        name: Équipement accessoire (hydratation, lampes, bâtons)
+        lines:
+          layer1: 96-100
+          layer2: 101-109
+          layer3: 110-120
+        keywords:
+          - ceinture hydratation
+          - gilet trail
+          - lampe frontale
+          - bâtons trail
+          - portage
+          - flasques
+          - ultra-trail
+          - visibilité
+          - sécurité nocturne
+        triggers:
+          - Quel système d'hydratation pour le trail ?
+          - Frontale pour courir de nuit ?
+          - Bâtons de trail utiles ?
+          - Comment s'équiper pour un ultra-trail ?
+        connects_to:
+          - environnement/pluie-vent-securite
+          - techniques-drills/technique-cote
+          - planification/adaptations-amateurs
+        applies_when: equipment | trail | ultra
+      - id: equipement-running/analyse-donnees
+        name: Analyse des données (ACWR, TSB, interprétation charge)
+        lines:
+          layer1: 124-128
+          layer2: 129-139
+          layer3: 140-155
+        keywords:
+          - analyse données running
+          - ACWR
+          - CTL ATL TSB
+          - charge d'entraînement
+          - TRIMP
+          - découplage
+          - distribution intensités
+          - polarisation
+          - suivi charge
+          - training load
+        triggers:
+          - Comment analyser mes données de course ?
+          - C'est quoi le ACWR ?
+          - Comment interpréter mon TSB ?
+          - Charge externe vs interne en course
+          - Distribution des intensités pour le running
+        connects_to:
+          - planification/gestion-charge
+          - materiel/analyse-donnees-training
+          - recuperation/outils-monitoring
+        applies_when: analysis | running | data-driven
+      - id: equipement-running/mythes
+        name: Mythes et débats sur l'équipement running
+        lines:
+          layer1: 156-165
+        keywords:
+          - mythes chaussures
+          - amorti blessure
+          - minimaliste blessure
+          - pronation
+          - super shoes
+          - GPS précision
+        triggers:
+          - Les chaussures anti-pronation sont-elles nécessaires ?
+          - Plus d'amorti protège-t-il des blessures ?
+          - Les minimalistes sont-elles meilleures ?
+        connects_to:
+          - blessures/running
+          - biomecanique/types-de-foulee
+        applies_when: education | debate | running
+
+nouveaux_programmes:
+  programme-5km:
+    name: Programme 5 km (3 niveaux)
+    file: programme-5km.md
+    total_lines: 120
+    description: Programme 8-12 semaines pour 5 km — débutant (<30 min), intermédiaire (<22 min), avancé (<18 min)
+    keywords:
+      - programme 5km
+      - plan entrainement 5km
+      - preparation 5km
+      - VMA 5km
+      - seuil 5km
+      - intervalles 5km
+      - 5 km training
+    triggers:
+      - Donne-moi un programme pour le 5 km
+      - Comment courir 5 km plus vite ?
+      - Plan d'entraînement 5 km débutant/intermédiaire/avancé
+      - Quelles séances pour le 5 km ?
+    connects_to:
+      - norvegienne/modele-polarise-80-20
+      - seances/intervalles-haute-intensite
+      - seances/travail-seuil
+      - seances/endurance-fondamentale
+      - planification/tapering-pic-forme
+    applies_when: program | 5k | competition
+  programme-10km:
+    name: Programme 10 km (3 niveaux)
+    file: programme-10km.md
+    total_lines: 121
+    description: Programme 10-12 semaines pour 10 km — débutant (<60 min), intermédiaire (<45 min), avancé (<38 min)
+    keywords:
+      - programme 10km
+      - plan entrainement 10km
+      - preparation 10km
+      - seuil 10km
+      - VMA 10km
+      - 10 km training
+    triggers:
+      - Donne-moi un programme pour le 10 km
+      - Comment courir 10 km plus vite ?
+      - Plan d'entraînement 10 km débutant/intermédiaire/avancé
+      - Quelles séances pour le 10 km ?
+      - Comment passer sous les 45 min au 10 km ?
+    connects_to:
+      - norvegienne/modele-polarise-80-20
+      - seances/travail-seuil
+      - seances/intervalles-haute-intensite
+      - seances/endurance-fondamentale
+      - planification/tapering-pic-forme
+    applies_when: program | 10k | competition
+  programme-semi-marathon:
+    name: Programme semi-marathon (3 niveaux)
+    file: programme-semi-marathon.md
+    total_lines: 132
+    description: Programme 12-16 semaines pour semi-marathon — débutant (<2h), intermédiaire (<1h35), avancé (<1h20)
+    keywords:
+      - programme semi-marathon
+      - plan entrainement semi
+      - preparation semi-marathon
+      - sortie longue
+      - seuil semi
+      - half marathon training
+    triggers:
+      - Donne-moi un programme pour le semi-marathon
+      - Comment préparer un semi-marathon ?
+      - Plan d'entraînement semi-marathon débutant/intermédiaire/avancé
+      - Quelles séances pour le semi-marathon ?
+      - Comment passer sous 1h30 au semi ?
+    connects_to:
+      - norvegienne/modele-polarise-80-20
+      - seances/travail-seuil
+      - seances/endurance-fondamentale
+      - planification/gestion-charge
+      - planification/tapering-pic-forme
+      - nutrition/glucides-timing
+    applies_when: program | half-marathon | competition
+
+domaines_modifies:
+  materiel-et-equipement:
+    nouveaux_concepts:
+      - Tapis de course (avantages, calibration, protocoles)
+      - Applications et plateformes (TrainingPeaks, Intervals.icu, Strava, Zwift)
+      - Méthodologies (tableau des méthodes d'analyse)
+      - Mythes et débats (capteur puissance, home-trainer, GPS)
+    total_lines: 178
+    modifications:
+      - Ajout section 2 Tapis de course (3 sous-sections)
+      - Ajout section 3 Applications et plateformes (4 sous-sections + tableau par niveau)
+      - Ajout section 4 Méthodologies (tableau 8 méthodes)
+      - Ajout section 5 Mythes et Débats (5 entrées)
+      - Enrichissement concept 1.4 Analyse données avec ACWR, HRV, distribution intensités
+      - Mise à jour des références (12 références vs 5 avant)
+    nouvelles_intent_rules:
+      tapis_course:
+        description: L'utilisateur s'interroge sur l'entraînement sur tapis de course
+        concepts:
+        - materiel/informatique-tapis
+        priority: low
+      plateforme_entrainement:
+        description: L'utilisateur demande quelle application ou plateforme utiliser
+        concepts:
+        - materiel/analyse-donnees-training
+        - planification/gestion-charge
+        priority: low
+
+  entrainement-croise:
+    nouveaux_concepts:
+      - Vélo pour coureur (bénéfices, transferts, protocoles HIST)
+      - Ski de fond et sports d'hiver (VO2max transfert, élites, intégration)
+      - Planification du croisé dans une semaine running (priorités, timing, arbitrages)
+      - Méthodologies (tableau des bénéfices par activité croisée)
+      - Mythes et Débats (5 entrées sur idées reçues)
+    total_lines: 164
+    modifications:
+      - Ajout concept 1.5 Vélo pour coureur (3 couches)
+      - Ajout concept 1.6 Ski de fond et sports d'hiver (3 couches)
+      - Ajout concept 1.7 Planification du croisé (3 couches)
+      - Ajout section 2 Méthodologies (tableau 7 activités)
+      - Ajout section 3 Métriques et Outils (équivalences, RPE combiné)
+      - Ajout section 4 Mythes et Débats (5 entrées)
+      - Mise à jour des références (11 vs 5 avant)
+
+nouvelles_intent_rules:
+  chaussures_question:
+    description: L'utilisateur pose une question sur le choix de chaussures de running
+    concepts:
+    - equipement-running/chaussures
+    - blessures/running
+    - biomecanique/types-de-foulee
+    priority: medium
+  montre_gps_question:
+    description: L'utilisateur s'interroge sur les montres GPS ou capteurs running
+    concepts:
+    - equipement-running/capteurs-montres
+    - materiel/cardio-gps-montres
+    - physiologie/frequence-cardiaque-hrv
+    priority: low
+  vetement_running:
+    description: L'utilisateur demande comment s'habiller pour courir
+    concepts:
+    - equipement-running/vetements
+    - environnement/froid
+    - environnement/chaleur
+    priority: low
+  accessoire_running:
+    description: L'utilisateur cherche des conseils sur les accessoires (ceinture, lampe, bâtons)
+    concepts:
+    - equipement-running/accessoires
+    - environnement/pluie-vent-securite
+    priority: low
+  programme_5km:
+    description: L'utilisateur demande un programme d'entraînement pour le 5 km
+    concepts:
+    - programme-5km
+    - seances/intervalles-haute-intensite
+    - seances/travail-seuil
+    - norvegienne/modele-polarise-80-20
+    priority: high
+  programme_10km:
+    description: L'utilisateur demande un programme d'entraînement pour le 10 km
+    concepts:
+    - programme-10km
+    - seances/travail-seuil
+    - seances/endurance-fondamentale
+    - norvegienne/modele-polarise-80-20
+    priority: high
+  programme_semi:
+    description: L'utilisateur demande un programme d'entraînement pour le semi-marathon
+    concepts:
+    - programme-semi-marathon
+    - seances/endurance-fondamentale
+    - seances/travail-seuil
+    - planification/gestion-charge
+    priority: high
+  velo_coureur:
+    description: L'utilisateur s'interroge sur les bénéfices du vélo pour la course
+    concepts:
+    - entrainement-croise/velo-coureur
+    - entrainement-croise/planification-croise
+    priority: medium
+  ski_coureur:
+    description: L'utilisateur s'interroge sur le ski de fond pour coureurs
+    concepts:
+    - entrainement-croise/ski-fond
+    - entrainement-croise/planification-croise
+    priority: medium
+  planification_croise:
+    description: L'utilisateur veut organiser son croisé dans sa semaine de course
+    concepts:
+    - entrainement-croise/planification-croise
+    - entrainement-croise/renforcement-endurance
+    - planification/structure-temporelle
+    priority: medium
+
+nouvelles_intent_blocks:
+  - group: entrainement_5km
+    description: Quand l'utilisateur veut un programme 5 km
+    concepts:
+    - programme-5km
+    - seances/intervalles-haute-intensite
+    - seances/travail-seuil
+    - physiologie/vo2max-seuils
+  - group: entrainement_10km
+    description: Quand l'utilisateur veut un programme 10 km
+    concepts:
+    - programme-10km
+    - seances/travail-seuil
+    - seances/endurance-fondamentale
+    - planification/gestion-charge
+  - group: entrainement_semi
+    description: Quand l'utilisateur veut un programme semi-marathon
+    concepts:
+    - programme-semi-marathon
+    - seances/endurance-fondamentale
+    - seances/travail-seuil
+    - planification/tapering-pic-forme
+  - group: cross_training_velo
+    description: Quand l'utilisateur veut intégrer le vélo dans son entrainement course
+    concepts:
+    - entrainement-croise/velo-coureur
+    - entrainement-croise/planification-croise
+    - seances/endurance-fondamentale

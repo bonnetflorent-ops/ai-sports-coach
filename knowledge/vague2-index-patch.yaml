@@ -1,0 +1,793 @@
+# VAGUE 2 - Patch d index a fusionner
+# Date: 2026-06-14
+# Fichiers modifies/crees lors de la Vague 2 (5 chantiers)
+# Format: entites a ajouter ou mettre a jour dans knowledge/index.yaml
+
+# === NOUVEAUX DOMAINES ===
+
+nouveaux_domaines:
+  gestion-course:
+    name: Gestion de course
+    file: gestion-course.md
+    total_lines: 244
+    description: Strategies de pacing, ravitaillement, gestion mentale et tactique en competition
+    concepts:
+      - id: gestion-course/strategies-pacing
+        name: Strategies de pacing
+        lines:
+          layer1: 7-10
+          layer2: 11-22
+          layer3: 23-33
+        keywords:
+          - pacing
+          - allure
+          - negative split
+          - positive split
+          - even pacing
+          - end-spurt
+          - regulation allure
+          - teleoanticipation
+          - puissance critique
+          - W'
+        triggers:
+          - Comment gerer mon allure en course ?
+          - Faut-il partir vite ou lentement ?
+          - C'est quoi le negative split ?
+          - Pourquoi je ralentis en fin de course ?
+          - Comment eviter le mur du marathon ?
+        connects_to:
+          - physiologie/vo2max-seuils
+          - norvegienne/controlled-intensity
+          - psychologie/gestion-effort-rpe
+        applies_when: race-planning | pacing | competition-strategy
+      - id: gestion-course/ravitaillement-course
+        name: Ravitaillement en course
+        lines:
+          layer1: 37-40
+          layer2: 41-50
+          layer3: 51-60
+        keywords:
+          - ravitaillement
+          - ravito
+          - glucides
+          - hydratation
+          - electrolytes
+          - gels
+          - boisson isotonique
+          - hyponatremie
+          - hitting the wall
+          - glycogene
+          - carbo-loading
+        triggers:
+          - Que manger pendant une course ?
+          - Combien de gels prendre au marathon ?
+          - Comment s hydrater pendant l effort ?
+          - Carbo loading avant une course
+          - Boisson isotonique ou eau ?
+        connects_to:
+          - nutrition/glucides-timing
+          - nutrition/hydratation-electrolytes
+          - nutrition/periodisation-nutritionnelle
+        applies_when: race-day | fueling | long-distance
+      - id: gestion-course/gestion-allure-rpe-fc
+        name: Gestion de l allure par RPE et FC
+        lines:
+          layer1: 65-68
+          layer2: 69-80
+          layer3: 81-91
+        keywords:
+          - RPE
+          - perception effort
+          - frequence cardiaque
+          - derive cardiaque
+          - teleoanticipation
+          - Marcora
+          - psychobiologique
+          - regulation effort
+        triggers:
+          - Comment gerer mon allure avec ma FC ?
+          - Quel RPE pour chaque allure ?
+          - Derive cardiaque en course
+          - Ajuster l allure en competition
+        connects_to:
+          - psychologie/gestion-effort-rpe
+          - physiologie/frequence-cardiaque-hrv
+          - physiologie/vo2max-seuils
+        applies_when: race-strategy | pacing | beginner
+      - id: gestion-course/aspects-tactiques
+        name: Aspects tactiques en competition
+        lines:
+          layer1: 96-99
+          layer2: 100-110
+          layer3: 111-121
+        keywords:
+          - tactique
+          - depart
+          - relance
+          - drafting
+          - positionnement
+          - end-spurt
+          - W'
+          - Noakes
+          - Central Governor
+        triggers:
+          - Comment bien se placer au depart ?
+          - Quand accelérer en course ?
+          - Strategie pour depasser un adversaire
+          - Gestion tactique du cross
+        connects_to:
+          - gestion-course/strategies-pacing
+          - psychologie/gestion-effort-rpe
+        applies_when: competition | race-tactics
+      - id: gestion-course/gestion-mentale-course
+        name: Gestion mentale en course
+        lines:
+          layer1: 126-129
+          layer2: 130-139
+          layer3: 140-151
+        keywords:
+          - mental
+          - association
+          - dissociation
+          - segmentation
+          - self-talk
+          - mantra
+          - sourire force
+          - reevaluation cognitive
+          - resilience
+        triggers:
+          - Comment gerer le mental en course ?
+          - Strategie mentale pour le marathon
+          - Je doute pendant la course
+          - Comment ne pas abandonner ?
+          - Faut-il penser a la douleur ou s en distraire ?
+        connects_to:
+          - psychologie/gestion-effort-rpe
+          - psychologie/preparation-mentale
+          - psychologie/motivation-autodetermination
+        applies_when: race-day | mental-toughness | marathon
+      - id: gestion-course/conditions-specifiques-course
+        name: Conditions specifiques de competition
+        lines:
+          layer1: 156-159
+          layer2: 160-169
+          layer3: 170-179
+        keywords:
+          - chaleur competition
+          - pluie
+          - vent
+          - altitude competition
+          - denivele
+          - WBGT
+          - conditions extremes
+          - acclimatation
+        triggers:
+          - Comment gerer ma course sous la pluie ?
+          - Strategie par forte chaleur en course
+          - Comment courir avec du vent ?
+          - Competition en altitude
+          - Parcours valonne en course
+        connects_to:
+          - environnement/chaleur
+          - environnement/pluie-vent-securite
+          - environnement/altitude
+          - nutrition/hydratation-electrolytes
+        applies_when: race-day | hot-weather | altitude-race
+
+  force-pour-coureur:
+    name: Force pour coureur
+    file: force-pour-coureur.md
+    total_lines: 315
+    description: Renforcement musculaire, plyometrie, gainage et periodisation de la force pour le coureur d endurance
+    concepts:
+      - id: force-pour-coureur/fondamentaux-force
+        name: Fondamentaux - pourquoi la force est essentielle
+        lines:
+          layer1: 7-10
+          layer2: 11-20
+          layer3: 21-33
+        keywords:
+          - force
+          - economie de course
+          - renforcement
+          - musculation coureur
+          - raideur tendineuse
+          - adaptations neurales
+          - puissance
+          - blessure
+        triggers:
+          - Pourquoi faire de la musculation quand on est coureur ?
+          - La force ameliore-t-elle l economie de course ?
+          - Faut-il etre fort pour courir vite ?
+          - La musculation pour prevenir les blessures
+        connects_to:
+          - entrainement-croise/renforcement-endurance
+          - biomecanique/economie-course
+          - seances/travail-neuromusculaire
+        applies_when: strength | injury-prevention | running-performance
+      - id: force-pour-coureur/plyometrie-coureur
+        name: Plyometrie pour coureur
+        lines:
+          layer1: 38-41
+          layer2: 42-56
+          layer3: 57-68
+        keywords:
+          - plyometrie
+          - sauts
+          - bonds
+          - drop jump
+          - pogo jump
+          - bounding
+          - cycle etirement-raccourcissement
+          - SSC
+          - raideur
+          - temps de contact
+        triggers:
+          - Quels exercices plyometriques pour le coureur ?
+          - Comment faire des sauts pour progresser en course ?
+          - Drop jumps pour coureur
+          - Plyometrie et blessure
+        connects_to:
+          - force-pour-coureur/renforcement-charge-lourde
+          - biomecanique/economie-course
+          - biomecanique/cinematique-foulee
+        applies_when: strength | plyometrics | running-economy
+      - id: force-pour-coureur/renforcement-charge-lourde
+        name: Renforcement charge lourde (HRT)
+        lines:
+          layer1: 73-76
+          layer2: 77-100
+          layer3: 101-113
+        keywords:
+          - heavy resistance training
+          - HRT
+          - squat
+          - deadlift
+          - leg press
+          - 1RM
+          - force maximale
+          - charge lourde
+          - developpement force
+          - deadlift
+        triggers:
+          - Faut-il faire du squat pour la course ?
+          - Quelle charge pour la musculation du coureur ?
+          - Seance de force lourde pour coureur
+          - Deadlift pour le running
+        connects_to:
+          - force-pour-coureur/plyometrie-coureur
+          - force-pour-coureur/periodisation-force
+          - seances/travail-neuromusculaire
+        applies_when: strength | heavy-lifting | gym-training
+      - id: force-pour-coureur/gainage-stabilite
+        name: Gainage et stabilite
+        lines:
+          layer1: 118-121
+          layer2: 122-135
+          layer3: 136-147
+        keywords:
+          - gainage
+          - core
+          - planche
+          - pallof press
+          - stabilite pelvienne
+          - anti-rotation
+          - posture course
+          - drop pelvien
+        triggers:
+          - Faut-il faire du gainage pour courir ?
+          - Exercices de core pour coureur
+          - Stabilite du bassin en course
+          - Planche pour eviter les blessures
+        connects_to:
+          - biomecanique/posture-alignement
+          - blessures/running
+          - force-pour-coureur/mobilite-souplesse
+        applies_when: core-training | posture | injury-prevention
+      - id: force-pour-coureur/mobilite-souplesse
+        name: Mobilite et souplesse
+        lines:
+          layer1: 152-155
+          layer2: 156-165
+          layer3: 166-177
+        keywords:
+          - mobilite
+          - souplesse
+          - stretching
+          - hanche
+          - cheville
+          - dorsiflexion
+          - foam rolling
+          - PNF
+          - flechisseurs hanche
+        triggers:
+          - Quels etirements pour le coureur ?
+          - Mobilite hanche pour courir
+          - Deficit de dorsiflexion cheville
+          - Souplesse et blessure course
+        connects_to:
+          - biomecanique/cinematique-foulee
+          - biomecanique/economie-course
+          - echauffement/etirements-et-mobilite
+        applies_when: mobility | flexibility | injury-prevention
+      - id: force-pour-coureur/periodisation-force
+        name: Periodisation de la force dans le plan running
+        lines:
+          layer1: 182-185
+          layer2: 186-204
+          layer3: 205-218
+        keywords:
+          - periodisation force
+          - planification force
+          - concurrent training
+          - interference
+          - AMPK
+          - mTOR
+          - force en saison
+          - maintien
+        triggers:
+          - Quand faire la musculation dans la semaine d entrainement ?
+          - Periodisation de la force pour coureur
+          - Musculation en saison de course
+          - Force et endurance : comment concilier ?
+          - Faut-il arreter la musculation avant une course ?
+        connects_to:
+          - planification/modeles-periodisation
+          - planification/gestion-charge
+          - force-pour-coureur/renforcement-charge-lourde
+        applies_when: planning | strength-periodization | season-planning
+      - id: force-pour-coureur/ppg-domicile-sans-materiel
+        name: PPG a domicile sans materiel
+        lines:
+          layer1: 223-226
+          layer2: 227-253
+          layer3: 254-266
+        keywords:
+          - PPG
+          - preparation physique generale
+          - poids de corps
+          - squat
+          - fente
+          - pont fessier
+          - nordic curl
+          - elastiques
+          - unilateral
+          - domicile
+        triggers:
+          - Renforcement sans materiel pour coureur
+          - Exercices a la maison pour courir plus vite
+          - Musculation sans poids pour le running
+          - PPG coureur domicile
+        connects_to:
+          - force-pour-coureur/renforcement-charge-lourde
+          - force-pour-coureur/gainage-stabilite
+          - seances/travail-neuromusculaire
+        applies_when: home-training | bodyweight | minimal-equipment
+
+  preparation-mentale-avancee:
+    name: Preparation mentale avancee
+    file: preparation-mentale-avancee.md
+    total_lines: 298
+    description: Imagerie mentale, routines pre-competition, gestion de la douleur, fixation d objectifs, resilience, flow state
+    concepts:
+      - id: preparation-mentale/imagerie-visualisation
+        name: Visualisation et imagerie mentale
+        lines:
+          layer1: 7-10
+          layer2: 11-32
+          layer3: 33-47
+        keywords:
+          - imagerie mentale
+          - visualisation
+          - PETTLEP
+          - neurones miroirs
+          - equivalence fonctionnelle
+          - imagerie kinesthesique
+          - imagerie motrice
+        triggers:
+          - Comment visualiser pour mieux performer ?
+          - Imagerie mentale pour le coureur
+          - PETTLEP en sport
+          - Visualisation avant course
+        connects_to:
+          - psychologie/preparation-mentale
+          - psychologie/motivation-autodetermination
+        applies_when: mental-training | imagery | pre-competition
+      - id: preparation-mentale/routines-pre-competition
+        name: Routines pre-competition
+        lines:
+          layer1: 52-55
+          layer2: 56-80
+          layer3: 81-92
+        keywords:
+          - routine
+          - pre-competition
+          - preparation
+          - ritual
+          - conditionnement
+          - stress pre-course
+          - anxiété performance
+          - check-list
+        triggers:
+          - Quelle routine avant une course ?
+          - Comment gerer le stress avant competition ?
+          - Que faire la veille d une course ?
+          - Preparation mentale jour J
+        connects_to:
+          - psychologie/preparation-mentale
+          - echauffement/routine-pre-competition
+          - nutrition/glucides-timing
+        applies_when: pre-competition | race-day | anxiety
+      - id: preparation-mentale/gestion-douleur-inconfort
+        name: Gestion de la douleur et de l inconfort
+        lines:
+          layer1: 97-100
+          layer2: 101-112
+          layer3: 113-124
+        keywords:
+          - douleur
+          - inconfort
+          - dissociation
+          - association
+          - reevaluation cognitive
+          - Marcora
+          - psychobiologique
+          - perception effort
+          - RPE
+        triggers:
+          - Comment gerer la douleur en courant ?
+          - Strategies pour supporter l effort
+          - Dissociation ou association ?
+          - La douleur c est dans la tete ?
+        connects_to:
+          - psychologie/gestion-effort-rpe
+          - psychologie/preparation-mentale
+        applies_when: mental-toughness | discomfort | race-strategy
+      - id: preparation-mentale/fixation-objectifs
+        name: Fixation d objectifs
+        lines:
+          layer1: 129-132
+          layer2: 133-150
+          layer3: 151-164
+        keywords:
+          - objectif
+          - SMART
+          - processus
+          - resultat
+          - goal setting
+          - Locke
+          - Latham
+          - maitrise
+          - ego
+          - hierarchie objectifs
+        triggers:
+          - Comment se fixer des objectifs en course ?
+          - Objectif de processus ou de resultat ?
+          - Methode SMART pour le running
+          - Fixer un objectif de marathon
+        connects_to:
+          - psychologie/fixation-objectifs
+          - psychologie/motivation-autodetermination
+          - planification/modeles-periodisation
+        applies_when: goal-setting | season-planning | motivation
+      - id: preparation-mentale/resilience-gestion-echec
+        name: Resilience et gestion de l echec
+        lines:
+          layer1: 169-172
+          layer2: 173-183
+          layer3: 184-195
+        keywords:
+          - resilience
+          - echec
+          - contre-performance
+          - DNF
+          - rebond
+          - mental toughness
+          - 4C
+          - coping
+          - debriefing
+        triggers:
+          - Comment rebondir apres une course ratee ?
+          - Echec en competition
+          - Abandon en course
+          - Deception apres une performance
+          - Comment analyser une contre-performance ?
+        connects_to:
+          - psychologie/resilience-ennui-plateaux
+          - psychologie/motivation-autodetermination
+        applies_when: failure | disappointment | injury-recovery
+      - id: preparation-mentale/flow-state-course
+        name: Flow state en course
+        lines:
+          layer1: 200-203
+          layer2: 204-225
+          layer3: 226-238
+        keywords:
+          - flow
+          - zone
+          - Csikszentmihalyi
+          - concentration
+          - etat optimal
+          - hypofrontalite
+          - pleine conscience
+          - mindfulness
+          - clutch
+        triggers:
+          - C'est quoi le flow en course ?
+          - Comment entrer dans la zone ?
+          - Flow state pour le sport
+          - Pleine conscience pour coureur
+        connects_to:
+          - psychologie/preparation-mentale
+          - psychologie/motivation-autodetermination
+        applies_when: mental-training | flow | optimal-performance
+
+# === NOUVELLES INTENT RULES ===
+
+nouvelles_intent_rules:
+  - id: pacing_question
+    description: L'utilisateur pose une question sur l'allure ou le pacing
+    concepts:
+      - gestion-course/strategies-pacing
+      - gestion-course/gestion-allure-rpe-fc
+    priority: high
+  - id: ravitaillement_course
+    description: L'utilisateur demande quoi manger/boire pendant une course
+    concepts:
+      - gestion-course/ravitaillement-course
+      - nutrition/glucides-timing
+      - nutrition/hydratation-electrolytes
+    priority: high
+  - id: course_conditions
+    description: L'utilisateur s'interroge sur la course par conditions specifiques (chaud, froid, pluie, altitude)
+    concepts:
+      - gestion-course/conditions-specifiques-course
+      - environnement/chaleur
+      - environnement/froid
+    priority: high
+  - id: force_endurance
+    description: L'utilisateur pose des questions sur la musculation/force pour la course
+    concepts:
+      - force-pour-coureur/fondamentaux-force
+      - force-pour-coureur/renforcement-charge-lourde
+      - force-pour-coureur/plyometrie-coureur
+    priority: high
+  - id: periodisation_force
+    description: L'utilisateur demande quand et comment integrer la force dans son plan
+    concepts:
+      - force-pour-coureur/periodisation-force
+      - planification/modeles-periodisation
+    priority: medium
+  - id: mental_avance
+    description: L'utilisateur veut des techniques mentales avancees (imagerie, flow, routines)
+    concepts:
+      - preparation-mentale/imagerie-visualisation
+      - preparation-mentale/routines-pre-competition
+      - preparation-mentale/flow-state-course
+    priority: medium
+  - id: gestion_echec_resilience
+    description: L'utilisateur parle d'echec, de contre-performance, de DNF
+    concepts:
+      - preparation-mentale/resilience-gestion-echec
+      - psychologie/resilience-ennui-plateaux
+    priority: high
+  - id: condition_medicale_sport
+    description: L'utilisateur a une condition medicale (asthme, diabete, anemie) et veut faire du sport
+    concepts:
+      - populations/athletes-conditions-medicales
+      - physiologie/frequence-cardiaque-hrv
+    priority: high
+  - id: pollution_qualite_air
+    description: L'utilisateur s'inquiete de la qualite de l'air pour courir en ville
+    concepts:
+      - environnement/pollution-qualite-air
+      - environnement/chaleur
+    priority: medium
+  - id: decalage_horaire
+    description: L'utilisateur voyage pour une competition
+    concepts:
+      - environnement/decalage-horaire-chronobiologie
+      - planification/tapering-pic-forme
+    priority: medium
+  - id: humidite_wbgt
+    description: L'utilisateur demande comment gerer l'humidite ou le WBGT
+    concepts:
+      - environnement/humidite-point-rosee
+      - environnement/chaleur
+    priority: medium
+
+# === DOMAINES MODIFIES (approfondissements) ===
+
+domaines_modifies:
+  populations:
+    total_lines: 214
+    nouveaux_concepts:
+      - id: populations/athletes-conditions-medicales
+        name: Athletes avec conditions medicales
+        lines:
+          layer1: 115-119
+          layer2: 120-142
+          layer3: 143-153
+        keywords:
+          - asthme d effort
+          - EIB
+          - bronchoconstriction
+          - salbutamol
+          - diabete type 1
+          - hypoglycemie
+          - CGM
+          - anemie ferriprive
+          - ferritine
+          - carence en fer
+          - runner's anemia
+        triggers:
+          - Courir avec de l asthme
+          - Asthme et course a pied
+          - Diabete type 1 et endurance
+          - Courir avec du diabete
+          - Fatigue inhabituelle en courant
+          - Anemie du coureur
+          - Manque de fer et course a pied
+        priority: high
+        applies_when: medical | asthma | diabetes | anemia
+        connects_to:
+          - physiologie/vo2max-seuils
+          - recuperation/surcompensation-surentrainement
+          - nutrition/hydratation-electrolytes
+    sections_ajoutees:
+      - section: Methodologies
+        line: 155-167
+      - section: Metriques et Outils
+        line: 168-179
+      - section: Mythes et Debus
+        line: 180-189
+      - section: Bibliographie completee
+        line: 190-214
+        nouvelles_references:
+          - doi:10.1016/j.jaip.2016.01.013
+          - doi:10.2337/dc16-1728
+          - doi:10.1001/jama.286.6.714
+          - doi:10.2165/00007256-200333120-00002
+    approfondissement_masters:
+      description: Ajout details sarcopenie, tendons, DMO, maintien volume entrainement
+      references_ajoutees:
+        - doi:10.2165/00007256-200333120-00002
+
+  environnement:
+    total_lines: 239
+    nouveaux_concepts:
+      - id: environnement/pollution-qualite-air
+        name: Pollution et qualite de l air
+        lines:
+          layer1: 71-73
+          layer2: 74-90
+          layer3: 91-101
+        keywords:
+          - pollution
+          - PM2.5
+          - ozone
+          - qualite de l air
+          - AQI
+          - FFP2
+          - inflammation bronchique
+          - dysfonction endotheliale
+          - marathon pollution
+        triggers:
+          - Courir en ville polluee
+          - Pollution et performance
+          - PM2.5 course a pied
+          - Masque pour courir
+          - Indice ATMO sport
+        priority: high
+        applies_when: air-pollution | urban-running | health
+        connects_to:
+          - environnement/chaleur
+          - physiologie/vo2max-seuils
+          - recuperation/surcompensation-surentrainement
+      - id: environnement/humidite-point-rosee
+        name: Humidite et point de rosee
+        lines:
+          layer1: 105-107
+          layer2: 108-122
+          layer3: 123-132
+        keywords:
+          - humidite
+          - point de rosee
+          - dew point
+          - WBGT
+          - evaporation
+          - thermoregulation
+          - VPD
+          - ACMS
+        triggers:
+          - Courir quand il fait tres humide
+          - Point de rosee et course
+          - WBGT pour le running
+          - Chaleur humide performance
+        priority: high
+        applies_when: hot-weather | humidity | safety
+        connects_to:
+          - environnement/chaleur
+          - nutrition/hydratation-electrolytes
+      - id: environnement/decalage-horaire-chronobiologie
+        name: Decalage horaire et chronobiologie
+        lines:
+          layer1: 135-138
+          layer2: 139-168
+          layer3: 169-179
+        keywords:
+          - jet lag
+          - decalage horaire
+          - chronobiologie
+          - rythme circadien
+          - melatonine
+          - NSC
+          - horloge interne
+          - competition etranger
+        triggers:
+          - Competition a l etranger decalage horaire
+          - Jet lag et performance
+          - Voyage pour course
+          - Melatonine pour le sport
+          - Resynchronisation athlete
+        priority: medium
+        applies_when: travel | jet-lag | international-competition
+        connects_to:
+          - planification/tapering-pic-forme
+          - recuperation/sommeil
+    sections_ajoutees:
+      - section: Methodologies
+        line: 182-194
+      - section: Metriques et Outils
+        line: 195-206
+      - section: Mythes et Debus
+        line: 207-218
+      - section: Bibliographie completee
+        line: 219-239
+        nouvelles_references:
+          - doi:10.1038/s41598-023-28802-x
+          - doi:10.1249/MSS.0b013e31822b0c65
+          - doi:10.1080/07420520701795357
+          - doi:10.1152/japplphysiol.00438.2020
+          - doi:10.1016/S0140-6736(07)60529-7
+
+# === CROSS-DOMAIN OVERLAPS ===
+
+nouveaux_groupes_cross_domain:
+  - group: race_performance
+    concepts:
+      - gestion-course/strategies-pacing
+      - gestion-course/gestion-allure-rpe-fc
+      - gestion-course/gestion-mentale-course
+      - psychologie/gestion-effort-rpe
+    description: Quand l'utilisateur veut optimiser sa performance en competition
+  - group: force_running
+    concepts:
+      - force-pour-coureur/fondamentaux-force
+      - force-pour-coureur/plyometrie-coureur
+      - force-pour-coureur/renforcement-charge-lourde
+      - force-pour-coureur/periodisation-force
+      - biomecanique/economie-course
+    description: Quand l'utilisateur demande du renforcement pour la course a pied
+  - group: nutrition_competition
+    concepts:
+      - gestion-course/ravitaillement-course
+      - nutrition/glucides-timing
+      - nutrition/hydratation-electrolytes
+      - nutrition/periodisation-nutritionnelle
+    description: Quand l'utilisateur veut optimiser sa nutrition pour la competition
+  - group: mental_entrainement
+    concepts:
+      - preparation-mentale/imagerie-visualisation
+      - preparation-mentale/routines-pre-competition
+      - preparation-mentale/gestion-douleur-inconfort
+      - preparation-mentale/fixation-objectifs
+      - psychologie/motivation-autodetermination
+    description: Quand l'utilisateur veut travailler le mental pour la performance
+  - group: course_environnement
+    concepts:
+      - gestion-course/conditions-specifiques-course
+      - environnement/chaleur
+      - environnement/pollution-qualite-air
+      - environnement/humidite-point-rosee
+    description: Quand l'utilisateur se demande comment adapter sa course aux conditions

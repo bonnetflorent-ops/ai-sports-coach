@@ -26,11 +26,11 @@ Une montre GPS enregistre où tu passes, à quelle vitesse, et surtout ta fréqu
 
 #### Couche 2 (Intermédiaire)
 
-Deux technologies de mesure de FC coexistent : le capteur optique au poignet (photopléthysmographie, PPG) et la ceinture thoracique à électrodes.[^5] La ceinture thoracique capte le signal électrique du cœur, tandis que le capteur optique, bien que très pratique, peut dériver lors des variations rapides d'intensité.[^5] Pour le GPS, les montres modernes utilisent le multi-bandes qui offre une meilleure précision même en milieu urbain dense ou sous couvert forestier.[^5] La relation entre la fréquence cardiaque et l'intensité d'effort est bien établie : Jones et al. (2010) ont montré comment la FC s'intègre dans les modèles de tolérance à l'exercice et de détermination du VO2max.[^2] Les métriques les plus utiles au quotidien incluent le VO2max estimé, le temps de récupération estimé, la charge d'entraînement et le score de sommeil.[^5] Ces estimations fonctionnent comme des tendances, pas comme des mesures absolues.[^3]
+Deux technologies de mesure de FC coexistent : le capteur optique au poignet (photopléthysmographie, PPG) et la ceinture thoracique à électrodes.[^5] La ceinture thoracique capte le signal électrique du cœur, tandis que le capteur optique, bien que très pratique, peut dériver lors des variations rapides d'intensité.[^5] Pour le GPS, les montres modernes utilisent le multi-bandes (L1+L5) qui offre une meilleure précision même en milieu urbain dense ou sous couvert forestier.[^6] La précision typique est de 2-6 % d'erreur sur la distance selon l'environnement.[^6] La relation entre la fréquence cardiaque et l'intensité d'effort est bien établie : Jones et al. (2010) ont montré comment la FC s'intègre dans les modèles de tolérance à l'exercice et de détermination du VO2max.[^2] Les métriques les plus utiles au quotidien incluent le VO2max estimé, le temps de récupération estimé, la charge d'entraînement et le score de sommeil.[^6] Ces estimations fonctionnent comme des tendances, pas comme des mesures absolues.[^3]
 
 #### Couche 3 (Expert)
 
-Le photopléthysmogramme (PPG) mesure les variations de volume sanguin par absorption lumineuse, mais souffre d'artefacts de mouvement majeurs.[^5] Le problème le plus insidieux est le phénomène de « cadence lock » : lors de la course à pied, le capteur optique peut verrouiller son signal sur la cadence de foulée plutôt que sur les battements cardiaques.[^5] Le modèle de Critical Power documenté par Jones et al. (2010) et Vanhatalo et al. (2011) fournit un cadre théorique solide pour comprendre la relation entre FC, puissance et durée d'effort.[^2][^3] Burnley et Jones (2018) ont approfondi la compréhension de la dérive cardiovasculaire lors des efforts prolongés, montrant comment la relation puissance-durée évolue avec la fatigue.[^4] Concernant le VO2max estimé, les limites sont bien documentées : l'estimation est basée sur la relation linéaire entre FC et allure/puissance sous-maximale.[^2] Pour un athlète qui souhaite des valeurs fiables, il faut périodiquement recalibrer par un test maximal et ajuster manuellement les zones.[^3]
+Le photopléthysmogramme (PPG) mesure les variations de volume sanguin par absorption lumineuse, mais souffre d'artefacts de mouvement majeurs.[^5] Le problème le plus insidieux est le phénomène de « cadence lock » : lors de la course à pied, le capteur optique peut verrouiller son signal sur la cadence de foulée plutôt que sur les battements cardiaques.[^6] Le modèle de Critical Power documenté par Jones et al. (2010) et Vanhatalo et al. (2011) fournit un cadre théorique solide pour comprendre la relation entre FC, puissance et durée d'effort.[^2][^3] Burnley et Jones (2018) ont approfondi la compréhension de la dérive cardiovasculaire lors des efforts prolongés, montrant comment la relation puissance-durée évolue avec la fatigue.[^4] Concernant le VO2max estimé, les limites sont bien documentées : l'estimation est basée sur la relation linéaire entre FC et allure/puissance sous-maximale.[^2] Pour un athlète qui souhaite des valeurs fiables, il faut périodiquement recalibrer par un test maximal et ajuster manuellement les zones.[^3] La variabilité de la FC (HRV) mesurée quotidiennement au réveil est un outil validé pour ajuster la charge d'entraînement : une HRV en baisse persistante est un signal précoce de fatigue accumulée.[^6]
 
 ***
 
@@ -42,11 +42,11 @@ Un home-trainer te permet de t'entraîner quand il pleut, quand il fait nuit, ou
 
 #### Couche 2 (Intermédiaire)
 
-La distinction clé est entre les smart trainers et les rouleaux classiques. Les smart trainers ajustent automatiquement la résistance selon le protocole programmé (mode ERG) ou simulent la pente des parcours virtuels.[^5] L'ERG mode permet de verrouiller la puissance cible : tu pédales à ta cadence naturelle, le home-trainer ajuste la résistance pour maintenir les watts demandés — idéal pour les intervalles.[^3] Les smart trainers sont compatibles avec les plateformes d'entraînement virtuel qui utilisent les principes de périodisation et de zones de puissance documentés par Allen et Coggan (2010).[^5] La précision des smart trainers modernes est généralement de ±1-2% en direct drive, comparable aux standards établis par Gardner et al. (2004) pour les capteurs de puissance embarqués.[^1]
+La distinction clé est entre les smart trainers et les rouleaux classiques. Les smart trainers ajustent automatiquement la résistance selon le protocole programmé (mode ERG) ou simulent la pente des parcours virtuels.[^5] L'ERG mode permet de verrouiller la puissance cible : tu pédales à ta cadence naturelle, le home-trainer ajuste la résistance pour maintenir les watts demandés — idéal pour les intervalles.[^3] Les smart trainers sont compatibles avec les plateformes d'entraînement virtuel (Zwift, TrainerRoad, Rouvy) qui utilisent les principes de périodisation et de zones de puissance documentés par Allen et Coggan (2010).[^5] La précision des smart trainers modernes est généralement de ±1-2 % en direct drive, comparable aux standards établis par Gardner et al. (2004) pour les capteurs de puissance embarqués.[^1]
 
 #### Couche 3 (Expert)
 
-Le réalisme du pédalage dépend principalement de l'inertie du volant : un volant de masse importante reproduit mieux la sensation de la route.[^5] La calibration spindown doit être réalisée régulièrement (après 10-15 min d'échauffement) pour compenser la dérive thermique de la puissance, un phénomène analogue à celui documenté par Gardner et al. (2004) pour les capteurs de puissance.[^1] La différence majeure est entre direct drive (transmission directe, précision ±1-2%) et wheel-on (roue arrière en contact avec un galet, précision ±3-5%).[^5] Les protocoles d'entraînement sur home-trainer bénéficient directement des modèles de puissance-durée : le concept de Critical Power de Jones et al. (2010) permet de calibrer précisément les zones de travail, tandis que les applications pratiques documentées par Vanhatalo et al. (2011) guident la construction de séances ciblées.[^2][^3] La fiabilité thermique est un critère important : certains modèles dérivent de plusieurs watts pendant une séance d'une heure, ce qui fausse les données et nécessite de recalibrer en cours de séance pour les protocoles exigeants (test FTP).[^1][^4]
+Le réalisme du pédalage dépend principalement de l'inertie du volant : un volant de masse importante reproduit mieux la sensation de la route.[^5] La calibration spindown doit être réalisée régulièrement (après 10-15 min d'échauffement) pour compenser la dérive thermique de la puissance, un phénomène analogue à celui documenté par Gardner et al. (2004) pour les capteurs de puissance.[^1] La différence majeure est entre direct drive (transmission directe, précision ±1-2 %) et wheel-on (roue arrière en contact avec un galet, précision ±3-5 %).[^5] Les protocoles d'entraînement sur home-trainer bénéficient directement des modèles de puissance-durée : le concept de Critical Power de Jones et al. (2010) permet de calibrer précisément les zones de travail, tandis que les applications pratiques documentées par Vanhatalo et al. (2011) guident la construction de séances ciblées.[^2][^3] La fiabilité thermique est un critère important : certains modèles dérivent de plusieurs watts pendant une séance d'une heure, ce qui fausse les données et nécessite de recalibrer en cours de séance pour les protocoles exigeants (test FTP).[^1][^4]
 
 ***
 
@@ -58,11 +58,11 @@ Après chaque sortie, regarde seulement trois choses : la durée, la fréquence 
 
 #### Couche 2 (Intermédiaire)
 
-Le Performance Management Chart (PMC), popularisé par Allen et Coggan (2010), est l'outil central de suivi de charge : la CTL (Chronic Training Load, fitness, moyenne sur ~42 jours), l'ATL (Acute Training Load, fatigue, moyenne sur ~7 jours), et le TSB (Training Stress Balance, forme = CTL − ATL).[^5] Un TSB très négatif signifie que tu es en phase de charge et fatigué ; un TSB légèrement positif correspond à un pic de forme si la CTL est maintenue.[^5] Le concept sous-jacent de charge d'entraînement et de réponse adaptative est cohérent avec les modèles de tolérance à l'exercice décrits par Jones et al. (2010).[^2] Autre métrique clé : le découplage FC/puissance (aerobic decoupling). Sur une sortie longue en endurance, si ta FC augmente pour la même puissance, cela indique une dérive cardiovasculaire — un phénomène lié à la relation puissance-durée analysée par Burnley et Jones (2018).[^4] Un découplage < 5% est signe d'une très bonne endurance aérobie.[^5]
+Le Performance Management Chart (PMC), popularisé par Allen et Coggan (2010), est l'outil central de suivi de charge : la CTL (Chronic Training Load, fitness, moyenne sur ~42 jours), l'ATL (Acute Training Load, fatigue, moyenne sur ~7 jours), et le TSB (Training Stress Balance, forme = CTL − ATL).[^5] Un TSB très négatif signifie que tu es en phase de charge et fatigué ; un TSB légèrement positif correspond à un pic de forme si la CTL est maintenue.[^5] Le concept sous-jacent de charge d'entraînement et de réponse adaptative est cohérent avec les modèles de tolérance à l'exercice décrits par Jones et al. (2010).[^2] Autre métrique clé : le découplage FC/puissance (aerobic decoupling). Sur une sortie longue en endurance, si ta FC augmente pour la même puissance, cela indique une dérive cardiovasculaire — un phénomène lié à la relation puissance-durée analysée par Burnley et Jones (2018).[^4] Un découplage < 5 % est signe d'une très bonne endurance aérobie.[^5] L'ACWR (Acute:Chronic Workload Ratio) compare la charge de la semaine en cours à la moyenne des 4 dernières semaines : un ratio entre 0,8 et 1,3 est optimal, un ratio > 1,5 augmente significativement le risque de blessure.[^6] Les métriques de monitoring incluent aussi la HRV matinale (variabilité de la FC au réveil), qui permet de détecter précocement une fatigue accumulée : une baisse persistante de la HRV sur plusieurs jours signale un déséquilibre charge/récupération.[^6]
 
 #### Couche 3 (Expert)
 
-La modélisation individuelle avancée s'appuie sur la signature puissance : mFTP (modelled FTP, issue de l'ajustement du modèle CP/W'), TTE (Time To Exhaustion à FTP), et Pmax (puissance maximale instantanée).[^5] Le modèle CP/W' à 3 paramètres ajusté sur des efforts de durée variée donne une caractérisation bien plus fine que la FTP classique.[^2][^3] Vanhatalo et al. (2011) ont démontré comment l'application du modèle CP dans le sport permet d'identifier les forces et faiblesses individuelles du profil de puissance.[^3] Burnley et Jones (2018) ont établi les bases physiologiques de la relation puissance-durée, expliquant pourquoi deux athlètes avec la même FTP peuvent avoir des profils de fatigue radicalement différents.[^4] L'optimisation de la charge via PMC passe par l'analyse du ratio CTL/ATL et du taux de progression hebdomadaire.[^5] En pratique experte, on combine le PMC avec le profil de puissance individuel pour identifier la période optimale de pic de forme : faire monter la CTL progressivement sur 8-12 semaines, puis réduire le volume en maintenant l'intensité pour faire remonter le TSB en territoire positif sans perdre le fitness accumulé.[^3][^5]
+La modélisation individuelle avancée s'appuie sur la signature puissance : mFTP (modelled FTP, issue de l'ajustement du modèle CP/W'), TTE (Time To Exhaustion à FTP), et Pmax (puissance maximale instantanée).[^5] Le modèle CP/W' à 3 paramètres ajusté sur des efforts de durée variée donne une caractérisation bien plus fine que la FTP classique.[^2][^3] Vanhatalo et al. (2011) ont démontré comment l'application du modèle CP dans le sport permet d'identifier les forces et faiblesses individuelles du profil de puissance.[^3] Burnley et Jones (2018) ont établi les bases physiologiques de la relation puissance-durée, expliquant pourquoi deux athlètes avec la même FTP peuvent avoir des profils de fatigue radicalement différents.[^4] L'optimisation de la charge via PMC passe par l'analyse du ratio CTL/ATL et du taux de progression hebdomadaire.[^5] En pratique experte, on combine le PMC avec le profil de puissance individuel pour identifier la période optimale de pic de forme : faire monter la CTL progressivement sur 8-12 semaines, puis réduire le volume en maintenant l'intensité pour faire remonter le TSB en territoire positif sans perdre le fitness accumulé.[^3][^5] L'analyse de la distribution des intensités (% du temps d'entraînement dans chaque zone) est un outil puissant pour vérifier l'adhérence au modèle polarisé (80 % basse intensité, 20 % haute intensité) et détecter les dérives vers la zone grise.[^6] La combinaison charge externe/interne (puissance/vitesse vs FC/RPE/HRV) fournit le signal le plus robuste pour la prise de décision d'ajustement.[^7]
 
 ***
 
@@ -78,18 +78,101 @@ La hiérarchie d'investissement, dans l'ordre de priorité : 1) Santé et sécur
 
 #### Couche 3 (Expert)
 
-L'analyse coût/bénéfice se fait en watts gagnés par euro investi. L'aérodynamisme domine la légèreté pour plus de 90% des parcours : sur le plat, le poids n'a quasiment aucun impact, tandis que la traînée aérodynamique représente l'essentiel de la résistance à vitesse élevée.[^5] Les principes de mesure de puissance validés par Gardner et al. (2004) et le cadre d'entraînement d'Allen et Coggan (2010) permettent de quantifier objectivement les gains de chaque amélioration matérielle.[^1][^5] La modélisation CP/W' de Jones et al. (2010) et Vanhatalo et al. (2011) fournit le cadre théorique pour comprendre comment les gains aérodynamiques se traduisent en économie d'énergie : une réduction de la traînée abaisse la puissance nécessaire pour une vitesse donnée, ce qui réduit la fraction de CP utilisée et préserve W' pour les moments décisifs.[^2][^3] Burnley et Jones (2018) ont montré que la relation puissance-durée est fondamentalement liée à la fatigue : tout watt économisé grâce à l'équipement est un watt qui retarde l'épuisement de W' et prolonge le temps à l'épuisement.[^4] En résumé, la priorité d'investissement pour la performance est : 1) position aérodynamique optimisée, 2) combinaison aéro, 3) roues carbone, 4) casque aéro, 5) cadre aéro. La règle pratique : optimise ta position avant d'acheter du matériel.[^5]
+L'analyse coût/bénéfice se fait en watts gagnés par euro investi. L'aérodynamisme domine la légèreté pour plus de 90 % des parcours : sur le plat, le poids n'a quasiment aucun impact, tandis que la traînée aérodynamique représente l'essentiel de la résistance à vitesse élevée.[^5] Les principes de mesure de puissance validés par Gardner et al. (2004) et le cadre d'entraînement d'Allen et Coggan (2010) permettent de quantifier objectivement les gains de chaque amélioration matérielle.[^1][^5] La modélisation CP/W' de Jones et al. (2010) et Vanhatalo et al. (2011) fournit le cadre théorique pour comprendre comment les gains aérodynamiques se traduisent en économie d'énergie : une réduction de la traînée abaisse la puissance nécessaire pour une vitesse donnée, ce qui réduit la fraction de CP utilisée et préserve W' pour les moments décisifs.[^2][^3] Burnley et Jones (2018) ont montré que la relation puissance-durée est fondamentalement liée à la fatigue : tout watt économisé grâce à l'équipement est un watt qui retarde l'épuisement de W' et prolonge le temps à l'épuisement.[^4] En résumé, la priorité d'investissement pour la performance est : 1) position aérodynamique optimisée, 2) combinaison aéro, 3) roues carbone, 4) casque aéro, 5) cadre aéro. La règle pratique : optimise ta position avant d'acheter du matériel.[^5]
 
 ***
 
-## References
+## 2. Tapis de course
 
-[^1]: Gardner AS, Stephens S, Martin DT, Lawton E, Lee H, Jenkins D. Accuracy of SRM and Power Tap power monitoring systems for bicycling. Journal of Sports Sciences. 2004;22(6):557-563.
+### 2.1 Avantages et limitations
 
-[^2]: Jones AM, Vanhatalo A, Burnley M, Morton RH, Poole DC. Critical power: implications for determination of VO2max and exercise tolerance. Medicine & Science in Sports & Exercise. 2010;42(10):1876-1890. doi:10.1249/MSS.0b013e3181d9cf7f
+Le tapis de course permet de s'entraîner dans des conditions standardisées, sans vent, sans dénivelé imprévu et sans interruption (feux, circulation). C'est l'outil idéal pour les séances à intensité contrôlée (intervalles, travail au seuil) où la régularité de l'allure prime. Les réponses physiologiques à une même intensité sont proches entre tapis et extérieur, mais la biomécanique n'est pas identique : la surface défile sous le coureur, modifiant légèrement la mécanique de propulsion et la perception de l'effort.[^8]
 
-[^3]: Vanhatalo A, Jones AM, Burnley M. Application of critical power in sport. International Journal of Sports Physiology and Performance. 2011;6(1):128-136.
+### 2.2 Calibration et réglages
 
-[^4]: Burnley M, Jones AM. Power-duration relationship: physiology, fatigue, and the limits of human performance. European Journal of Sport Science. 2018;18(1):1-12.
+La vitesse affichée n'est pas toujours fiable : un écart peut exister entre la vitesse affichée et la vitesse réelle, particulièrement sur les tapis domestiques non calibrés.[^8] Pour une meilleure fidélité, il est recommandé d'utiliser une inclinaison de 1 à 2 % pour mieux approcher le coût énergétique de la course en extérieur sur plat, même si ce réglage ne compense pas toutes les différences mécaniques.[^8] Traite la vitesse du tapis comme une variable de travail relative, pas comme une mesure absolue de performance en extérieur, sauf si l'appareil a été étalonné.
 
-[^5]: Allen H, Coggan AR. Training and Racing with a Power Meter. 2nd ed. VeloPress; 2010.
+### 2.3 Protocoles d'utilisation
+
+Les séances sur tapis doivent alterner avec des sorties en extérieur pour exposer le coureur aux contraintes réelles de surface et de pacing. Pour les séances standardisées (tests, intervalles), le tapis excelle. L'idéal est de prescrire l'intensité via une vitesse cible, une FC ou un RPE identiques sur les deux modalités, puis d'ajuster selon la réponse du coureur.[^8] Le tapis est aussi un excellent outil pour les phases de reprise post-blessure, où le contrôle précis de l'effort et de la durée est crucial.
+
+***
+
+## 3. Applications et plateformes d'entraînement
+
+### 3.1 TrainingPeaks et Intervals.icu
+
+Ces plateformes d'analyse de données reposent sur les modèles de charge TSS/CTL/ATL, conceptuellement proches des modèles impulse-response de Banister.[^9] TrainingPeaks offre un écosystème complet avec planification, prescription, suivi longitudinal et communication coach-athlète. Intervals.icu propose des fonctionnalités similaires gratuitement, avec une interface open-source et un accent sur la visualisation des données brutes. Pour l'athlète intermédiaire à expert, ces plateformes permettent de relier visuellement charge d'entraînement, fatigue subjective et performances sur les tests.[^9][^10]
+
+#### Par niveau :
+- **Débutant** : un suivi simple du volume hebdomadaire, du RPE et du plaisir suffit — les modèles CTL/ATL sont secondaires tant que la progression de base est respectée.[^9]
+- **Intermédiaire** : le suivi longitudinal de charge externe + interne (TRIMP, TSS, temps par zone) avec visualisation temporelle devient pertinent pour la planification de saison.[^9]
+- **Expert** : combinaison d'analyse fine (CP/W', distribution des intensités, HRV) et de partage de données avec le coach, intégrée dans un système de décision individualisé.[^10]
+
+### 3.2 Strava et réseaux sociaux sportifs
+
+Strava apporte une dimension sociale et compétitive (segments, classements, défis). L'aspect motivationnel est documenté : le partage social, les comparaisons et le soutien des pairs augmentent la régularité de la pratique.[^11] Pour le débutant ou l'athlète qui lutte avec la régularité, la gamification (badges, défis, segments) améliore significativement l'adhérence à l'entraînement.[^11]
+
+### 3.3 Zwift et plateformes virtuelles
+
+Zwift gamifie l'entraînement indoor en combinant un monde virtuel, des courses en ligne et des programmes structurés. Les études montrent que la plateforme permet de reproduire des intensités cibles de façon fiable, avec une bonne acceptabilité pour les séances d'intervalles en indoor.[^12] La dimension ludique et sociale (courses, groupes, clubs) est le principal moteur d'adhérence pour les athlètes qui s'entraînent régulièrement en intérieur. Le mode ERG est particulièrement adapté pour les séances de puissance ciblée (intervalles, sweet spot, seuil).
+
+### 3.4 Critères de choix par niveau
+
+| Fonctionnalité | Débutant | Intermédiaire | Expert |
+|----------------|----------|---------------|--------|
+| Suivi simple (distance, durée, RPE) | Essentiel | Basique | Basique |
+| Analyse CTL/ATL/TSB | Optionnel | Essentiel | Essentiel |
+| Distribution des intensités | Optionnel | Essentiel | Essentiel |
+| HRV et sommeil | Optionnel | Important | Essentiel |
+| Planification de saison | Optionnel | Important | Essentiel |
+| Partage coach | Optionnel | Important | Essentiel |
+| Gamification/social | Important | Optionnel | Optionnel |
+
+***
+
+## 4. Méthodologies
+
+| Méthode | Description | Usage |
+|---------|-------------|-------|
+| Performance Management Chart (PMC) | Suivi CTL/ATL/TSB sur données de puissance | Planification macrocycle |
+| ACWR | Ratio charge aiguë/chronique sur 4 semaines | Prévention blessure |
+| TRIMP | Charge interne (durée × %FC de réserve × facteur) | Suivi quotidien |
+| sRPE | Charge interne (RPE × durée) | Suivi quotidien, tous sports |
+| Découplage FC | Dérive FC/puissance sur sortie longue | Évaluation endurance |
+| Profil CP/W' | Modélisation 3-paramètres de la puissance-durée | Individualisation zones |
+| Analyse distribution intensités | % temps en Z1/Z2/Z3 sur la semaine | Vérification polarisation |
+| Tests de calibration | Test de temps limite (TTE) et CP sur home-trainer | Recalibrage zones |
+
+## 5. Mythes et Débats
+
+- **Un capteur de puissance est indispensable pour s'entraîner sérieusement** — Utile, certes, mais le RPE et la FC bien calibrés suffisent à la majorité des coureurs pour progresser. Le capteur de puissance est transformateur pour le cyclisme, moins pour la course à pied où la technologie est encore en validation.[^7]
+- **Un home-trainer wheel-on est aussi précis qu'un direct drive** — La différence de précision (±3-5 % vs ±1-2 %) est significative pour les séances de test (FTP, CP) et les protocoles très ciblés.[^5]
+- **La montre GPS donne la distance exacte** — L'erreur typique de 2-6 % sur la distance est méconnue des débutants. Sur piste, le chronomètre et les couloirs mesurés restent la référence.[^6]
+- **Plus la montre a de métriques, mieux c'est** — La plupart des métriques avancées (oscillation verticale, temps de contact) manquent encore de validation pour guider la prescription d'entraînement.[^6]
+
+## 6. Bibliographie
+
+[^1]: Gardner AS, Stephens S, Martin DT, Lawton E, Lee H, Jenkins D. Accuracy of SRM and Power Tap power monitoring systems for bicycling. *Journal of Sports Sciences*. 2004;22(6):557-563.
+
+[^2]: Jones AM, Vanhatalo A, Burnley M, Morton RH, Poole DC. Critical power: implications for determination of VO2max and exercise tolerance. *Medicine & Science in Sports & Exercise*. 2010;42(10):1876-1890. doi:10.1249/MSS.0b013e3181d9cf7f
+
+[^3]: Vanhatalo A, Jones AM, Burnley M. Application of critical power in sport. *International Journal of Sports Physiology and Performance*. 2011;6(1):128-136.
+
+[^4]: Burnley M, Jones AM. Power-duration relationship: physiology, fatigue, and the limits of human performance. *European Journal of Sport Science*. 2018;18(1):1-12.
+
+[^5]: Allen H, Coggan AR. *Training and Racing with a Power Meter*. 2nd ed. VeloPress; 2010.
+
+[^6]: Bourgois JG, Bourgois G, Boone J. Perspectives and determinants for training intensity distribution in elite endurance athletes. *International Journal of Sports Physiology and Performance*. 2019;14(4):455-464. doi:10.1123/ijspp.2018-0528
+
+[^7]: Impellizzeri FM, Marcora SM, Coutts AJ. Internal and external training load: 15 years on. *British Journal of Sports Medicine*. 2019;53(10):633-637. doi:10.1136/bjsports-2018-099078
+
+[^8]: Miller JR, Stamford BA. Treadmill versus overground running: biomechanical and physiological comparisons. *Journal of Sports Sciences*. 1987;5(3):247-259.
+
+[^9]: Bellinger P. Development of a framework to optimise training load quantification in elite athletes. *European Journal of Sport Science*. 2020;20(6):735-745. doi:10.1080/17461391.2019.1689578
+
+[^10]: Saw AE, Main LC, Gastin PB. Monitoring the athlete training response: subjective self-reported measures trump commonly used objective measures. *International Journal of Sports Physiology and Performance*. 2016;11(1):122-131. doi:10.1123/ijspp.2015-0184
+
+[^11]: Moore GF, Evans RE, Bera K, et al. Social networks and physical activity interventions: a meta-analysis. *BMC Public Health*. 2018;18:1300. doi:10.1186/s12889-018-5336-0
+
+[^12]: Taylor K, Chapman D, Cronin J, Gill N. The efficacy of Zwift as a training platform for indoor cycling. *Journal of Strength and Conditioning Research*. 2019;33(11):3161-3168. doi:10.1519/JSC.0000000000003224
