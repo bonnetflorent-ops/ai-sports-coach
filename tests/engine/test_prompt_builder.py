@@ -59,8 +59,8 @@ class TestBuildSystemPrompt:
         assert "préparer l'Étape du Tour" in prompt
         assert "CTL=75" in prompt
         assert "TSB=-5" in prompt
-        assert "PERSONNALISATION ACTIVE" in prompt
-        assert "SIGLES TECHNIQUES" in prompt
+        assert "PERSONNALISATION" in prompt
+        assert "Explique chaque sigle technique" in prompt
 
     def test_beginner_prompt_pedagogue(self):
         """Beginner prompt — check 'pédagogue' is present."""
@@ -79,7 +79,7 @@ class TestBuildSystemPrompt:
 
         prompt = build_system_prompt(selection, profile)
 
-        assert "pédagogue" in prompt
+        assert "encourageant" in prompt
         assert "Débutant" in prompt
 
     def test_low_tsb_prompt(self):
@@ -101,7 +101,7 @@ class TestBuildSystemPrompt:
 
         prompt = build_system_prompt(selection, profile)
 
-        assert "privilégie la récupération" in prompt
+        assert "récup prioritaire" in prompt
         assert "TSB=-25" in prompt
 
     def test_prompt_without_ctl_has_no_tsb_rules(self):

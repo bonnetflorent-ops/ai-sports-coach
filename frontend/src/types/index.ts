@@ -9,6 +9,11 @@ export interface User {
   health_data?: Record<string, unknown>;
   equipment?: string;  // string JSON en DB
   weekly_slots?: WeeklySlot[];
+  // Physiologie (onboarding phase 2)
+  weight_kg?: number | null;
+  height_cm?: number | null;
+  age?: number | null;
+  gender?: string | null;
   onboarding_completed: boolean;
   badge_count?: number;
   created_at: string;

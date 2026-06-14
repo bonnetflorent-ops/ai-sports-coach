@@ -54,7 +54,11 @@ export function sseStream(
           try {
             const data = JSON.parse(line.slice(6));
             if (data.token) onToken(data.token);
-            else if (data.done === true || data.message_id) onComplete(data);
+            // message_complete peut arriver sous 3 formes :
+            // - {"done": true, ...} (nouveau backend)
+            // - {"message_id": "..."} (ancien format)
+            // - {"content": "..."} (backend actuel sans done)
+            else if (data.done === true || data.message_id || 'content' in data) onComplete(data);
             else if (data.code) onError(data);
           } catch { /* ignore parse errors */ }
         }

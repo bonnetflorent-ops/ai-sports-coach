@@ -9,6 +9,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { User, levelLabel, WeeklySlot } from '@/types';
 import { apiFetch } from '@/lib/api';
 import { BugReport } from './BugReport';
+import { EditProfileDialog } from './EditProfileDialog';
 
 // Noms lisibles pour les sports (valeur DB → affichage)
 const SPORT_LABELS: Record<string, string> = {
@@ -31,6 +32,7 @@ export function ProfileView() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [bugReportOpen, setBugReportOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -168,6 +170,52 @@ export function ProfileView() {
         </CardContent>
       </Card>
 
+      {/* Physiologie */}
+      {(user.weight_kg || user.height_cm || user.age || user.gender) && (
+        <Card className="bg-slate-900/50 border-slate-800">
+          <CardHeader>
+            <CardTitle className="text-slate-50 text-base">
+              📊 Physiologie
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {user.weight_kg && (
+              <>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-slate-400">Poids</span>
+                  <span className="text-sm text-slate-50">{user.weight_kg} kg</span>
+                </div>
+                <Separator className="bg-slate-800" />
+              </>
+            )}
+            {user.height_cm && (
+              <>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-slate-400">Taille</span>
+                  <span className="text-sm text-slate-50">{user.height_cm} cm</span>
+                </div>
+                <Separator className="bg-slate-800" />
+              </>
+            )}
+            {user.age && (
+              <>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-slate-400">Âge</span>
+                  <span className="text-sm text-slate-50">{user.age} ans</span>
+                </div>
+                <Separator className="bg-slate-800" />
+              </>
+            )}
+            {user.gender && (
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-slate-400">Genre</span>
+                <span className="text-sm text-slate-50 capitalize">{user.gender}</span>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
       {/* Equipment */}
       {user.equipment && (
         <Card className="bg-slate-900/50 border-slate-800">
@@ -189,7 +237,7 @@ export function ProfileView() {
         <Button
           variant="outline"
           className="w-full"
-          onClick={() => {}}
+          onClick={() => setEditOpen(true)}
         >
           Modifier mon profil
         </Button>
@@ -210,6 +258,13 @@ export function ProfileView() {
       <BugReport
         open={bugReportOpen}
         onClose={() => setBugReportOpen(false)}
+      />
+
+      <EditProfileDialog
+        open={editOpen}
+        onClose={() => setEditOpen(false)}
+        user={user}
+        onSaved={(updated) => setUser(updated)}
       />
     </div>
   );
